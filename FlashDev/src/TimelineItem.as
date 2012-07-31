@@ -3,7 +3,7 @@
 	import flash.display.*;
 	import flash.events.*;
 	
-	public class TimelineEvent extends MovieClip
+	public class TimelineItem extends MovieClip
 	{
 		public var type:String; //type of event it is (political, war, etc.) for icons and sorting purposes
 		public var victor:String;
@@ -18,7 +18,7 @@
 		
 		public var importance:int;
 		
-		public function TimelineEvent()
+		public function TimelineItem()
 		{
 		}
 		

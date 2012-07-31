@@ -8,7 +8,8 @@
  <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
   <Author>Tim</Author>
   <LastAuthor>Tim</LastAuthor>
-  <Created>2012-07-27T18:21:08Z</Created>
+  <Created>2012-07-31T19:31:54Z</Created>
+  <LastSaved>2012-07-31T19:31:25Z</LastSaved>
   <Version>12.00</Version>
  </DocumentProperties>
  <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
@@ -37,42 +38,46 @@
    <NumberFormat/>
    <Protection/>
   </Style>
-  <Style ss:ID="s21">
+  <Style ss:ID="s62">
    <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
   </Style>
-  <Style ss:ID="s22">
+  <Style ss:ID="s63">
    <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
    <Font ss:FontName="Arial" x:Family="Swiss"/>
    <Interior ss:Color="#99CCFF" ss:Pattern="Solid"/>
   </Style>
-  <Style ss:ID="s23">
+  <Style ss:ID="s64">
    <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
    <Font ss:FontName="Arial" x:Family="Swiss"/>
    <Interior ss:Color="#FF3333" ss:Pattern="Solid"/>
   </Style>
-  <Style ss:ID="s24">
+  <Style ss:ID="s65">
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11"/>
   </Style>
-  <Style ss:ID="s25">
+  <Style ss:ID="s66">
    <Font ss:FontName="Arial" x:Family="Swiss"/>
    <Interior ss:Color="#FF3333" ss:Pattern="Solid"/>
   </Style>
+  <Style ss:ID="s67">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#FFFF00" ss:Pattern="Solid"/>
+  </Style>
  </Styles>
  <Worksheet ss:Name="Sheet1">
-  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="34" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="8" ss:ExpandedRowCount="40" x:FullColumns="1"
    x:FullRows="1" ss:DefaultColumnWidth="60.75">
    <Column ss:AutoFitWidth="0" ss:Width="30.75"/>
    <Column ss:AutoFitWidth="0" ss:Width="20.25" ss:Span="1"/>
    <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="68.25"/>
-   <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="309.75"/>
-   <Column ss:AutoFitWidth="0" ss:Width="1011.75"/>
+   <Column ss:StyleID="s62" ss:AutoFitWidth="0" ss:Width="309.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="249"/>
    <Column ss:AutoFitWidth="0" ss:Width="68.25"/>
    <Row>
     <Cell><Data ss:Type="Number">1860</Data></Cell>
     <Cell><Data ss:Type="Number">11</Data></Cell>
     <Cell><Data ss:Type="Number">6</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Lincoln Elected President</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Lincoln Elected President</Data></Cell>
     <Cell><Data ss:Type="String">Lincoln Elected</Data></Cell>
    </Row>
    <Row ss:Height="14.25">
@@ -80,7 +85,7 @@
     <Cell><Data ss:Type="Number">12</Data></Cell>
     <Cell><Data ss:Type="Number">20</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Southern States Secede</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Southern States Secede</Data></Cell>
     <Cell><ss:Data ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">From December 20<Sup>th</Sup><Font> to February 1</Font><Sup>st</Sup><Font> South Carolina, Mississippi, Florida, Alabama, Georgia, Louisiana, and Texas Secede</Font></ss:Data></Cell>
    </Row>
    <Row ss:Height="15">
@@ -88,16 +93,17 @@
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="Number">12</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Bombardment of Fort Sumter</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">Civil War Begins, Fort Sumter attacked by Confederate Forces. Union Surrenders Fort Sumter after 2 days of bombardment.</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Bombardment of Fort Sumter</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Civil War Begins, Fort Sumter attacked by Confederate Forces. Union Surrenders Fort Sumter after 2 days of bombardment.</Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
    </Row>
    <Row ss:Height="14.25">
     <Cell><Data ss:Type="Number">1861</Data></Cell>
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="Number">17</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Virginia Secedes</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Virginia Secedes</Data></Cell>
     <Cell><ss:Data ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">From April 17<Sup>th</Sup><Font> to May 20</Font><Sup>th</Sup><Font> Virginia, Arkansas, Tennessee and North Carolina Secede.</Font></ss:Data></Cell>
    </Row>
    <Row>
@@ -105,7 +111,7 @@
     <Cell><Data ss:Type="Number">7</Data></Cell>
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Lincoln Addresses Congress to enlist Union army</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Lincoln Addresses Congress to enlist Union army</Data></Cell>
     <Cell><Data ss:Type="String">Lincoln calls for enlistment</Data></Cell>
    </Row>
    <Row ss:Height="15">
@@ -113,130 +119,141 @@
     <Cell><Data ss:Type="Number">7</Data></Cell>
     <Cell><Data ss:Type="Number">21</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">First Battle of Bull Run</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[32,000 U...32,000 C] (2,896 U...1,982 C) Union defeated and retreats</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">First Battle of Bull Run</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[32,000 U...32,000 C] (2,896 U...1,982 C) Union defeated and retreats</Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1862</Data></Cell>
     <Cell><Data ss:Type="Number">3</Data></Cell>
     <Cell><Data ss:Type="Number">9</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">USS Merrimack battles USS Monitor</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">Confederate ironclad USS Merrimack and Union ironclad USS Monitor reach a draw in Chesapeake Bay.  Is considered a turning point in Naval warfare from wooden ships to steel.</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">USS Merrimack battles USS Monitor</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Confederate ironclad USS Merrimack and Union ironclad USS Monitor reach a draw in Chesapeake Bay.  Is considered a turning point in Naval warfare from wooden ships to steel.</Data></Cell>
     <Cell><Data ss:Type="String">Indecisive</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1862</Data></Cell>
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="Number">8</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s25"><Data ss:Type="String">Battle of Shiloh</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[66,812 U...44,699 C] (13,047 U...10,699 C) Higher casualty rate then all other American wars combined. Union victory.</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">Battle of Shiloh</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[66,812 U...44,699 C] (13,047 U...10,699 C) Higher casualty rate then all other American wars combined. Union victory.</Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1862</Data></Cell>
     <Cell><Data ss:Type="Number">6</Data></Cell>
     <Cell><Data ss:Type="Number">1</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Robert E. Lee takes command of the confederate army</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">Commands Confederate Army of Northern Virginia.</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Robert E. Lee takes command of the confederate army</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Commands Confederate Army of Northern Virginia.</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1862</Data></Cell>
     <Cell><Data ss:Type="Number">6</Data></Cell>
     <Cell><Data ss:Type="Number">25</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s25"><Data ss:Type="String">Seven Days Battle</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[104,100 U...92,000 C](15,855 U...20,204 C)  Robert E. Lee's forces attacked by George McClellan's Union army. Union army suffers heavy casualties over 7 days of fighting and retreats.  Confederate Victory.</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">Seven Days Battle</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[104,100 U...92,000 C](15,855 U...20,204 C)  Robert E. Lee's forces attacked by George McClellan's Union army. Union army suffers heavy casualties over 7 days of fighting and retreats.  Confederate Victory.</Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1862</Data></Cell>
     <Cell><Data ss:Type="Number">8</Data></Cell>
     <Cell><Data ss:Type="Number">28</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s25"><Data ss:Type="String">Second Battle of Bull Run</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[62,000 U...50,000 C](10,000 U...8,300 C) General Stonewall Jackson leads the Confederate army to Victory.  Union forces devastated and Union Major General John Pope is discharged after being blamed for loss.</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">Second Battle of Bull Run</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[62,000 U...50,000 C](10,000 U...8,300 C) General Stonewall Jackson leads the Confederate army to Victory.  Union forces devastated and Union Major General John Pope is discharged after being blamed for loss.</Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1862</Data></Cell>
     <Cell><Data ss:Type="Number">9</Data></Cell>
     <Cell><Data ss:Type="Number">17</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Antietam</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[75,500 U...38,000 C](12,401 U... 10,316 C) Bloodiest single day battle in American History.  Battle is tactically a draw, but Union forces managed to stop Robert E. Lee's Maryland Campaign.</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Antietam</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[75,500 U...38,000 C](12,401 U... 10,316 C) Bloodiest single day battle in American History.  Battle is tactically a draw, but Union forces managed to stop Robert E. Lee's Maryland Campaign.</Data></Cell>
     <Cell><Data ss:Type="String">Indecisive</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1862</Data></Cell>
     <Cell><Data ss:Type="Number">12</Data></Cell>
     <Cell><Data ss:Type="Number">11</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Fredericksburg</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[114,000 U...72,500 C](12,653 U...5,377 C) Union forces routed by the entrenched Confederate forces.  Multiple frontal assaults resulted in heavy losses for Union troops.  Confederate Victory.</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Fredericksburg</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[114,000 U...72,500 C](12,653 U...5,377 C) Union forces routed by the entrenched Confederate forces.  Multiple frontal assaults resulted in heavy losses for Union troops.  Confederate Victory.</Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1863</Data></Cell>
     <Cell><Data ss:Type="Number">1</Data></Cell>
     <Cell><Data ss:Type="Number">1</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Emancipation Proclamation</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">Lincoln issues an executive order that frees all slaves. This makes abolition a central point of the Civil War.</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Emancipation Proclamation</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Lincoln issues an executive order that frees all slaves. This makes abolition a central point of the Civil War.</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1863</Data></Cell>
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="Number">30</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Chancellorsville</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[133,868 U...60,892 C](17,197 U....13,303 C) Robert E. Lee's &quot;perfect&quot; battle.  In the face of overwhelming Union forces doubling the size of his army he tactically won the battle. Confederate Victory.</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Chancellorsville</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[133,868 U...60,892 C](17,197 U....13,303 C) Robert E. Lee's &quot;perfect&quot; battle.  In the face of overwhelming Union forces doubling the size of his army he tactically won the battle. Confederate Victory.</Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1863</Data></Cell>
     <Cell><Data ss:Type="Number">5</Data></Cell>
     <Cell><Data ss:Type="Number">10</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Stonewall Jackson dies from friendly fire injuries</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">Jackson dies from injuries sustained at Chancellorsville. (Was hit by friendly fire)</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Stonewall Jackson dies from friendly fire injuries</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Jackson dies from injuries sustained at Chancellorsville. (Was hit by friendly fire)</Data></Cell>
    </Row>
    <Row ss:Height="15">
     <Cell><Data ss:Type="Number">1863</Data></Cell>
     <Cell><Data ss:Type="Number">7</Data></Cell>
     <Cell><Data ss:Type="Number">1</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Gettysburg</Data></Cell>
-    <Cell ss:StyleID="s24"><Data ss:Type="String">[93,921 U...71,699 C](23,055 U... 23,231 C) Pickett's Charge. Union Victory.</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Gettysburg</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">[93,921 U...71,699 C](23,055 U... 23,231 C) Pickett's Charge. Union Victory.</Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1863</Data></Cell>
     <Cell><Data ss:Type="Number">7</Data></Cell>
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Siege of Vicksburg</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Siege of Vicksburg</Data></Cell>
     <Cell><Data ss:Type="String">[77,000 U...33,000 C](4,835 U...3,202 C) 29,495 Confederate forces Captured. With the capture of Vicksburg the Union now completely controls the Mississippi River.</Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1863</Data></Cell>
     <Cell><Data ss:Type="Number">9</Data></Cell>
     <Cell><Data ss:Type="Number">19</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Chickamauga</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Chickamauga</Data></Cell>
     <Cell><Data ss:Type="String">[60,000 U... 65,000 C](16,170 U...18,454 C) Confederate Victory.  Most significant Union defeat in the Western Theater. </Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">3</Data></Cell>
     <Cell><Data ss:Type="Number">9</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Ulysses S. Grant is appointed commander of the Union armies</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Ulysses S. Grant is appointed commander of the Union armies</Data></Cell>
     <Cell><Data ss:Type="String">Grant appointed commander by Lincoln</Data></Cell>
    </Row>
    <Row>
@@ -244,97 +261,107 @@
     <Cell><Data ss:Type="Number">5</Data></Cell>
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Virginia Overland Campaign (Wilderness Campaign)</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Virginia Overland Campaign (Wilderness Campaign)</Data></Cell>
     <Cell><Data ss:Type="String">Ulysses S. Grant leads 120,000 Union forces into Virginia, attempting to end the War.</Data></Cell>
     <Cell><Data ss:Type="String">Indecisive</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">5</Data></Cell>
     <Cell><Data ss:Type="Number">5</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of the Wilderness</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of the Wilderness</Data></Cell>
     <Cell><Data ss:Type="String">[101,895 U... 61,025 C](17,666 U... 11,125 C) Inconclusive. Fighting in dense woodlands, some men burned alive by forest fires. Union continues their offensive in the Virginia Overland Campaign.</Data></Cell>
     <Cell><Data ss:Type="String">Indecisive</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">5</Data></Cell>
     <Cell><Data ss:Type="Number">8</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Spotsylvania Courthouse</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Spotsylvania Courthouse</Data></Cell>
     <Cell><Data ss:Type="String">[100,000 U...52,000 C](18,399 U... 13,421 C) Inconclusive.  Confederate forces retreat farther south.</Data></Cell>
     <Cell><Data ss:Type="String">Indecisive</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">6</Data></Cell>
     <Cell><Data ss:Type="Number">1</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Cold Harbor</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Cold Harbor</Data></Cell>
     <Cell><Data ss:Type="String">[108,000 U...59,000 C](12,737 U... 4,595 C) Confederate Victory. Ulysses S. Grant makes tactical errors that result in the loss of thousands of troops. One of the last Battles in the Overland Campaign.</Data></Cell>
     <Cell><Data ss:Type="String">Confederate</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">6</Data></Cell>
     <Cell><Data ss:Type="Number">9</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Siege of Petersburg</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Siege of Petersburg</Data></Cell>
     <Cell><Data ss:Type="String">[67-125,000 U... 52,000 C] Union Victory. Lasts until March 25. </Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">9</Data></Cell>
     <Cell><Data ss:Type="Number">2</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Atlanta Campaign Ends</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Atlanta Campaign Ends</Data></Cell>
     <Cell><Data ss:Type="String">[98,500-112,000 U... 50,000-65,000 C](31,687 U... 34,979 C) Union Victory. Sherman captures and burns Atlanta, quickening the end of the war.</Data></Cell>
     <Cell><Data ss:Type="String">Union </Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">11</Data></Cell>
     <Cell><Data ss:Type="Number">15</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Savannah Campaign (Sherman's March to the Sea)</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Savannah Campaign (Sherman's March to the Sea)</Data></Cell>
     <Cell><Data ss:Type="String">After Sherman's victory at Atlanta he begins the Savannah Campaign with his Union forces.</Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">12</Data></Cell>
     <Cell><Data ss:Type="Number">15</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Battle of Nashville</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Battle of Nashville</Data></Cell>
     <Cell><Data ss:Type="String">[55,000 U... 30,000 C](3,061 U...6,000 C) Union Victory. One of the largest Union victories of the Civil War. </Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1864</Data></Cell>
     <Cell><Data ss:Type="Number">12</Data></Cell>
     <Cell><Data ss:Type="Number">21</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">End of Savannah Campaign (Savannah Captured)</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">End of Savannah Campaign (Savannah Captured)</Data></Cell>
     <Cell><Data ss:Type="String">Sherman and the Union army captures Savannah. He offers it to President Lincoln as a Christmas Present</Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1865</Data></Cell>
     <Cell><Data ss:Type="Number">3</Data></Cell>
     <Cell><Data ss:Type="Number">25</Data></Cell>
     <Cell><Data ss:Type="String">Battle</Data></Cell>
-    <Cell ss:StyleID="s23"><Data ss:Type="String">Siege of Petersburg Ends</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Siege of Petersburg Ends</Data></Cell>
     <Cell><Data ss:Type="String">Union Victory. Lots of trench warfare with over 30 miles of trench lines. Lee retreats.</Data></Cell>
     <Cell><Data ss:Type="String">Union</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="Number">1865</Data></Cell>
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="Number">9</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Lee Surrenders – War is Over</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Lee Surrenders – War is Over</Data></Cell>
     <Cell><Data ss:Type="String">At the Appomattox Court House Robert E. Lee surrenders to Ulysses S. Grant, effectively ending the Civil War.</Data></Cell>
    </Row>
    <Row>
@@ -342,7 +369,7 @@
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="Number">15</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Lincoln Assassinated</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Lincoln Assassinated</Data></Cell>
     <Cell><Data ss:Type="String">At Ford's Theatre by Confederate supporter John Wilkes Booth</Data></Cell>
    </Row>
    <Row>
@@ -350,7 +377,7 @@
     <Cell><Data ss:Type="Number">4</Data></Cell>
     <Cell><Data ss:Type="Number">18</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><Data ss:Type="String">Johnston Surrenders</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">Johnston Surrenders</Data></Cell>
     <Cell><Data ss:Type="String">Leading the largest Confederate force still in existence, Johnston surrenders to Sherman near Durham in North Carolina.</Data></Cell>
    </Row>
    <Row ss:Height="14.25">
@@ -358,9 +385,57 @@
     <Cell><Data ss:Type="Number">12</Data></Cell>
     <Cell><Data ss:Type="Number">6</Data></Cell>
     <Cell><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s22"><ss:Data ss:Type="String"
+    <Cell ss:StyleID="s63"><ss:Data ss:Type="String"
       xmlns="http://www.w3.org/TR/REC-html40">Slavery Abolished by ratified 13<Sup>th</Sup><Font> Amendment</Font></ss:Data></Cell>
     <Cell><ss:Data ss:Type="String" xmlns="http://www.w3.org/TR/REC-html40">13<Sup>th</Sup><Font> Amendment finally ratified.</Font></ss:Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1814</Data></Cell>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">Artist</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">James Henry Beard Born</Data></Cell>
+    <Cell><Data ss:Type="String">In Cincinnati Ohio</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1862</Data></Cell>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">Artist</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">James Henry Beard Enlists as a Union Soldier</Data></Cell>
+    <Cell><Data ss:Type="String">He was stationed near Ohio</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1865</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">Artist</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">James Henry Beard Finishes painting Night Before the Battle</Data></Cell>
+    <Cell><Data ss:Type="String">Finishes painting</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1865</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">Artist</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">Night Before the Battle Exhibited</Data></Cell>
+    <Cell><Data ss:Type="String">At the National Academy of Design in NYC</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1870</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">Artist</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">James Henry Beard elected to the National Academy of Design</Data></Cell>
+    <Cell><Data ss:Type="String">In NYC</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1893</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">Artist</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">James Henry Beard passes away</Data></Cell>
+    <Cell><Data ss:Type="String">In NYC</Data></Cell>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
@@ -380,7 +455,7 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>19</ActiveRow>
+     <ActiveRow>37</ActiveRow>
      <ActiveCol>5</ActiveCol>
     </Pane>
    </Panes>
