@@ -9,15 +9,15 @@
 	{		
 		private var xml:XML;
 		private var itemList:Vector.<TimelineItem>;
-		private var tParent:timeline;
+		private var tParent:Main;
 		private var myLoader:Loader;
 		private var imageNum:int = 0;
 		
-		public function ReadManager(t:timeline)
+		public function ReadManager(t:Main)
 		{
 			tParent = t;
 			
-			readImage("political.png")
+			readImage("political.png");
 		}
 		
 		private function readImage(fileName:String):void
