@@ -1,12 +1,17 @@
 package
 {
+	import flash.display.Bitmap;
+	import flash.display.Loader;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.display.Bitmap;
+	import flash.events.MouseEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import Timeline.TimelineItem;
 	
 	/**
 	 * ...
@@ -14,6 +19,12 @@ package
 	 */
 	public class Main extends Sprite 
 	{
+		// Constant that defines the URL of the XML database.
+		public static const XMLDATA:String = "data/database.xml";
+		// Constant that defines an array of images to load in sequence.
+		public static const IMAGES:Array = ["data/political.png", "data/union.png", "data/confederate.png", "data/battle.png", "data/art.png"];
+		private var loaded:int = 0; //keeps track of which images needs to be loaded next.
+		
 		public var timelineLine:MovieClip;
 		public var timelineItemList:Vector.<TimelineItem>;		//stores all the events from our database in sorted order
 		public var currentItemList:Vector.<TimelineItem>;		//stores the currently shown events
@@ -43,17 +54,78 @@ package
 			iconArray = new Vector.<Bitmap>();
 			beginDate = 1860;
 			endDate = 1866;
-			var readMan:ReadManager = new ReadManager(this);
-			trace("back in timeline");
+			
+			loadNext();
 		}
 		
+		public function loadNext(e:Event = null):void {
+			//The first time this is called, e is null, every other time, e.target is a Loader that just finished.
+			if(e != null) { iconArray.push(e.target.loader.content); }
+			
+			//if there are still images to load, load the next one.
+			if (loaded < IMAGES.length)
+			{
+				trace("loading image #" + loaded + " now...");
+				var loader:Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadNext);
+				loader.load(new URLRequest(IMAGES[loaded]));
+				//iconArray.push(loader.content);
+				loaded++;
+			}
+			//otherwise, load the xml file.
+			else
+			{
+				trace("loading XML now...");
+				var xmlloader:URLLoader = new URLLoader();
+				xmlloader.addEventListener(Event.COMPLETE, parseXML);
+				xmlloader.load(new URLRequest(XMLDATA));
+			}
+		}
 		
-		public function zoomIn():void
+		//pretty much copied verbatim -- those namespaces are just too messy to deal with (ditto for the xml file itself)
+		public function parseXML(e:Event):void
+		{
+			var xml:XML = new XML(e.target.data);
+			xml.ignoreWhitespace=true;
+			var ss:Namespace = new Namespace("urn:schemas-microsoft-com:office:spreadsheet");
+			
+			trace("xml reading");
+			
+			timelineItemList = new Vector.<TimelineItem>();
+			for(var i:int=0; i<xml.ss::Worksheet..ss::Table.children().length(); i++)
+			{
+				var rName:String = xml.ss::Worksheet..ss::Table.children()[i].name();
+
+				if(rName == "urn:schemas-microsoft-com:office:spreadsheet::Row")
+				{
+					var tEvent:TimelineItem = new TimelineItem();
+					
+					tEvent.year = xml.ss::Worksheet..ss::Table.children()[i].children()[0].children()[0];
+					tEvent.month = xml.ss::Worksheet..ss::Table.children()[i].children()[1].children()[0];
+					tEvent.day = xml.ss::Worksheet..ss::Table.children()[i].children()[2].children()[0];
+					tEvent.type = xml.ss::Worksheet..ss::Table.children()[i].children()[3].children()[0];
+					tEvent.shortDes = xml.ss::Worksheet..ss::Table.children()[i].children()[4].children()[0];
+					tEvent.fullDes = xml.ss::Worksheet..ss::Table.children()[i].children()[5].children()[0];
+					if(tEvent.type == "Battle")
+					{
+						tEvent.victor = xml.ss::Worksheet..ss::Table.children()[i].children()[6].children()[0];	
+						tEvent.importance = xml.ss::Worksheet..ss::Table.children()[i].children()[7].children()[0];						
+					}
+					
+					timelineItemList.push(tEvent);					
+				}
+			}
+			
+			trace("xml done reading");
+			changeZoomLevel(0,0);
+		}
+		
+		public function zoomIn(e:Event = null):void
 		{
 			changeZoomLevel(1,-1);
 		}
 		
-		public function zoomOut():void
+		public function zoomOut(e:Event = null):void
 		{
 			changeZoomLevel(-1,1);
 		}
@@ -96,21 +168,27 @@ package
 			//load the Events into the timeline
 			createEvents();
 			
-			var zoomTool:TextField;
-			zoomTool = new TextField();
-			zoomTool.text ="zoomTool";
-			zoomTool.x = lineEnd + 10;
-			zoomTool.y = lineHeight + 50;
-			this.addChild(zoomTool);
+			var zoomInbox:TextField;
+			zoomInbox = new TextField();
+			zoomInbox.text ="zoomIn";
+			zoomInbox.x = lineEnd + 10;
+			zoomInbox.y = lineHeight + 50;
+			zoomInbox.addEventListener(MouseEvent.CLICK, zoomIn);
+			this.addChild(zoomInbox);
+			
+			var zoomOutbox:TextField;
+			zoomOutbox = new TextField();
+			zoomOutbox.text ="zoomOut";
+			zoomOutbox.x = lineEnd + 10;
+			zoomOutbox.y = lineHeight + 70;
+			zoomOutbox.addEventListener(MouseEvent.CLICK, zoomOut);
+			this.addChild(zoomOutbox);
 		}
 		
 		private function emptyTimeline():void
 		{
 			//clear current events and objects on screen
-			for(var i:int = 0; i < this.numChildren; i++)
-			{
-				this.removeChildAt(i);
-			}
+			while (numChildren > 0) { removeChildAt(0); }
 		}
 		
 		private function createLine():void
