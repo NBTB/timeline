@@ -23,6 +23,8 @@ package Timeline
 		private var isDragging:Boolean = false;
 		private var lastmouseX:Number;
 		
+		private var momentum:Number = 0;
+		
 		public function Timeline(x:int, y:int, width:int, height:int) 
 		{
 			view = new Timeline.View();
@@ -83,8 +85,15 @@ package Timeline
 		private function onFrame(e:Event):void {
 			if (isDragging) {
 				field.x += mouseX - lastmouseX;
-				lastmouseX = mouseX;
 			}
+			else {
+				field.x += momentum;
+				momentum *= .8;
+				if (Math.abs(momentum) < 1) {
+					momentum = 0;
+				}
+			}
+			lastmouseX = mouseX;
 		}
 		
 		private function beginDrag(e:MouseEvent):void {
@@ -94,6 +103,7 @@ package Timeline
 		
 		private function endDrag(e:MouseEvent):void {
 			isDragging = false;
+			momentum = mouseX - lastmouseX;
 		}
 	}
 

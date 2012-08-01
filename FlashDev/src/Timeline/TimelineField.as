@@ -1,10 +1,11 @@
 package Timeline 
 {
 	import flash.display.MovieClip;
+	import flash.display.Shape;
 	/**
 	 * A graphic representation of the entire timeline all at once.
 	 * The intended use is to have one inside a Timeline object which in turn masks the TimelineField,
-	 * changes in zoom handled by shifting elements around in the field.
+	 * scrolling handled by simply moving the field left or right, changes in zoom handled by shifting elements around in the field.
 	 * @author Robert Cigna
 	 */
 	public class TimelineField extends MovieClip
@@ -19,6 +20,14 @@ package Timeline
 			//hardcoded stuff follows
 			
 			var totalwidth:Number = width * 100 / view.width;
+			
+			var line:Shape;
+			line = new Shape();
+			line.graphics.lineStyle(1, 0x000000,1);
+			line.graphics.beginFill(0x002772,0.5);
+			line.graphics.drawRect(0, height - 4, totalwidth, 8);
+			line.graphics.endFill();
+			addChild(line);
 			
 			for (var i:int = 0; i <= 100; i++)
 			{
