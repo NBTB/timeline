@@ -7,10 +7,12 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TextEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import Timeline.Timeline;
 	import Timeline.TimelineItem;
 	
 	/**
@@ -22,13 +24,31 @@ package
 		// Constant that defines the URL of the XML database.
 		public static const XMLDATA:String = "data/database.xml";
 		// Constant that defines an array of images to load in sequence.
-		public static const IMAGES:Array = ["data/political.png", "data/union.png", "data/confederate.png", "data/battle.png", "data/art.png"];
+		public static const IMAGES:Array = ["data/political.png", "data/union.png", "data/confederate.png", 
+											"data/battle.png", "data/art.png"];
 		private var loaded:int = 0; //keeps track of which images needs to be loaded next.
+		
 		
 		public var timelineLine:MovieClip;
 		public var timelineItemList:Vector.<TimelineItem>;		//stores all the events from our database in sorted order
 		public var currentItemList:Vector.<TimelineItem>;		//stores the currently shown events
 		public var iconArray:Vector.<Bitmap>;						//stores all the icons
+		
+		//{ region UI Elements
+		
+		private var title:TextField;
+		private var political:TextField;
+		private var battles:TextField;
+		private var artist:TextField;
+		private var art:TextField;
+		
+		private var zoomInbox:TextField;
+		private var zoomOutbox:TextField;
+		
+		private var timeline:Timeline;
+		
+		//} endregion
+		
 		
 		private var beginDate:int;
 		private var endDate:int;
@@ -38,7 +58,6 @@ package
 		private var lineEnd:int = 650;
 		private var lineHeight:int = 500;
 	
-		//private var startTimeline:timeline;
 		public function Main():void 
 		{
 			if (stage) init();
@@ -49,8 +68,9 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
-			//startTimeline = new timeline();
-			//addChild(startTimeline);
+			
+			//TODO throw up a loading graphic
+			
 			iconArray = new Vector.<Bitmap>();
 			beginDate = 1860;
 			endDate = 1866;
@@ -69,7 +89,6 @@ package
 				var loader:Loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadNext);
 				loader.load(new URLRequest(IMAGES[loaded]));
-				//iconArray.push(loader.content);
 				loaded++;
 			}
 			//otherwise, load the xml file.
@@ -117,6 +136,7 @@ package
 			}
 			
 			trace("xml done reading");
+			populateUI();
 			changeZoomLevel(0,0);
 		}
 		
@@ -153,22 +173,92 @@ package
 				beginDate = newBegin;
 				endDate = newEnd;
 				emptyTimeline();
-				populateTimeline();
+				populateUI();
 			}
 		}
 		
-		private function populateTimeline():void
-		{			
-			//create Timeline Line
-			createLine();
+		private function populateUI():void
+		{		
+			timeline = new Timeline(100, 50, 550, 455);
+			addChild(timeline);
 			
-			//create Text stuff in Timeline
-			createText();
+			//create Timeline Line
+			//createLine();
+			
+				
+			trace("creating Text");
+			var format1:TextFormat = new TextFormat();
+			format1.size = 25;
+			 
+			var format2:TextFormat = new TextFormat();
+			format2.italic = true;
+			
+			title = new TextField();
+			title.width = 700;
+			title.text = "The Night Before the Battle and the American Civil War";
+			title.setTextFormat(format1);
+			title.setTextFormat(format2, 0,27);
+			title.x = 100;
+			title.y = 15;
+			this.addChild(title);
+			
+			format1.size = 15;
+			
+			political = new TextField();
+			political.text ="Political Front";
+			political.setTextFormat(format1);
+			political.width = 90;
+			political.height = 20;
+			political.border = true;
+			political.background = true;
+			political.backgroundColor = 0xFFFFFF;
+			political.wordWrap = true;
+			political.x = 15;
+			political.y = ((lineHeight - 100) / 4) * 1;
+			this.addChild(political);
+			
+			battles = new TextField();
+			battles.text ="Battles of the Civil War";
+			battles.setTextFormat(format1);
+			battles.width = 90;
+			battles.height = 40;
+			battles.border = true;
+			battles.background = true;
+			battles.backgroundColor = 0x788C42;
+			battles.wordWrap = true;
+			battles.x = 15;
+			battles.y = ((lineHeight - 100) / 4) * 2;
+			this.addChild(battles);
+			
+			artist = new TextField();
+			artist.text ="Life of James Henry Beard";
+			artist.setTextFormat(format1);
+			artist.width = 90;
+			artist.height = 40;
+			artist.border = true;
+			artist.background = true;
+			artist.backgroundColor = 0x935E3E;
+			artist.wordWrap = true;
+			artist.x = 15;
+			artist.y = ((lineHeight - 100) / 4) * 3;
+			this.addChild(artist);
+			
+			art = new TextField();
+			art.text ="Art of the Civil War Era";
+			art.setTextFormat(format1);
+			art.width = 90;
+			art.height = 40;
+			art.border = true;
+			art.background = true;
+			art.backgroundColor = 0xFFBF01;
+			art.wordWrap = true;
+			art.x = 15;
+			art.y = ((lineHeight - 100) / 4) * 4;
+			this.addChild(art);
 			
 			//load the Events into the timeline
 			createEvents();
 			
-			var zoomInbox:TextField;
 			zoomInbox = new TextField();
 			zoomInbox.text ="zoomIn";
 			zoomInbox.x = lineEnd + 10;
@@ -176,7 +266,6 @@ package
 			zoomInbox.addEventListener(MouseEvent.CLICK, zoomIn);
 			this.addChild(zoomInbox);
 			
-			var zoomOutbox:TextField;
 			zoomOutbox = new TextField();
 			zoomOutbox.text ="zoomOut";
 			zoomOutbox.x = lineEnd + 10;
@@ -280,84 +369,6 @@ package
 				}
 				skipNum++;
 			}
-		}
-		
-		private function createText():void
-		{			
-			trace("creating Text");
-			var format1:TextFormat = new TextFormat();
-			format1.size = 25;
-			 
-			var format2:TextFormat = new TextFormat();
-			format2.italic = true;
-			
-			var nbtbT:TextField;
-			nbtbT = new TextField();
-			nbtbT.width = 700;
-			nbtbT.text = "The Night Before the Battle and the American Civil War";
-			nbtbT.setTextFormat(format1);
-			nbtbT.setTextFormat(format2, 0,27);
-			nbtbT.x = 100;
-			nbtbT.y = 15;
-			this.addChild(nbtbT);
-			
-			format1.size = 15;
-			
-			var politicalT:TextField;
-			politicalT = new TextField();
-			politicalT.text ="Political Front";
-			politicalT.setTextFormat(format1);
-			politicalT.width = 90;
-			politicalT.height = 20;
-			politicalT.border = true;
-			politicalT.background = true;
-			politicalT.backgroundColor = 0xFFFFFF;
-			politicalT.wordWrap = true;
-			politicalT.x = 15;
-			politicalT.y = ((lineHeight - 100) / 4) * 1;
-			this.addChild(politicalT);
-			
-			var battleT:TextField;
-			battleT = new TextField();
-			battleT.text ="Battles of the Civil War";
-			battleT.setTextFormat(format1);
-			battleT.width = 90;
-			battleT.height = 40;
-			battleT.border = true;
-			battleT.background = true;
-			battleT.backgroundColor = 0x788C42;
-			battleT.wordWrap = true;
-			battleT.x = 15;
-			battleT.y = ((lineHeight - 100) / 4) * 2;
-			this.addChild(battleT);
-			
-			var artistT:TextField;
-			artistT = new TextField();
-			artistT.text ="Life of James Henry Beard";
-			artistT.setTextFormat(format1);
-			artistT.width = 90;
-			artistT.height = 40;
-			artistT.border = true;
-			artistT.background = true;
-			artistT.backgroundColor = 0x935E3E;
-			artistT.wordWrap = true;
-			artistT.x = 15;
-			artistT.y = ((lineHeight - 100) / 4) * 3;
-			this.addChild(artistT);
-			
-			var artT:TextField;
-			artT = new TextField();
-			artT.text ="Art of the Civil War Era";
-			artT.setTextFormat(format1);
-			artT.width = 90;
-			artT.height = 40;
-			artT.border = true;
-			artT.background = true;
-			artT.backgroundColor = 0xFFBF01;
-			artT.wordWrap = true;
-			artT.x = 15;
-			artT.y = ((lineHeight - 100) / 4) * 4;
-			this.addChild(artT);
 		}
 		
 		private function createEvents():void

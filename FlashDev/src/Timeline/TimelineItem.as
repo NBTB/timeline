@@ -3,6 +3,9 @@
 	import flash.display.*;
 	import flash.events.*;
 	
+	/**
+	 * A TimelineItem is an interactive icon that appears on the timeline. 
+	 */
 	public class TimelineItem extends MovieClip
 	{
 		public var type:String; //type of event it is (political, war, etc.) for icons and sorting purposes

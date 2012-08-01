@@ -28,7 +28,7 @@
     <path-element>C:\Users\Rob\Desktop\masterTimeline\FlashDev\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
-  <default-frame-rate>30</default-frame-rate>
+  <default-frame-rate>60</default-frame-rate>
   <default-size>
     <width>750</width>
     <height>600</height>
