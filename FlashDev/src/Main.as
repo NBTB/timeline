@@ -179,7 +179,7 @@ package
 		
 		private function populateUI():void
 		{		
-			timeline = new Timeline(100, 50, 550, 455);
+			timeline = new Timeline(100, 50, 550, 455, timelineItemList, iconArray);
 			addChild(timeline);
 			
 			//create Timeline Line
@@ -257,20 +257,20 @@ package
 			this.addChild(art);
 			
 			//load the Events into the timeline
-			createEvents();
+			//createEvents();
 			
 			zoomInbox = new TextField();
 			zoomInbox.text ="zoomIn";
 			zoomInbox.x = lineEnd + 10;
 			zoomInbox.y = lineHeight + 50;
-			zoomInbox.addEventListener(MouseEvent.CLICK, zoomIn);
+			//zoomInbox.addEventListener(MouseEvent.CLICK, zoomIn);
 			this.addChild(zoomInbox);
 			
 			zoomOutbox = new TextField();
 			zoomOutbox.text ="zoomOut";
 			zoomOutbox.x = lineEnd + 10;
 			zoomOutbox.y = lineHeight + 70;
-			zoomOutbox.addEventListener(MouseEvent.CLICK, zoomOut);
+			//zoomOutbox.addEventListener(MouseEvent.CLICK, zoomOut);
 			this.addChild(zoomOutbox);
 		}
 		

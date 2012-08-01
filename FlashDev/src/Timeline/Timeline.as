@@ -1,12 +1,13 @@
 package Timeline 
 {
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.AccelerometerEvent;
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	/**
-	 * A type representing the Timeline as a user interface element.
+	 * A type representing the Timeline itself as a user interface element.
 	 * @author Robert Cigna
 	 */
 	public class Timeline extends MovieClip
@@ -25,11 +26,11 @@ package Timeline
 		
 		private var momentum:Number = 0;
 		
-		public function Timeline(x:int, y:int, width:int, height:int) 
+		public function Timeline(x:int, y:int, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
 		{
 			view = new Timeline.View();
 			
-			field = new TimelineField(view, width, height);
+			field = new TimelineField(view, width, height, items, icons);
 			addChild(field);
 			
 			fieldMask = new Sprite();
@@ -49,7 +50,7 @@ package Timeline
 			fieldHitArea.graphics.endFill();
 			fieldHitArea.mouseEnabled = false;
 			fieldHitArea.visible = false;
-			addChild(fieldHitArea);
+			addChild(fieldHitArea); // the hit area has to be part of the display list! who knew!?
 			field.hitArea = fieldHitArea;
 			
 			leftArrow = new Sprite();

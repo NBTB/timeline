@@ -11,7 +11,7 @@ package Timeline
 		public var center:Number;
 		public var width:Number;
 		
-		public function View(center:Number = .5, width:Number = 10) 
+		public function View(center:Number = .6, width:Number = 10) 
 		{
 			this.center = center;
 			this.width = width;
