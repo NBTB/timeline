@@ -11,37 +11,52 @@ package Timeline
 	 */
 	public class TimelineField extends MovieClip
 	{
+		private var viewWidth:int;
+		private var viewHeight:int;
+		
 		private var ticks:Array;
+		private var items:Array;
+		private var line:Shape;
+		private var fill:Shape;
+		private var totalwidth:Number;
+		public function get TotalWidth():Number { return totalwidth; }
 		
 		public function TimelineField(view:Timeline.View, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
 		{
+			viewWidth = width;
+			viewHeight = height;
 			ticks = new Array();
+			this.items = new Array();
 			
 			//TODO fix this hardcoding
 			//hardcoded stuff follows
 			
-			var totalwidth:Number = width * 100 / view.width;
+			totalwidth = viewWidth * 100 / view.width;
 			
-			var line:Shape;
+			
+			fill = new Shape();
+			fill.graphics.beginFill(0xDCDCDC, 1);
+			fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
+			addChild(fill);
+			
 			line = new Shape();
 			line.graphics.lineStyle(1, 0x000000,1);
 			line.graphics.beginFill(0x002772,0.5);
-			line.graphics.drawRect(0, height - 4, totalwidth, 8);
+			line.graphics.drawRect(0, viewHeight - 4, totalwidth, 8);
 			line.graphics.endFill();
 			addChild(line);
 			
 			for (var i:int = 0; i <= 100; i++)
 			{
-				var tick:TimelineTick = new Timeline.TimelineTick(height, (i + 1800).toString());
-				tick.y = height;
+				var tick:TimelineTick = new Timeline.TimelineTick(viewHeight, (i + 1800).toString());
+				tick.y = viewHeight;
 				tick.x = totalwidth / 100 * i;// 
+				ticks.push(tick);
 				addChild(tick);
 			}
 			
-			graphics.beginFill(0xDCDCDC, 1);
-			graphics.drawRect(0, 0, totalwidth, height);
 			
-			this.x = - totalwidth * view.center + width / 2;
+			this.x = - totalwidth * view.center + viewWidth / 2;
 			//this.cacheAsBitmap = true;
 			
 			for ( var j:int = 0; j < items.length; j++)
@@ -58,9 +73,38 @@ package Timeline
 					items[j].y = 240;
 				}
 				addChild(items[j]);
+				this.items.push(items[j]);
 			}
 		}
 		
+		public function update(view:Timeline.View):void {
+			
+			totalwidth = viewWidth * 100 / view.width;
+			
+			line.graphics.clear();
+			line.graphics.lineStyle(1, 0x000000,1);
+			line.graphics.beginFill(0x002772,0.5);
+			line.graphics.drawRect(0, viewHeight - 4, totalwidth, 8);
+			line.graphics.endFill();
+			
+			fill.graphics.clear();
+			fill.graphics.beginFill(0xDCDCDC, 1);
+			fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
+			fill.graphics.endFill();
+			
+			
+			for (var i:int = 0; i <= 100; i++)
+			{
+				ticks[i].x = totalwidth / 100 * i;
+			}
+			
+			for ( var j:int = 0; j < items.length; j++)
+			{
+				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200;
+			}
+			
+			this.x = - totalwidth * view.center + viewWidth / 2;
+		}
 	}
 
 }

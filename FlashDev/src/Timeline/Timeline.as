@@ -14,6 +14,8 @@ package Timeline
 	{
 		public var view:Timeline.View;
 		
+		private var viewWidth:Number;
+		
 		private var leftArrow:Sprite;
 		private var rightArrow:Sprite;
 		
@@ -29,28 +31,29 @@ package Timeline
 		public function Timeline(x:int, y:int, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
 		{
 			view = new Timeline.View();
+			viewWidth = width;
 			
 			field = new TimelineField(view, width, height, items, icons);
 			addChild(field);
 			
 			fieldMask = new Sprite();
-			fieldMask.x = x;
-			fieldMask.y = y;
 			fieldMask.graphics.beginFill(0);
 			fieldMask.graphics.drawRect(0, 0, width, height + 50);
 			fieldMask.graphics.endFill();
 			fieldMask.cacheAsBitmap = true;
+			fieldMask.visible = false; //I think setting this sprite as a mask automatically sets this property, but just to be safe.
+			addChild(fieldMask); //I think doing this means the mask will move with the Timeline object. Don't know for sure though.
 			field.mask = fieldMask;
 			
+			//Considering this is an identical shape, it might be possible to use one Sprite as both mask and hitArea... not sure about 
+			//caching / mouse enabling, though.
 			fieldHitArea = new Sprite();
-			fieldHitArea.x = x;
-			fieldHitArea.y = y;
 			fieldHitArea.graphics.beginFill(0);
 			fieldHitArea.graphics.drawRect(0, 0, width, height + 50);
 			fieldHitArea.graphics.endFill();
 			fieldHitArea.mouseEnabled = false;
-			fieldHitArea.visible = false;
-			addChild(fieldHitArea); // the hit area has to be part of the display list! who knew!?
+			fieldHitArea.visible = false; //For hitAreas, this does have to be manually set.
+			addChild(fieldHitArea); //The hit area has to be part of the display list! who knew!?
 			field.hitArea = fieldHitArea;
 			
 			leftArrow = new Sprite();
@@ -94,6 +97,7 @@ package Timeline
 					momentum = 0;
 				}
 			}
+			view.center = -(field.x - viewWidth / 2) / field.TotalWidth;
 			lastmouseX = mouseX;
 		}
 		
@@ -105,6 +109,11 @@ package Timeline
 		private function endDrag(e:MouseEvent):void {
 			isDragging = false;
 			momentum = mouseX - lastmouseX;
+		}
+		
+		public function changeView(view:Timeline.View):void {
+			this.view = view;
+			field.update(view);
 		}
 	}
 

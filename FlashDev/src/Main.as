@@ -21,18 +21,30 @@ package
 	 */
 	public class Main extends Sprite 
 	{
+		//{ region Constants
+		
 		// Constant that defines the URL of the XML database.
 		public static const XMLDATA:String = "data/database.xml";
+		
+		// Constants for icon assets. 
+		// NOTE: in order for the icon to be loaded, you must also add the constant to the IMAGES array below.
+		public static const POLITICAL_ICON:String = "data/political.png";
+		public static const UNION_ICON:String = "data/union.png";
+		public static const CONFEDERATE_ICON:String = "data/confederate.png";
+		public static const BATTLE_ICON:String = "data/battle.png";
+		public static const ART_ICON:String = "data/art.png";
+		
 		// Constant that defines an array of images to load in sequence.
-		public static const IMAGES:Array = ["data/political.png", "data/union.png", "data/confederate.png", 
-											"data/battle.png", "data/art.png"];
-		private var loaded:int = 0; //keeps track of which images needs to be loaded next.
+		public static const IMAGES:Array = [POLITICAL_ICON, UNION_ICON, CONFEDERATE_ICON, 
+											BATTLE_ICON, ART_ICON];
 		
+		//} endregion
 		
-		public var timelineLine:MovieClip;
 		public var timelineItemList:Vector.<TimelineItem>;		//stores all the events from our database in sorted order
 		public var currentItemList:Vector.<TimelineItem>;		//stores the currently shown events
 		public var iconArray:Vector.<Bitmap>;						//stores all the icons
+		//private var icons:Object;             //associative array of all icons. the key is given by the asset constants.
+		private var loaded:int = 0;           //keeps track of which images needs to be loaded next.
 		
 		//{ region UI Elements
 		
@@ -142,12 +154,16 @@ package
 		
 		public function zoomIn(e:Event = null):void
 		{
-			changeZoomLevel(1,-1);
+			//changeZoomLevel(1,-1);
+			timeline.view.width *= .9;
+			timeline.changeView(timeline.view);
 		}
 		
 		public function zoomOut(e:Event = null):void
 		{
-			changeZoomLevel(-1,1);
+			//changeZoomLevel(-1,1);
+			timeline.view.width /= .9;
+			timeline.changeView(timeline.view);
 		}
 		
 		public function changeZoomLevel(beginDateZoom:int, endDateZoom:int):void
@@ -182,14 +198,10 @@ package
 			timeline = new Timeline(100, 50, 550, 455, timelineItemList, iconArray);
 			addChild(timeline);
 			
-			//create Timeline Line
-			//createLine();
-			
-				
 			trace("creating Text");
 			var format1:TextFormat = new TextFormat();
 			format1.size = 25;
-			 
+			
 			var format2:TextFormat = new TextFormat();
 			format2.italic = true;
 			
@@ -256,21 +268,18 @@ package
 			art.y = ((lineHeight - 100) / 4) * 4;
 			this.addChild(art);
 			
-			//load the Events into the timeline
-			//createEvents();
-			
 			zoomInbox = new TextField();
 			zoomInbox.text ="zoomIn";
 			zoomInbox.x = lineEnd + 10;
 			zoomInbox.y = lineHeight + 50;
-			//zoomInbox.addEventListener(MouseEvent.CLICK, zoomIn);
+			zoomInbox.addEventListener(MouseEvent.CLICK, zoomIn);
 			this.addChild(zoomInbox);
 			
 			zoomOutbox = new TextField();
 			zoomOutbox.text ="zoomOut";
 			zoomOutbox.x = lineEnd + 10;
 			zoomOutbox.y = lineHeight + 70;
-			//zoomOutbox.addEventListener(MouseEvent.CLICK, zoomOut);
+			zoomOutbox.addEventListener(MouseEvent.CLICK, zoomOut);
 			this.addChild(zoomOutbox);
 		}
 		
