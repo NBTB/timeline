@@ -149,21 +149,26 @@ package
 			
 			trace("xml done reading");
 			populateUI();
-			changeZoomLevel(0,0);
 		}
 		
 		public function zoomIn(e:Event = null):void
 		{
-			//changeZoomLevel(1,-1);
+			/*
 			timeline.view.width *= .9;
 			timeline.changeView(timeline.view);
+			/*/
+			timeline.zoomMomentum = -.1;
+			//*/
 		}
 		
 		public function zoomOut(e:Event = null):void
 		{
-			//changeZoomLevel(-1,1);
+			/*
 			timeline.view.width /= .9;
 			timeline.changeView(timeline.view);
+			/*/
+			timeline.zoomMomentum = .1;
+			//*/
 		}
 		
 		public function changeZoomLevel(beginDateZoom:int, endDateZoom:int):void

@@ -8,8 +8,8 @@ package Timeline
 	 */
 	public class View 
 	{
-		public var center:Number;
-		public var width:Number;
+		public var center:Number;      //The current focus of the timeline, measured as a fraction of the whole width.
+		public var width:Number;       //The current zoom of the timeline, measured in years per screen width.
 		
 		public function View(center:Number = .6, width:Number = 10) 
 		{

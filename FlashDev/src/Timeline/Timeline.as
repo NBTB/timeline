@@ -12,9 +12,16 @@ package Timeline
 	 */
 	public class Timeline extends MovieClip
 	{
+		public static const MAX_WIDTH:Number = 100;  //The maximum width of the view in years. Ideally, this should be set to the actual width of the entire timeline, but should never be more.
+		public static const MIN_WIDTH:Number = .5;   //The minimum width of the view in years.
+		
+		public static const SCROLL_DECAY_FRAC:Number = .8;
+		public static const ZOOM_DECAY_FRAC:Number = .6;
+		
 		public var view:Timeline.View;
 		
 		private var viewWidth:Number;
+		private var viewHeight:Number;
 		
 		private var leftArrow:Sprite;
 		private var rightArrow:Sprite;
@@ -25,8 +32,10 @@ package Timeline
 		
 		private var isDragging:Boolean = false;
 		private var lastmouseX:Number;
-		
 		private var momentum:Number = 0;
+		
+		//private var isZooming:Boolean = false;
+		public var zoomMomentum:Number = 0;
 		
 		public function Timeline(x:int, y:int, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
 		{
@@ -52,7 +61,7 @@ package Timeline
 			fieldHitArea.graphics.drawRect(0, 0, width, height + 50);
 			fieldHitArea.graphics.endFill();
 			fieldHitArea.mouseEnabled = false;
-			fieldHitArea.visible = false; //For hitAreas, this does have to be manually set.
+			fieldHitArea.visible = false; //For hitAreas, this does have to be manually set, because...
 			addChild(fieldHitArea); //The hit area has to be part of the display list! who knew!?
 			field.hitArea = fieldHitArea;
 			
@@ -62,6 +71,9 @@ package Timeline
 			leftArrow.graphics.endFill();
 			leftArrow.x = 0;
 			leftArrow.y = height;
+			leftArrow.addEventListener(MouseEvent.CLICK, function (e:Event):void {
+				momentum = 100;
+			});
 			addChild(leftArrow);
 			
 			rightArrow = new Sprite();
@@ -70,6 +82,9 @@ package Timeline
 			rightArrow.graphics.endFill();
 			rightArrow.x = width;
 			rightArrow.y = height;
+			rightArrow.addEventListener(MouseEvent.CLICK, function (e:Event):void {
+				momentum = -100;
+			});
 			addChild(rightArrow);
 			
 			this.x = x;
@@ -84,31 +99,66 @@ package Timeline
 			stage.addEventListener(MouseEvent.MOUSE_UP, endDrag);
 			field.addEventListener(MouseEvent.MOUSE_DOWN, beginDrag);
 			field.addEventListener(Event.ENTER_FRAME, onFrame);
+			field.doubleClickEnabled = true;
+			field.addEventListener(MouseEvent.DOUBLE_CLICK, quickZoom);
 		}
 		
 		private function onFrame(e:Event):void {
+			//Calculate left/right movement first
 			if (isDragging) {
 				field.x += mouseX - lastmouseX;
 			}
 			else {
 				field.x += momentum;
-				momentum *= .8;
+				momentum *= SCROLL_DECAY_FRAC;
 				if (Math.abs(momentum) < 1) {
 					momentum = 0;
 				}
 			}
+			field.x = field.x > 0 ? 0 : field.x;
+			field.x = field.x < viewWidth - field.TotalWidth ? viewWidth - field.TotalWidth : field.x;
+			view.center = -(field.x - viewWidth / 2) / field.TotalWidth;
+			
+			//Then zoom
+			//TODO decide if zoom momentum is worth it
+			//*
+			view.width *= (1 + zoomMomentum);
+			
+			//Clamp to acceptable limits
+			view.width = MAX_WIDTH < view.width ? MAX_WIDTH : view.width;
+			view.width = MIN_WIDTH > view.width ? MIN_WIDTH : view.width;
+			
+			field.update(view);
+			zoomMomentum *= ZOOM_DECAY_FRAC;
+			if (Math.abs(zoomMomentum) < .001) {
+				zoomMomentum = 0;
+			}
+			//*/
+			
+			field.x = field.x > 0 ? 0 : field.x;
+			field.x = field.x < viewWidth - field.TotalWidth ? viewWidth - field.TotalWidth : field.x;
 			view.center = -(field.x - viewWidth / 2) / field.TotalWidth;
 			lastmouseX = mouseX;
 		}
 		
 		private function beginDrag(e:MouseEvent):void {
-				isDragging = true;
-				lastmouseX = mouseX;
+			isDragging = true;
+			lastmouseX = mouseX;
 		}
 		
 		private function endDrag(e:MouseEvent):void {
 			isDragging = false;
 			momentum = mouseX - lastmouseX;
+		}
+		
+		public function quickZoom(e:MouseEvent):void {
+			//Okay, so I did some maths, and then I tinkered, and now I don't now how, but this sorta works.
+			
+			//Add scroll momentum to recenter on the click location.
+			momentum = (e.stageX - x - viewWidth / 2) * Math.log(SCROLL_DECAY_FRAC) / Math.pow(SCROLL_DECAY_FRAC, 2.47);
+			
+			//Add a large amount of zoom momentum.
+			zoomMomentum = -.4;
 		}
 		
 		public function changeView(view:Timeline.View):void {
