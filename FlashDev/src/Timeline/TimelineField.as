@@ -14,10 +14,10 @@ package Timeline
 		//{ region Constants
 		
 		public static const MONTH_TICK_THRESHOLD:Number = 1;         //The threshold at which the monthly tick marks begin to fade in years-of-view-width.
-		public static const MONTH_TICK_FADE_RATE:Number = 1;         //The rate at which monthly ticks fade out, in alpha-per-year-of-view-width.
+		public static const MONTH_TICK_FADE_RATE:Number = 1;         //The rate at which monthly ticks fade out, in alpha-per-year-of-view-width. (The reciprocal is the number of years-of-view-width until fully transparent).
 		
 		public static const QUARTER_TICK_THRESHOLD:Number = 3;       //The threshold at which the quarterly tick marks begin to fade in years-of-view-width.
-		public static const QUARTER_TICK_FADE_RATE:Number = .33;     //The rate at which quarterly ticks fade out, in alpha-per-year-of-view-width.
+		public static const QUARTER_TICK_FADE_RATE:Number =.333;     //The rate at which quarterly ticks fade out, in alpha-per-year-of-view-width.
 		
 		public static const YEAR_TICK_THRESHOLD:Number = 15;         //The threshold at which the yearly tick marks begin to fade in years-of-view-width.
 		public static const YEAR_TICK_FADE_RATE:Number = .1;         //The rate at which yearly ticks fade out, in alpha-per-year-of-view-width.
@@ -66,6 +66,8 @@ package Timeline
 			line.graphics.drawRect(0, viewHeight - 4, totalwidth, 8);
 			line.graphics.endFill();
 			addChild(line);
+			
+			//TODO tick labels
 			
 			//set up ticks
 			for (var i:int = 0; i <= 100; i++)
@@ -170,7 +172,7 @@ package Timeline
 			for ( var j:int = 0; j < items.length; j++)
 			{
 				items[j].setUp(icons);
-				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200;
+				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200 - (30 - items[j].day) * totalwidth / (1200 * 30);
 				if(items[j].type == "Political") {
 					items[j].y = 80;
 				}
@@ -201,12 +203,16 @@ package Timeline
 			fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
 			fill.graphics.endFill();
 			
-			//TODO actively fading ticks to control density on screen
 			var monthA:Number = 1 - MONTH_TICK_FADE_RATE * (view.width - MONTH_TICK_THRESHOLD);
+			monthA = monthA > 1 ? 1 : monthA;
 			var quarterA:Number = 1 - QUARTER_TICK_FADE_RATE * (view.width - QUARTER_TICK_THRESHOLD);
+			quarterA = quarterA > 1 ? 1 : quarterA;
 			var yearA:Number = 1 - YEAR_TICK_FADE_RATE * (view.width - YEAR_TICK_THRESHOLD);
+			yearA = yearA > 1 ? 1 : yearA;
 			var fiveA:Number = 1 - FIVE_TICK_FADE_RATE * (view.width - FIVE_TICK_THRESHOLD);
+			fiveA = fiveA > 1 ? 1 : fiveA;
 			var decadeA:Number = 1 - DECADE_TICK_FADE_RATE * (view.width - DECADE_TICK_THRESHOLD);
+			decadeA = decadeA > 1 ? 1 : decadeA;
 			
 			for (var i:int = 0; i <= 100; i++)
 			{
@@ -273,7 +279,7 @@ package Timeline
 			
 			for ( var j:int = 0; j < items.length; j++)
 			{
-				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200;
+				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200 - (30 - items[j].day) * totalwidth / (1200 * 30);
 			}
 			
 			this.x = - totalwidth * view.center + viewWidth / 2;
