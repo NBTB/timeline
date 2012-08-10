@@ -2,10 +2,13 @@ package Timeline
 {
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.AccelerometerEvent;
 	import flash.events.MouseEvent;
 	import flash.events.Event;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	/**
 	 * A type representing the Timeline itself as a user interface element.
 	 * @author Robert Cigna
@@ -33,6 +36,9 @@ package Timeline
 		private var isDragging:Boolean = false;
 		private var lastmouseX:Number;
 		private var momentum:Number = 0;
+		
+		public var descriptionBox:MovieClip;
+		public var exitBtn:MovieClip;
 		
 		//private var isZooming:Boolean = false;
 		public var zoomMomentum:Number = 0;
@@ -165,6 +171,78 @@ package Timeline
 			this.view = view;
 			field.update(view);
 		}
+		
+		public function showDesBox(item:TimelineItem):void
+		{			
+			var desShape:Shape = new Shape();
+			desShape.graphics.lineStyle(1, 0x000000,1);
+			desShape.graphics.beginFill(0xFFFFFF,1);
+			desShape.graphics.drawRoundRect(0, 0, 650, 500, 50);
+			desShape.graphics.endFill();
+			
+			var format1:TextFormat = new TextFormat();
+			format1.size = 25;
+			
+			var titleText:TextField = new TextField();
+			titleText.text = item.shortDes;
+			titleText.x = 50;
+			titleText.y = 50;
+			titleText.width = 550;
+			titleText.multiline = true;
+			titleText.autoSize = "left";
+			titleText.wordWrap = true;
+			titleText.setTextFormat(format1);
+			
+			var dateText:TextField = new TextField();
+			dateText.text = item.month + "/" + item.day + "/" + item.year;
+			dateText.x = 50;
+			dateText.y = 100;
+			dateText.width = 550;
+			dateText.autoSize = "left";
+			dateText.setTextFormat(format1);
+			
+			var bodyText:TextField = new TextField();
+			bodyText.text = item.fullDes;
+			bodyText.x = 50;
+			bodyText.y = 150;
+			bodyText.width = 550;
+			bodyText.multiline = true;
+			bodyText.autoSize = "left";
+			bodyText.wordWrap = true;
+			bodyText.setTextFormat(format1);
+			
+			descriptionBox = new MovieClip();
+			descriptionBox.x = 50;
+			descriptionBox.y = 50;
+			descriptionBox.addChild(desShape);
+			descriptionBox.addChild(titleText);
+			descriptionBox.addChild(dateText);
+			descriptionBox.addChild(bodyText);
+			this.parent.addChild(descriptionBox);
+			
+			var btnShape:Shape = new Shape();
+			btnShape.graphics.lineStyle(1, 0x000000,1);
+			btnShape.graphics.beginFill(0xFF4444,0.5);
+			btnShape.graphics.drawRoundRect(0, 0, 30, 30, 10);
+			btnShape.graphics.endFill();
+			
+			exitBtn = new MovieClip();
+			exitBtn.x = 650;
+			exitBtn.y = 70;
+			exitBtn.addEventListener(MouseEvent.CLICK, hideDesBox);		
+			exitBtn.addChild(btnShape);
+			this.parent.addChild(exitBtn);
+			
+			this.parent.setChildIndex(descriptionBox, this.parent.numChildren-1);
+			this.parent.setChildIndex(exitBtn, this.parent.numChildren-1);
+		}
+		
+		public function hideDesBox(e:Event):void
+		{
+			this.parent.removeChild(descriptionBox);
+			this.parent.removeChild(exitBtn);
+		}
+		
 	}
 
 }

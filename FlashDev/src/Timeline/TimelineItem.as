@@ -2,6 +2,7 @@
 {
 	import flash.display.*;
 	import flash.events.*;
+	import flash.text.TextField;
 	
 	/**
 	 * A TimelineItem is an interactive icon that appears on the timeline. 
@@ -21,6 +22,11 @@
 		
 		public var importance:int;
 		
+		public var backgroundCircle:Shape;
+		public var bitImage:Bitmap;
+		
+		public var hoverBoxContainer:Sprite;
+		
 		public function TimelineItem()
 		{
 		}
@@ -28,10 +34,8 @@
 		public function setUp(iconArray:Vector.<Bitmap>):void {
 			while (numChildren > 0) { removeChildAt(0); }
 			
-			var circle:Shape;
-			circle = new Shape();
-			circle.graphics.lineStyle(2, 0x777777, 1);
-			var bit:Bitmap;
+			backgroundCircle = new Shape();
+			backgroundCircle.graphics.lineStyle(2, 0x777777, 1);
 			
 			if(type == "Battle")
 			{
@@ -39,18 +43,18 @@
 				
 				if(victor == "Union")
 				{
-					circle.graphics.beginFill(0x002772,0.5);
-					bit = new Bitmap((iconArray[1]).bitmapData.clone());
+					backgroundCircle.graphics.beginFill(0x002772,0.5);
+					bitImage = new Bitmap((iconArray[1]).bitmapData.clone());
 				}
 				else if(victor == "Confederate")
 				{
-					circle.graphics.beginFill(0x777777,0.5);
-					bit = new Bitmap((iconArray[2]).bitmapData.clone());
+					backgroundCircle.graphics.beginFill(0x777777,0.5);
+					bitImage = new Bitmap((iconArray[2]).bitmapData.clone());
 				}
 				else
 				{
-					circle.graphics.beginFill(0x722700,0.5);
-					bit = new Bitmap((iconArray[3]).bitmapData.clone());
+					backgroundCircle.graphics.beginFill(0x722700,0.5);
+					bitImage = new Bitmap((iconArray[3]).bitmapData.clone());
 				}
 				
 				//if(xPos - lastBattle < safeZone)
@@ -64,20 +68,20 @@
 				//	byPos = by1;
 				//}
 				
-				//circle.x = xPos;
-				//circle.y = byPos;
-				circle.graphics.drawCircle(0,0,magnitude);
+				//backgroundCircle.x = xPos;
+				//backgroundCircle.y = byPos;
+				backgroundCircle.graphics.drawCircle(0,0,magnitude);
 				//lastBattle = xPos;
 				
-				bit.scaleX = 0.01*(magnitude/2);
-				bit.scaleY = 0.01*(magnitude/2);
-				bit.x = -bit.width / 2;
-				bit.y = -bit.height / 2;
+				bitImage.scaleX = 1;
+				bitImage.scaleY = 1;
+				bitImage.x = -bitImage.width / 2;
+				bitImage.y = -bitImage.height / 2;
 			}
 			else if (type == "Artist")
 			{
 				//trace("artist");
-				circle.graphics.beginFill(0x55FF22,0.5);
+				backgroundCircle.graphics.beginFill(0x55FF22,0.5);
 				
 				//if(xPos - lastArtist < safeZone)
 				//{
@@ -88,20 +92,20 @@
 				//{
 				//	ayPos = ay1;
 				//}
-				//circle.x = xPos;
-				//circle.y = ayPos;
-				circle.graphics.drawCircle(0,0,20);
+				//backgroundCircle.x = xPos;
+				//backgroundCircle.y = ayPos;
+				backgroundCircle.graphics.drawCircle(0,0,20);
 				//lastArtist = xPos;
 				
-				bit = new Bitmap((iconArray[4]).bitmapData.clone());
-				bit.scaleX = 0.15;
-				bit.scaleY = 0.15;
-				bit.x = -bit.width / 2;
-				bit.y = -bit.height / 2;
+				bitImage = new Bitmap((iconArray[4]).bitmapData.clone());
+				bitImage.scaleX = 1;
+				bitImage.scaleY = 1;
+				bitImage.x = -bitImage.width / 2;
+				bitImage.y = -bitImage.height / 2;
 			}
 			else
 			{
-				circle.graphics.beginFill(0xFFCC11,0.5);
+				backgroundCircle.graphics.beginFill(0xFFCC11,0.5);
 				
 				//if(xPos - lastPolitical < safeZone)
 				//{
@@ -113,24 +117,44 @@
 				//{
 				//	pyPos = py1;
 				//}
-				//circle.x = xPos;
-				//circle.y = pyPos;
-				circle.graphics.drawCircle(0,0,20);
+				//backgroundCircle.x = xPos;
+				//backgroundCircle.y = pyPos;
+				backgroundCircle.graphics.drawCircle(0,0,20);
 				//lastPolitical = xPos;
 				
-				bit = new Bitmap((iconArray[0]).bitmapData.clone());
-				bit.scaleX = 0.15;
-				bit.scaleY = 0.15;
-				bit.x = -bit.width / 3;
-				bit.y = -bit.height / 3 * 2;
+				bitImage = new Bitmap((iconArray[0]).bitmapData.clone());
+				bitImage.scaleX = 1;
+				bitImage.scaleY = 1;
+				bitImage.x = -bitImage.width / 3;
+				bitImage.y = -bitImage.height / 3 * 2;
 			}
-			circle.graphics.endFill();
-			addChild(circle);
-			addChild(bit);
+			backgroundCircle.graphics.endFill();
+			addChild(backgroundCircle);
+			addChild(bitImage);
+			
+			hoverBoxContainer = new Sprite();
+			
+			var hoverBox:Shape = new Shape();
+			hoverBox.graphics.lineStyle(2, 0x777777, 1);
+			hoverBox.graphics.beginFill(0xFFFFFF, 0.7);
+			hoverBox.graphics.drawRect( -50, 20, 100, 100);
+			hoverBox.visible = false;
+			hoverBoxContainer.addChild(hoverBox);
+			
+			var hoverText:TextField = new TextField();
+			hoverText.text = month.toString() + "/" + day.toString() + "/" + year.toString() + "\n" + shortDes;
+			hoverText.x = -50;
+			hoverText.y = 20;
+			hoverText.width = 100;
+			hoverText.multiline = true;
+			hoverText.autoSize = "left";
+			hoverText.wordWrap = true;
+			hoverText.border = true;
+			hoverText.background = true;
+			
+			hoverBoxContainer.addChild(hoverText);
+			hoverBoxContainer.visible = false;
+			addChild(hoverBoxContainer);
 		}
-		
-		//on hover
-		
-		//on click
 	}
 }

@@ -3,6 +3,9 @@ package Timeline
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.ColorTransform;
 	/**
 	 * A graphic representation of the entire timeline all at once.
 	 * The intended use is to have one inside a Timeline object which in turn masks the TimelineField,
@@ -40,7 +43,7 @@ package Timeline
 		private var fill:Shape;
 		private var totalwidth:Number;
 		public function get TotalWidth():Number { return totalwidth; }
-		
+			
 		public function TimelineField(view:Timeline.View, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
 		{
 			viewWidth = width;
@@ -174,18 +177,52 @@ package Timeline
 				items[j].setUp(icons);
 				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200 - (30 - items[j].day) * totalwidth / (1200 * 30);
 				if(items[j].type == "Political") {
-					items[j].y = 80;
+					items[j].y = 70;
 				}
 				else if(items[j].type == "Battle") {
-					items[j].y = 160;
+					items[j].y = 170;
 				}
 				else if(items[j].type == "Artist") {
-					items[j].y = 240;
+					items[j].y = 270;
 				}
 				items[j].doubleClickEnabled = true;
 				addChild(items[j]);
 				this.items.push(items[j]);
+				items[j].addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
+				items[j].addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
+				items[j].addEventListener(MouseEvent.CLICK, mouseClick);
 			}
+		}
+		
+		private function mouseOver(e:Event):void
+		{
+			//trace("mouseover: " + e.currentTarget.type);
+			e.currentTarget.backgroundCircle.scaleX = 1.2;
+			e.currentTarget.backgroundCircle.scaleY = 1.2;
+			Shape(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 00, 180, 180);
+			
+			//hover Description
+			e.currentTarget.parent.setChildIndex(e.currentTarget, e.currentTarget.parent.numChildren-1);
+			e.currentTarget.hoverBoxContainer.visible = true;
+			
+		}
+		
+		private function mouseOut(e:Event):void
+		{
+			//trace("mouseout");
+			e.currentTarget.backgroundCircle.scaleX = 1;
+			e.currentTarget.backgroundCircle.scaleY = 1;
+			Shape(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1)
+			
+			//hide HoverDescription
+			e.currentTarget.hoverBoxContainer.visible = false;
+		}
+		
+		private function mouseClick(e:Event):void
+		{
+			trace("clicky");
+			e.currentTarget.hoverBoxContainer.visible = false;
+			Timeline.Timeline(this.parent).showDesBox(Timeline.TimelineItem(e.currentTarget));
 		}
 		
 		public function update(view:Timeline.View):void {
