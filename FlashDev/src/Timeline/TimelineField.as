@@ -28,6 +28,9 @@ package Timeline
 		public static const DECADE_TICK_THRESHOLD:Number = 150;      //The threshold at which the decade tick marks begin to fade in years-of-view-width.
 		public static const DECADE_TICK_FADE_RATE:Number = .01;      //The rate at which decade ticks fade out, in alpha-per-year-of-view-width.
 		
+		public static const ITEM_THRESHOLD_RATE:Number = 3;          //The rate at which the threshold for item's increases (linearly with importance).
+		public static const ITEM_FADE_RATE:Number = 1;               //The rate at which items fade out, in alpha-per-year-of-view-width-per-importance.
+		
 		//} endregion
 		
 		private var viewWidth:int;
@@ -41,7 +44,7 @@ package Timeline
 		private var totalwidth:Number;
 		public function get TotalWidth():Number { return totalwidth; }
 		
-		public function TimelineField(view:Timeline.View, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
+		public function TimelineField(width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>, center:Number, zoom:Number, start:Number, end:Number) 
 		{
 			viewWidth = width;
 			viewHeight = height;
@@ -49,10 +52,10 @@ package Timeline
 			monthlyTicks = new Array();
 			this.items = new Array();
 			
-			//TODO fix this hardcoding
+			//TODO fix this hardcoding (mostly overall length of timeline)
 			//hardcoded stuff follows
 			
-			totalwidth = viewWidth * 100 / view.width;
+			totalwidth = viewWidth * (end-start) / zoom;
 			
 			
 			fill = new Shape();
@@ -166,7 +169,7 @@ package Timeline
 			}
 			
 			
-			this.x = - totalwidth * view.center + viewWidth / 2;
+			this.x = - totalwidth * center + viewWidth / 2;
 			//this.cacheAsBitmap = true;
 			
 			for ( var j:int = 0; j < items.length; j++)
@@ -174,23 +177,25 @@ package Timeline
 				items[j].setUp(icons);
 				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200 - (30 - items[j].day) * totalwidth / (1200 * 30);
 				if(items[j].type == "Political") {
-					items[j].y = 80;
+					items[j].y = 60+ (j % 5) * 13;
 				}
 				else if(items[j].type == "Battle") {
-					items[j].y = 160;
+					items[j].y = 160 +(j % 5) * 13;
 				}
 				else if(items[j].type == "Artist") {
-					items[j].y = 240;
+					items[j].y = 260 +(j % 5) * 13;
 				}
 				items[j].doubleClickEnabled = true;
 				addChild(items[j]);
 				this.items.push(items[j]);
 			}
+			
+			update(center, zoom, start, end);
 		}
 		
-		public function update(view:Timeline.View):void {
+		public function update(center:Number, zoom:Number, start:Number, end:Number):void {
 			
-			totalwidth = viewWidth * 100 / view.width;
+			totalwidth = viewWidth * (end - start) / zoom;
 			
 			line.graphics.clear();
 			line.graphics.lineStyle(1, 0x000000,1);
@@ -203,22 +208,22 @@ package Timeline
 			fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
 			fill.graphics.endFill();
 			
-			var monthA:Number = 1 - MONTH_TICK_FADE_RATE * (view.width - MONTH_TICK_THRESHOLD);
+			var monthA:Number = 1 - MONTH_TICK_FADE_RATE * (zoom - MONTH_TICK_THRESHOLD);
 			monthA = monthA > 1 ? 1 : monthA;
-			var quarterA:Number = 1 - QUARTER_TICK_FADE_RATE * (view.width - QUARTER_TICK_THRESHOLD);
+			var quarterA:Number = 1 - QUARTER_TICK_FADE_RATE * (zoom - QUARTER_TICK_THRESHOLD);
 			quarterA = quarterA > 1 ? 1 : quarterA;
-			var yearA:Number = 1 - YEAR_TICK_FADE_RATE * (view.width - YEAR_TICK_THRESHOLD);
+			var yearA:Number = 1 - YEAR_TICK_FADE_RATE * (zoom - YEAR_TICK_THRESHOLD);
 			yearA = yearA > 1 ? 1 : yearA;
-			var fiveA:Number = 1 - FIVE_TICK_FADE_RATE * (view.width - FIVE_TICK_THRESHOLD);
+			var fiveA:Number = 1 - FIVE_TICK_FADE_RATE * (zoom - FIVE_TICK_THRESHOLD);
 			fiveA = fiveA > 1 ? 1 : fiveA;
-			var decadeA:Number = 1 - DECADE_TICK_FADE_RATE * (view.width - DECADE_TICK_THRESHOLD);
+			var decadeA:Number = 1 - DECADE_TICK_FADE_RATE * (zoom - DECADE_TICK_THRESHOLD);
 			decadeA = decadeA > 1 ? 1 : decadeA;
 			
 			for (var i:int = 0; i <= 100; i++)
 			{
 				//If this is a decade
 				if (i % 10 == 0) {
-					ticks[i].x = totalwidth / 100 * i;
+					ticks[i].x = totalwidth / (end-start) * i;
 					ticks[i].alpha = decadeA;
 					if (decadeA < 0) {
 						ticks[i].visible = false;
@@ -229,7 +234,7 @@ package Timeline
 				}
 				//Else if this is a fifth year
 				else if (i % 5 == 0) {
-					ticks[i].x = totalwidth / 100 * i;
+					ticks[i].x = totalwidth / (end-start) * i;
 					ticks[i].alpha = fiveA;
 					if (fiveA < 0) {
 						ticks[i].visible = false;
@@ -240,7 +245,7 @@ package Timeline
 				}
 				//Otherwise this is just a normal year
 				else {
-					ticks[i].x = totalwidth / 100 * i;
+					ticks[i].x = totalwidth / (end-start) * i;
 					ticks[i].alpha = yearA;
 					if (yearA < 0) {
 						ticks[i].visible = false;
@@ -255,7 +260,7 @@ package Timeline
 			{
 				//If this is a quarter
 				if (k % 3 == 0) {
-					monthlyTicks[k].x = totalwidth / 1200 * k;
+					monthlyTicks[k].x = totalwidth / (12*(end-start)) * k;
 					monthlyTicks[k].alpha = quarterA;
 					if (quarterA < 0) {
 						monthlyTicks[k].visible = false;
@@ -266,7 +271,7 @@ package Timeline
 				}
 				//Otherwise just a month
 				else {
-					monthlyTicks[k].x = totalwidth / 1200 * k;
+					monthlyTicks[k].x = totalwidth / (12*(end-start)) * k;
 					monthlyTicks[k].alpha = monthA;
 					if (monthA < 0) {
 						monthlyTicks[k].visible = false;
@@ -277,12 +282,49 @@ package Timeline
 				}
 			}
 			
+			
+			//Items
 			for ( var j:int = 0; j < items.length; j++)
 			{
-				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200 - (30 - items[j].day) * totalwidth / (1200 * 30);
+				//Item fading by importance
+				//TODO re-enable fading-by-importance when importance is given more meaning.
+				/*
+				var itemA:Number = 1 - (ITEM_FADE_RATE / (items[j].importance + 2)) * (viewWidth - ITEM_THRESHOLD_RATE * (items[j].importance+1));
+				itemA = itemA > 1 ? 1 : itemA;
+				
+				if (itemA < 0) {
+					items[j].visible = false;
+				}
+				else {
+					items[j].alpha = itemA;
+					items[j].visible = true;
+				}
+				//*/
+				items[j].x = totalwidth - (end - items[j].year) * totalwidth / (end-start) - (12 - items[j].month) * totalwidth / (12*(end-start)) - (30 - items[j].day) * totalwidth / ((12*(end-start)) * 30);
+				
+				
 			}
 			
-			this.x = - totalwidth * view.center + viewWidth / 2;
+			this.x = - totalwidth * (center - start) / (end - start) + viewWidth / 2;
+			
+			//placeholder staggering
+			/*
+			for (var l:int = 0; l < items.length; l++)
+			{
+				for (var m:int = 0; m < items.length; m++)
+				{
+					var difx = items[l].x - items[m].x;
+					var dify = items[l].y - items[m].y;
+					if (Math.abs(difx) < 20 && Math.abs(dify) < 30 && l != m) {
+						var force:Number = 0;
+						var dist = Math.sqrt(Math.pow(difx, 2) + Math.pow(dify, 2));
+						force = (dist - 20) * dify / Math.abs(dify) * dify / dist;
+						items[l].y += force * .01;
+					}
+					
+				}
+			}
+			//*/
 		}
 	}
 

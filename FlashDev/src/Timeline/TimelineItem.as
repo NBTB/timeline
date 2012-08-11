@@ -33,6 +33,8 @@
 			circle.graphics.lineStyle(2, 0x777777, 1);
 			var bit:Bitmap;
 			
+			trace(importance);
+			
 			if(type == "Battle")
 			{
 				var magnitude:int = importance * 5 + 7;
