@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
@@ -51,10 +52,11 @@ package
 		public var currentItemList:Vector.<TimelineItem>;		//stores the currently shown events
 		private var currentItems:MovieClip;
 		public var iconArray:Vector.<Bitmap>;						//stores all the icons
-		//private var icons:Object;             //associative array of all icons. the key is given by the asset constants.
 		private var loaded:int = 0;           //keeps track of which images needs to be loaded next.
 		
 		//{ region UI Elements
+		
+		private var loadingThingy:DisplayObject;
 		
 		private var title:MovieClip;
 		private var political:MovieClip;
@@ -90,7 +92,12 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
-			//TODO throw up a loading graphic
+			//TODO a better loading graphic
+			loadingThingy = new TextField();
+			TextField(loadingThingy).text = "Loading... 0/" + (IMAGES.length + 1);
+			loadingThingy.x = 250;
+			loadingThingy.y = 250;
+			addChild(loadingThingy);
 			
 			iconArray = new Vector.<Bitmap>();
 			beginDate = 1860;
@@ -103,6 +110,7 @@ package
 			//The first time this is called, e is null, every other time, e.target is a Loader that just finished.
 			if(e != null) { iconArray.push(e.target.loader.content); }
 			
+			
 			//if there are still images to load, load the next one.
 			if (loaded < IMAGES.length)
 			{
@@ -111,6 +119,9 @@ package
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadNext);
 				loader.load(new URLRequest(IMAGES[loaded]));
 				loaded++;
+				
+				//TODO update loading graphic
+				TextField(loadingThingy).text = "Loading... " + loaded + "/" + (IMAGES.length + 1);
 			}
 			//otherwise, load the xml file.
 			else
@@ -119,7 +130,12 @@ package
 				var xmlloader:URLLoader = new URLLoader();
 				xmlloader.addEventListener(Event.COMPLETE, parseXML);
 				xmlloader.load(new URLRequest(XMLDATA));
+				loaded++;
+				
+				//TODO update loading graphic
+				TextField(loadingThingy).text = "Loading data... " + loaded + "/" + (IMAGES.length + 1);
 			}
+			
 		}
 		
 		//pretty much copied verbatim -- those namespaces are just too messy to deal with (ditto for the xml file itself)
@@ -158,26 +174,6 @@ package
 			
 			trace("xml done reading");
 			populateUI();
-		}
-		
-		public function zoomIn(e:Event = null):void
-		{
-			/*
-			timeline.view.width *= .9;
-			timeline.changeView(timeline.view);
-			/*/
-			timeline.zoomMomentum = -.1;
-			//*/
-		}
-		
-		public function zoomOut(e:Event = null):void
-		{
-			/*
-			timeline.view.width /= .9;
-			timeline.changeView(timeline.view);
-			/*/
-			timeline.zoomMomentum = .1;
-			//*/
 		}
 		
 		public function changeZoomLevel(beginDateZoom:int, endDateZoom:int):void
@@ -254,14 +250,14 @@ package
 			zoomInbox.text ="zoomIn";
 			zoomInbox.x = lineEnd + 10;
 			zoomInbox.y = lineHeight + 50;
-			zoomInbox.addEventListener(MouseEvent.CLICK, zoomIn);
+			zoomInbox.addEventListener(MouseEvent.CLICK, timeline.zoomIn);
 			this.addChild(zoomInbox);
 			
 			zoomOutbox = new TextField();
 			zoomOutbox.text ="zoomOut";
 			zoomOutbox.x = lineEnd + 10;
 			zoomOutbox.y = lineHeight + 70;
-			zoomOutbox.addEventListener(MouseEvent.CLICK, zoomOut);
+			zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);
 			this.addChild(zoomOutbox);
 		}
 		
