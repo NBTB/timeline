@@ -48,11 +48,10 @@ package Timeline
 		public function get TotalWidth():Number { return totalwidth; }
 <<<<<<< HEAD
 			
-		public function TimelineField(view:Timeline.View, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
 =======
 		
+>>>>>>> e71ffb9f488c325452f84271a40927bcecd4841a
 		public function TimelineField(width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>, center:Number, zoom:Number, start:Number, end:Number) 
->>>>>>> Zoom overhaul. Now able to exert more specific control like snap left edge to nearest year, if necessary.
 		{
 			viewWidth = width;
 			viewHeight = height;
@@ -185,15 +184,6 @@ package Timeline
 				items[j].setUp(icons);
 				items[j].x = totalwidth - (1900 - items[j].year) * totalwidth / 100 - (12 - items[j].month) * totalwidth / 1200 - (30 - items[j].day) * totalwidth / (1200 * 30);
 				if(items[j].type == "Political") {
-<<<<<<< HEAD
-					items[j].y = 70;
-				}
-				else if(items[j].type == "Battle") {
-					items[j].y = 170;
-				}
-				else if(items[j].type == "Artist") {
-					items[j].y = 270;
-=======
 					items[j].y = 60+ (j % 5) * 13;
 				}
 				else if(items[j].type == "Battle") {
@@ -201,7 +191,6 @@ package Timeline
 				}
 				else if(items[j].type == "Artist") {
 					items[j].y = 260 +(j % 5) * 13;
->>>>>>> Zoom overhaul. Now able to exert more specific control like snap left edge to nearest year, if necessary.
 				}
 				items[j].doubleClickEnabled = true;
 				addChild(items[j]);
@@ -246,10 +235,9 @@ package Timeline
 			Timeline.Timeline(this.parent).showDesBox(Timeline.TimelineItem(e.currentTarget));
 		}
 		
-		public function update(view:Timeline.View):void {
 =======
+>>>>>>> e71ffb9f488c325452f84271a40927bcecd4841a
 		public function update(center:Number, zoom:Number, start:Number, end:Number):void {
->>>>>>> Zoom overhaul. Now able to exert more specific control like snap left edge to nearest year, if necessary.
 			
 			totalwidth = viewWidth * (end - start) / zoom;
 			

@@ -37,11 +37,10 @@ package Timeline
 		public var descriptionBox:MovieClip;
 		public var exitBtn:MovieClip;
 		
-		//private var isZooming:Boolean = false;
-		public var zoomMomentum:Number = 0;
-=======
->>>>>>> Zoom overhaul. Now able to exert more specific control like snap left edge to nearest year, if necessary.
 		
+=======
+		
+>>>>>>> e71ffb9f488c325452f84271a40927bcecd4841a
 		public function get Focus():Number { return center; } //Gets the current center of focus, in abolute years.
 		public function get Zoom():Number { return zoom; }    //Gets the current zoom, in years.
 		
@@ -123,10 +122,17 @@ package Timeline
 			zoom = 10;
 			startDate = 1800;
 			endDate = 1900;
+<<<<<<< HEAD
 			
 			//view = new Timeline.View(width,height+50);
 			//addChild(view);
 			
+=======
+			
+			//view = new Timeline.View(width,height+50);
+			//addChild(view);
+			
+>>>>>>> e71ffb9f488c325452f84271a40927bcecd4841a
 			field = new TimelineField(width, height, items, icons, center, zoom, startDate, endDate);
 			addChild(field);
 			
@@ -283,11 +289,24 @@ package Timeline
 		
 		public function flipRight(e:Event = null):void {
 			TargetCenter = desiredCenter + zoom;
+<<<<<<< HEAD
 		}
 		
 		public function jumpCenter(value:Number):void {
 			TargetCenter = value;
 			Focus = value;
+=======
+		}
+		
+		public function jumpCenter(value:Number):void {
+			TargetCenter = value;
+			Focus = value;
+		}
+		
+		public function jumpZoom(value:Number):void {
+			TargetZoom = value;
+			Zoom = value;
+>>>>>>> e71ffb9f488c325452f84271a40927bcecd4841a
 		}
 		
 		public function jumpZoom(value:Number):void {

@@ -195,6 +195,8 @@ package Timeline
 				items[j].addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
 				items[j].addEventListener(MouseEvent.CLICK, mouseClick);
 			}
+			
+			update(center, zoom, start, end);
 		}
 		
 		private function mouseOver(e:Event):void
@@ -329,6 +331,10 @@ package Timeline
 				
 				if (itemA < 0) {
 					items[j].visible = false;
+				}
+				else {
+					items[j].alpha = itemA;
+					items[j].visible = true;
 				}
 				else {
 					items[j].alpha = itemA;

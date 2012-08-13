@@ -204,17 +204,17 @@ package Timeline
 			//Zooming
 			/*
 			//if (zoomMomentum != 0) {
-				view.viewwidth *= (1 + zoomMomentum);
-				
-				//Clamp to acceptable limits
-				view.viewwidth = MIN_ZOOM < view.viewwidth ? MIN_ZOOM : view.viewwidth;
-				view.viewwidth = MAX_ZOOM > view.viewwidth ? MAX_ZOOM : view.viewwidth;
-				
-				field.update(view);
-				zoomMomentum *= ZOOM_RATE;
-				if (Math.abs(zoomMomentum) < .001) {
-					zoomMomentum = 0;
-				}
+			//	view.viewwidth *= (1 + zoomMomentum);
+			//	
+			//	//Clamp to acceptable limits
+			//	view.viewwidth = MIN_ZOOM < view.viewwidth ? MIN_ZOOM : view.viewwidth;
+			//	view.viewwidth = MAX_ZOOM > view.viewwidth ? MAX_ZOOM : view.viewwidth;
+			//	
+			//	field.update(view);
+			//	zoomMomentum *= ZOOM_RATE;
+			//	if (Math.abs(zoomMomentum) < .001) {
+			//		zoomMomentum = 0;
+			//	}
 			//}
 			//*/
 

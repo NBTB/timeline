@@ -58,12 +58,20 @@ package
 		
 		private var loadingThingy:DisplayObject;
 		
+<<<<<<< HEAD
 		private var title:MovieClip;
 		private var political:MovieClip;
 		private var battles:MovieClip;
 		private var artist:MovieClip;
 		private var art:MovieClip;
 		private var arrows:MovieClip;
+=======
+		private var title:TextField;
+		private var political:TextField;
+		private var battles:TextField;
+		private var artist:TextField;
+		private var art:TextField;
+>>>>>>> e71ffb9f488c325452f84271a40927bcecd4841a
 		
 		private var zoomInbox:TextField;
 		private var zoomOutbox:TextField;

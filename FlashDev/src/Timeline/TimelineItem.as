@@ -39,6 +39,8 @@
 			
 			trace(importance);
 			
+			trace(importance);
+			
 			if(type == "Battle")
 			{
 				var magnitude:int = importance * 5 + 7;
