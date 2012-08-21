@@ -37,13 +37,13 @@ package Timeline
 		public var exitBtn:MovieClip;
 		
 		
-		public function get Focus():Number { return center; } //Gets the current center of focus, in abolute years.
+		public function get Center():Number { return center; } //Gets the current center of focus, in abolute years.
 		public function get Zoom():Number { return zoom; }    //Gets the current zoom, in years.
 		
 		/**
 		 * Sets the current center of focus. Automatically clamps to a valid range and updates the display to reflect new position.
 		 */
-		public function set Focus(value:Number):void {
+		public function set Center(value:Number):void {
 			value = Math.max(Math.min(endDate - zoom / 2, value), startDate + zoom / 2);
 			center = value;
 			field.x = - (center - startDate) * field.TotalWidth / (endDate - startDate) + fieldView.width/2;
@@ -62,20 +62,20 @@ package Timeline
 		public function get StartDate():Number { return startDate; } //Gets the start date of the timeline, in years.
 		public function get EndDate():Number { return endDate; }     //Gets the end date of the timeline, in years.
 		
-		private var desiredCenter:Number; //The center of focus the app is moving towards, in absolute years.
-		private var desiredZoom:Number;   //The zoom level the app is changing to, in years.
+		private var targetCenter:Number; //The center of focus the app is moving towards, in absolute years.
+		private var targetZoom:Number;   //The zoom level the app is changing to, in years.
 		
-		public function get TargetCenter():Number { return desiredCenter; } //Gets the desired center of focus, in absolute years.
-		public function get TargetZoom():Number { return desiredZoom; }     //Gets the desired zoom level, in years.
+		public function get TargetCenter():Number { return targetCenter; } //Gets the desired center of focus, in absolute years.
+		public function get TargetZoom():Number { return targetZoom; }     //Gets the desired zoom level, in years.
 		
 		//Sets the desired center of focus, in absolute years. Automatically clamps to valid range.
 		public function set TargetCenter(value:Number):void {
-			desiredCenter = Math.max(Math.min(endDate - desiredZoom / 2, value), startDate + desiredZoom / 2);
+			targetCenter = Math.max(Math.min(endDate - targetZoom / 2, value), startDate + targetZoom / 2);
 		}
 		//Sets the desired zoom level, in years. Automatically clamps to valid range.
 		public function set TargetZoom(value:Number):void {
-			desiredZoom = Math.max(Math.min(MAX_ZOOM, value), MIN_ZOOM);
-			desiredCenter = Math.max(Math.min(endDate - desiredZoom / 2, desiredCenter), startDate + desiredZoom / 2);
+			targetZoom = Math.max(Math.min(MAX_ZOOM, value), MIN_ZOOM);
+			targetCenter = Math.max(Math.min(endDate - targetZoom / 2, targetCenter), startDate + targetZoom / 2);
 		}
 		
 		private var isDragging:Boolean = false; //A flag signalling when the user is dragging the timeline.
@@ -96,6 +96,8 @@ package Timeline
 		private var fieldView:Sprite;    //A mask that ensures only the right portion of the timeline is visible.
 		private var fieldHitArea:Sprite; //A sprite used to define the hit area of the timeline.
 		
+		public function get Field():Timeline.TimelineField { return field; }
+		
 		//} endregion
 		
 		/**
@@ -112,9 +114,9 @@ package Timeline
 			this.x = x;
 			this.y = y;
 			
-			desiredCenter = 1862.5;
+			targetCenter = 1862.5;
 			center = 1862.5;
-			desiredZoom = 10;
+			targetZoom = 10;
 			zoom = 10;
 			startDate = 1800;
 			endDate = 1900;
@@ -178,9 +180,9 @@ package Timeline
 		
 		private function onFrame(e:Event):void {
 			//Zooming
-			var ratio:Number = 1 - desiredZoom / zoom;
+			var ratio:Number = 1 - targetZoom / zoom;
 			if (Math.abs(ratio) < ZOOM_TOLERANCE) {
-				zoom = desiredZoom;
+				zoom = targetZoom;
 			}
 			else {
 				Zoom = (1 - ratio * (1 - ZOOM_RATE)) * zoom;
@@ -191,12 +193,12 @@ package Timeline
 				jumpCenter(center - (mouseX - lastmouseX) * zoom / fieldView.width);
 			}
 			else {
-				var difference:Number = desiredCenter - center;
+				var difference:Number = targetCenter - center;
 				if (Math.abs(difference * fieldView.width / zoom) < SCROLL_TOLERANCE) {
-					center = desiredCenter;
+					center = targetCenter;
 				}
 				else {
-					Focus = desiredCenter - difference * SCROLL_RATE;
+					Center = targetCenter - difference * SCROLL_RATE;
 				}
 			}
 			lastmouseX = mouseX;
@@ -247,16 +249,16 @@ package Timeline
 		
 		private function endDrag(e:MouseEvent):void {
 			isDragging = false;
-			TargetCenter = Focus - (mouseX - lastmouseX) / (1 - SCROLL_RATE) * zoom / fieldView.width;
+			TargetCenter = Center - (mouseX - lastmouseX) / (1 - SCROLL_RATE) * zoom / fieldView.width;
 			//momentum = mouseX - lastmouseX;
 		}
 		
 		public function zoomIn(e:Event = null):void {
-			TargetZoom = desiredZoom / Math.SQRT2;
+			TargetZoom = targetZoom / Math.SQRT2;
 		}
 		
 		public function zoomOut(e:Event = null):void {
-			TargetZoom = desiredZoom * Math.SQRT2;
+			TargetZoom = targetZoom * Math.SQRT2;
 		}
 		
 		public function quickZoom(e:MouseEvent):void {
@@ -273,16 +275,16 @@ package Timeline
 		}
 		
 		public function flipLeft(e:Event = null):void {
-			TargetCenter = desiredCenter - zoom;
+			TargetCenter = targetCenter - zoom;
 		}
 		
 		public function flipRight(e:Event = null):void {
-			TargetCenter = desiredCenter + zoom;
+			TargetCenter = targetCenter + zoom;
 		}
 		
 		public function jumpCenter(value:Number):void {
 			TargetCenter = value;
-			Focus = value;
+			Center = value;
 		}
 		
 		public function jumpZoom(value:Number):void {

@@ -367,6 +367,17 @@ package Timeline
 			}
 			//*/
 		}
+		
+		public function filter(types:Array):void {
+			for (var i:int = 0 ; i < items.length; i++ ) {
+				items[i].visible = false;
+				for (var j:int = 0; j < types.length; j++) {
+					if (items[i].type == types[j]) {
+						items[i].visible = true;
+					}
+				}
+			}
+		}
 	}
 
 }

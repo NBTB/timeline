@@ -59,10 +59,10 @@ package
 		private var loadingThingy:DisplayObject;
 		
 		private var title:MovieClip;
-		private var political:MovieClip;
-		private var battles:MovieClip;
-		private var artist:MovieClip;
-		private var art:MovieClip;
+		private var political:FilterButton;
+		private var battles:FilterButton;
+		private var artist:FilterButton;
+		private var art:FilterButton;
 		private var arrows:MovieClip;
 		
 		private var zoomInbox:TextField;
@@ -222,28 +222,28 @@ package
 			arrows.y = lineHeight;
 			this.addChild(arrows);
 			*/
-			political = new MovieClip();
-			political.addChild(new Bitmap((iconArray[7]).bitmapData.clone()));
+			political = new FilterButton("Political",new Bitmap((iconArray[7]).bitmapData.clone()));
 			political.x = 15;
 			political.y = ((lineHeight - 100) / 4) * 1;
+			political.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(political);
 			
-			battles = new MovieClip();
-			battles.addChild(new Bitmap((iconArray[8]).bitmapData.clone()));
+			battles = new FilterButton("Battle", new Bitmap((iconArray[8]).bitmapData.clone()));
 			battles.x = 15;
 			battles.y = ((lineHeight - 100) / 4) * 2;
+			battles.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(battles);
 			
-			artist = new MovieClip();
-			artist.addChild(new Bitmap((iconArray[9]).bitmapData.clone()));
+			artist = new FilterButton("Artist", new Bitmap((iconArray[9]).bitmapData.clone()));
 			artist.x = 15;
 			artist.y = ((lineHeight - 100) / 4) * 3;
+			artist.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(artist);
 			
-			art = new MovieClip();
-			art.addChild(new Bitmap((iconArray[10]).bitmapData.clone()));
+			art = new FilterButton("Art", new Bitmap((iconArray[10]).bitmapData.clone()));
 			art.x = 15;
 			art.y = ((lineHeight - 100) / 4) * 4;
+			art.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(art);
 			
 			zoomInbox = new TextField();
@@ -259,6 +259,8 @@ package
 			zoomOutbox.y = lineHeight + 70;
 			zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);
 			this.addChild(zoomOutbox);
+			
+			setFilter();
 		}
 		
 		private function emptyTimeline():void
@@ -268,6 +270,15 @@ package
 			while (numChildren > 0) { removeChildAt(0); }
 		}
 		
+		private function setFilter(e:Event = null):void {
+			var tags:Array = new Array();
+			if (political.Selected) tags.push(political.Tag);
+			if (battles.Selected) tags.push(battles.Tag);
+			if (artist.Selected) tags.push(artist.Tag);
+			if (art.Selected) tags.push(art.Tag);
+			
+			timeline.Field.filter(tags);
+		}
 	}
 	
 }
