@@ -4,9 +4,8 @@ package Timeline
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.AccelerometerEvent;
-	import flash.events.MouseEvent;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	/**
@@ -17,14 +16,31 @@ package Timeline
 	{
 		//{ region Constants
 		
-		public static const SCROLL_RATE:Number = .8;         //Essentially, the rate at which the scrolling momentum decays. Larger ratios mean slower / larger scrolling animations.
-		public static const ZOOM_RATE:Number = .6;           //Essentially, the rate at which the zooming momentum decays. Larger ratios mean slower animations.
+		/**
+		 * Essentially, the rate at which the scrolling momentum decays. Larger ratios mean slower / larger scrolling animations.
+		 */
+		public static const SCROLL_RATE:Number = .8;
+		/**
+		 * Essentially, the rate at which the zooming momentum decays. Larger ratios mean slower animations.
+		 */
+		public static const ZOOM_RATE:Number = .6;
+        /**
+         * Controls when the app stops attempting to adjust the current zoom to match the desired.
+         */
+		public static const ZOOM_TOLERANCE:Number = .001;
+		/**
+		 * Controls when the app stops attempting to adjust the current center to match the desired.
+		 */
+		public static const SCROLL_TOLERANCE:Number = 1;
 		
-		public static const ZOOM_TOLERANCE:Number = .001;    //Controls when the app stops attempting to adjust the current zoom to match the desired.
-		public static const SCROLL_TOLERANCE:Number = 1;     //Controls when the app stops attempting to adjust the current center to match the desired.
-		
-		public static const MAX_ZOOM:Number = 100;           //The maximum size of the view, in years.
-		public static const MIN_ZOOM:Number = .5;            //The minimum size of the view, in years.
+		/**
+		 * The maximum size of the view, in years.
+		 */
+		public static const MAX_ZOOM:Number = 100;
+		/**
+		 * //The minimum size of the view, in years.
+		 */
+		public static const MIN_ZOOM:Number = .5;            
 		
 		//} endregion
 		
@@ -80,11 +96,6 @@ package Timeline
 		
 		private var isDragging:Boolean = false; //A flag signalling when the user is dragging the timeline.
 		private var lastmouseX:Number;          //A cache of the last mouseX, used to find mouse deltas.
-		
-		//public var view:Timeline.View;
-		//private var momentum:Number = 0;
-		//public var zoomMomentum:Number = 0;
-		
 		//} endregion
 		
 		//{ region UI Elements
@@ -120,9 +131,6 @@ package Timeline
 			zoom = 10;
 			startDate = 1800;
 			endDate = 1900;
-			
-			//view = new Timeline.View(width,height+50);
-			//addChild(view);
 			
 			field = new TimelineField(width, height, items, icons, center, zoom, startDate, endDate);
 			addChild(field);
@@ -202,45 +210,6 @@ package Timeline
 				}
 			}
 			lastmouseX = mouseX;
-			
-			//Zooming
-			/*
-			//if (zoomMomentum != 0) {
-			//	view.viewwidth *= (1 + zoomMomentum);
-			//	
-			//	//Clamp to acceptable limits
-			//	view.viewwidth = MIN_ZOOM < view.viewwidth ? MIN_ZOOM : view.viewwidth;
-			//	view.viewwidth = MAX_ZOOM > view.viewwidth ? MAX_ZOOM : view.viewwidth;
-			//	
-			//	field.update(view);
-			//	zoomMomentum *= ZOOM_RATE;
-			//	if (Math.abs(zoomMomentum) < .001) {
-			//		zoomMomentum = 0;
-			//	}
-			//}
-			//*/
-
-			
-			//Scrolling
-			//if (isDragging) {
-			//	field.x += mouseX - lastmouseX;
-			//	
-			//	//field.x = - (view.Focus - view.StartDate) * view.width / view.Zoom + view.width / 2;
-			//	//((mouseX - lastmouseX) - view.width / 2)/view.width * view.Zoom
-			//	//view.jumpCenter(view.Focus - (mouseX - lastmouseX) * view.Zoom / view.width);
-			//}
-			//else {
-			//	field.x += momentum;
-			//	momentum *= SCROLL_RATE;
-			//	if (Math.abs(momentum) < 1) {
-			//		momentum = 0;
-			//	}
-			//}
-			
-			//field.x = field.x > 0 ? 0 : field.x;
-			//field.x = field.x < fieldView.width - field.TotalWidth ? fieldView.width - field.TotalWidth : field.x;
-			//view.center = -(field.x - fieldView.width/ 2) / field.TotalWidth;
-			//lastmouseX = mouseX;
 		}
 		
 		private function beginDrag(e:MouseEvent):void {
@@ -248,9 +217,10 @@ package Timeline
 		}
 		
 		private function endDrag(e:MouseEvent):void {
-			isDragging = false;
-			TargetCenter = Center - (mouseX - lastmouseX) / (1 - SCROLL_RATE) * zoom / fieldView.width;
-			//momentum = mouseX - lastmouseX;
+			if(isDragging) {
+				isDragging = false;
+				TargetCenter = Center - (mouseX - lastmouseX) / (1 - SCROLL_RATE) * zoom / fieldView.width;
+			}
 		}
 		
 		public function zoomIn(e:Event = null):void {
@@ -262,14 +232,6 @@ package Timeline
 		}
 		
 		public function quickZoom(e:MouseEvent):void {
-			//Okay, so I did some maths, and then I tinkered, and now I don't now how, but this sorta works.
-			
-			//Add scroll momentum to recenter on the click location.
-			//momentum = (e.stageX - x - fieldView.width / 2) * Math.log(SCROLL_RATE) / Math.pow(SCROLL_RATE, 2.47);
-			
-			//Add a large amount of zoom momentum.
-			//zoomMomentum = -.4;
-			
 			TargetZoom = TargetZoom / 2;
 			TargetCenter = center + (e.stageX - x - fieldView.width / 2) / fieldView.width * zoom;
 		}

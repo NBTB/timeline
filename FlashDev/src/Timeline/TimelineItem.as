@@ -12,6 +12,15 @@
 		public var type:String; //type of event it is (political, war, etc.) for icons and sorting purposes
 		public var victor:String;
 		
+		private var shouldBeVisible:Boolean = true;
+		public function set ShouldBeVisible(value:Boolean):void 
+		{
+			if (value) {
+				alpha = Math.max(0.015625, alpha);
+			}
+			shouldBeVisible = value;
+		}
+		
 		//date values
 		public var year:int;
 		public var month:int;
@@ -159,6 +168,22 @@
 			hoverBoxContainer.addChild(hoverText);
 			hoverBoxContainer.visible = false;
 			addChild(hoverBoxContainer);
+			
+			addEventListener(Event.ENTER_FRAME, onFrame);
+		}
+	
+		private function onFrame(e:Event):void {
+			if (shouldBeVisible) {
+				visible = true;
+				alpha = Math.min(1, alpha * Math.SQRT2);
+			}
+			else
+			{
+				if (visible) {
+					alpha /= Math.SQRT2;
+					if (alpha < .0001) visible = false;
+				}
+			}
 		}
 	}
 }
