@@ -208,8 +208,8 @@ package
 			background.addChild(new Bitmap((iconArray[11]).bitmapData.clone()));
 			background.x = 0;
 			background.y = 0;
-			background.width = 750;
-			background.height = 600;
+			background.width = 1270;
+			background.height = 900;
 			this.addChild(background);
 			this.setChildIndex(background, 0);
 			/*

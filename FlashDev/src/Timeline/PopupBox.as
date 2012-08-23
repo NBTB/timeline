@@ -28,7 +28,7 @@ package Timeline
 			format1.size = 25;
 			
 			var titleText:TextField = new TextField();
-			titleText.text = item.shortDes;
+			titleText.text = item.title;
 			titleText.x = 50;
 			titleText.y = 50;
 			titleText.width = width - 100;
@@ -64,7 +64,7 @@ package Timeline
 			var btnShape:Sprite = new Sprite();
 			btnShape.graphics.lineStyle(1, 0x000000,1);
 			btnShape.graphics.beginFill(0xFF4444,0.5);
-			btnShape.graphics.drawRoundRect(0, 0, 30, 30, 10);
+			btnShape.graphics.drawRoundRect(0, 0, 30, 30, 30);
 			btnShape.graphics.endFill();
 			btnShape.x = width - 50;
 			btnShape.y = 30;
