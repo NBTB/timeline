@@ -5,7 +5,7 @@ package
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	/**
-	 * ...
+	 * FilterButton is a toggleable button used for the filtering buttons that turn on/off categories of items.
 	 * @author Robert Cigna
 	 */
 	public class FilterButton extends Sprite

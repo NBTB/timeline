@@ -34,6 +34,12 @@ package Timeline
 		public static const SCROLL_TOLERANCE:Number = 1;
 		
 		/**
+		 * The ratio between two levels of zoom. Clicking the zoom buttons changes the zoom by one level. 
+		 * Double clicking the field changes the zoom by two levels.
+		 */
+		public static const ZOOM_STEP:Number = Math.SQRT2;
+		
+		/**
 		 * The maximum size of the view, in years.
 		 */
 		public static const MAX_ZOOM:Number = 100;
@@ -52,9 +58,14 @@ package Timeline
 		public var descriptionBox:MovieClip;
 		public var exitBtn:MovieClip;
 		
-		
-		public function get Center():Number { return center; } //Gets the current center of focus, in abolute years.
-		public function get Zoom():Number { return zoom; }    //Gets the current zoom, in years.
+		/**
+		 * Gets the current center of focus, in abolute years.
+		 */
+		public function get Center():Number { return center; } 
+		/**
+		 * Gets the current zoom, in years.
+		 */
+		public function get Zoom():Number { return zoom; }
 		
 		/**
 		 * Sets the current center of focus. Automatically clamps to a valid range and updates the display to reflect new position.
@@ -69,26 +80,42 @@ package Timeline
 		 */
 		public function set Zoom(value:Number):void {
 			zoom = value;
-			field.update(center, zoom, startDate, endDate);
+			field.update(center, zoom, startDate, endDate, targetZoom);
 		}
 		
 		private var startDate:Number; //The earliest visible date. This should allow some padding around the earliest event.
 		private var endDate:Number;   //The latest visible date. This should allow some padding around the latest event.
 		
-		public function get StartDate():Number { return startDate; } //Gets the start date of the timeline, in years.
-		public function get EndDate():Number { return endDate; }     //Gets the end date of the timeline, in years.
+		/**
+		 * Gets the start date of the timeline, in years.
+		 */
+		public function get StartDate():Number { return startDate; }
+		/**
+		 * Gets the end date of the timeline, in years.
+		 */
+		public function get EndDate():Number { return endDate; }
 		
 		private var targetCenter:Number; //The center of focus the app is moving towards, in absolute years.
 		private var targetZoom:Number;   //The zoom level the app is changing to, in years.
 		
-		public function get TargetCenter():Number { return targetCenter; } //Gets the desired center of focus, in absolute years.
-		public function get TargetZoom():Number { return targetZoom; }     //Gets the desired zoom level, in years.
+		/**
+		 * Gets the desired center of focus, in absolute years.
+		 */
+		public function get TargetCenter():Number { return targetCenter; }
+		/**
+		 * Gets the desired zoom level, in years.
+		 */
+		public function get TargetZoom():Number { return targetZoom; } 
 		
-		//Sets the desired center of focus, in absolute years. Automatically clamps to valid range.
+		/**
+		 * Sets the desired center of focus, in absolute years. Automatically clamps to valid range.
+		 */
 		public function set TargetCenter(value:Number):void {
 			targetCenter = Math.max(Math.min(endDate - targetZoom / 2, value), startDate + targetZoom / 2);
 		}
-		//Sets the desired zoom level, in years. Automatically clamps to valid range.
+		/**
+		 * Sets the desired zoom level, in years. Automatically clamps to valid range.
+		 */
 		public function set TargetZoom(value:Number):void {
 			targetZoom = Math.max(Math.min(MAX_ZOOM, value), MIN_ZOOM);
 			targetCenter = Math.max(Math.min(endDate - targetZoom / 2, targetCenter), startDate + targetZoom / 2);
@@ -107,6 +134,9 @@ package Timeline
 		private var fieldView:Sprite;    //A mask that ensures only the right portion of the timeline is visible.
 		private var fieldHitArea:Sprite; //A sprite used to define the hit area of the timeline.
 		
+		/**
+		 * Gets a reference to the TimelineField.
+		 */
 		public function get Field():Timeline.TimelineField { return field; }
 		
 		//} endregion
@@ -176,6 +206,10 @@ package Timeline
 			addEventListener(Event.ADDED_TO_STAGE, setListeners);
 		}
 		
+		/**
+		 * Sets the appropriate listeners for the Timeline to function
+		 * @param	e The ADDED_TO_STAGE event
+		 */
 		private function setListeners(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, setListeners);
 			
@@ -186,17 +220,21 @@ package Timeline
 			field.addEventListener(MouseEvent.DOUBLE_CLICK, quickZoom);
 		}
 		
+		/**
+		 * An event listener for ENTER_FRAME that performs zooming and scrolling animation.
+		 * @param	e The ENTER_FRAME event.
+		 */
 		private function onFrame(e:Event):void {
-			//Zooming
-			var ratio:Number = 1 - targetZoom / zoom;
+			//Zooming -- basically, this code takes the ratio of desired to current zoom and moves it towards 1, or equal.
+			var ratio:Number = 1 - zoom / targetZoom;
 			if (Math.abs(ratio) < ZOOM_TOLERANCE) {
 				zoom = targetZoom;
 			}
 			else {
-				Zoom = (1 - ratio * (1 - ZOOM_RATE)) * zoom;
+				Zoom = (1 - ratio * ZOOM_RATE) * targetZoom;
 			}
 			
-			//Scrolling
+			//Scrolling -- basically, this code takes the difference of desired and current center and moves it toward 0, or equal.
 			if (isDragging) {
 				jumpCenter(center - (mouseX - lastmouseX) * zoom / fieldView.width);
 			}
@@ -212,10 +250,18 @@ package Timeline
 			lastmouseX = mouseX;
 		}
 		
+		/**
+		 * An event listener for MOUSE_DOWN.
+		 * @param	e The MOUSE_DOWN event.
+		 */
 		private function beginDrag(e:MouseEvent):void {
 			isDragging = true;
 		}
 		
+		/**
+		 * An event listener for MOUSE_UP. Must be added to the stage to catch all mouse up events.
+		 * @param	e The MOUSE_UP event.
+		 */
 		private function endDrag(e:MouseEvent):void {
 			if(isDragging) {
 				isDragging = false;
@@ -223,107 +269,64 @@ package Timeline
 			}
 		}
 		
+		/**
+		 * Begins an animated zoom. Decreases the number of years visible on screen by one level.
+		 * @param	e
+		 */
 		public function zoomIn(e:Event = null):void {
-			TargetZoom = targetZoom / Math.SQRT2;
+			TargetZoom = targetZoom / ZOOM_STEP;
 		}
-		
+		/**
+		 * Begins an animated zoom. Increases the number of years visible on screen by one level.
+		 * @param	e
+		 */
 		public function zoomOut(e:Event = null):void {
-			TargetZoom = targetZoom * Math.SQRT2;
+			TargetZoom = targetZoom * ZOOM_STEP;
 		}
 		
+		/**
+		 * Begins an animated zoom and recenter. Zooms in by two levels and puts the click location in the center of the timeline.
+		 * @param	e
+		 */
 		public function quickZoom(e:MouseEvent):void {
-			TargetZoom = TargetZoom / 2;
+			TargetZoom = TargetZoom / ZOOM_STEP / ZOOM_STEP;
 			TargetCenter = center + (e.stageX - x - fieldView.width / 2) / fieldView.width * zoom;
 		}
 		
+		/**
+		 * Begins an animated scroll to the left by one whole screen width.
+		 * @param	e
+		 */
 		public function flipLeft(e:Event = null):void {
 			TargetCenter = targetCenter - zoom;
 		}
 		
+		/**
+		 * Begins an animated scroll to the right by one whole screen width.
+		 * @param	e
+		 */
 		public function flipRight(e:Event = null):void {
 			TargetCenter = targetCenter + zoom;
 		}
 		
+		/**
+		 * Forces the center of focus to immediately jump to the given location.
+		 * @param	value The value to assign, in absolute years.
+		 */
 		public function jumpCenter(value:Number):void {
 			TargetCenter = value;
 			Center = value;
 		}
 		
+		/**
+		 * Forces the zoom to immediately jump to the given amount.
+		 * @param	value The value to assign, in years per screen.
+		 */
 		public function jumpZoom(value:Number):void {
 			TargetZoom = value;
 			Zoom = value;
 		}
 		
-		public function showDesBox(item:TimelineItem):void
-		{			
-			var desShape:Shape = new Shape();
-			desShape.graphics.lineStyle(1, 0x000000,1);
-			desShape.graphics.beginFill(0xFFFFFF,1);
-			desShape.graphics.drawRoundRect(0, 0, 650, 500, 50);
-			desShape.graphics.endFill();
-			
-			var format1:TextFormat = new TextFormat();
-			format1.size = 25;
-			
-			var titleText:TextField = new TextField();
-			titleText.text = item.title;
-			titleText.x = 50;
-			titleText.y = 50;
-			titleText.width = 550;
-			titleText.multiline = true;
-			titleText.autoSize = "left";
-			titleText.wordWrap = true;
-			titleText.setTextFormat(format1);
-			
-			var dateText:TextField = new TextField();
-			dateText.text = item.month + "/" + item.day + "/" + item.year;
-			dateText.x = 50;
-			dateText.y = 100;
-			dateText.width = 550;
-			dateText.autoSize = "left";
-			dateText.setTextFormat(format1);
-			
-			var bodyText:TextField = new TextField();
-			bodyText.text = item.fullDes;
-			bodyText.x = 50;
-			bodyText.y = 150;
-			bodyText.width = 550;
-			bodyText.multiline = true;
-			bodyText.autoSize = "left";
-			bodyText.wordWrap = true;
-			bodyText.setTextFormat(format1);
-			
-			descriptionBox = new MovieClip();
-			descriptionBox.x = 50;
-			descriptionBox.y = 50;
-			descriptionBox.addChild(desShape);
-			descriptionBox.addChild(titleText);
-			descriptionBox.addChild(dateText);
-			descriptionBox.addChild(bodyText);
-			this.parent.addChild(descriptionBox);
-			
-			var btnShape:Shape = new Shape();
-			btnShape.graphics.lineStyle(1, 0x000000,1);
-			btnShape.graphics.beginFill(0xFF4444,0.5);
-			btnShape.graphics.drawRoundRect(0, 0, 30, 30, 30);
-			btnShape.graphics.endFill();
-			
-			exitBtn = new MovieClip();
-			exitBtn.x = 650;
-			exitBtn.y = 70;
-			exitBtn.addEventListener(MouseEvent.CLICK, hideDesBox);		
-			exitBtn.addChild(btnShape);
-			this.parent.addChild(exitBtn);
-			
-			this.parent.setChildIndex(descriptionBox, this.parent.numChildren-1);
-			this.parent.setChildIndex(exitBtn, this.parent.numChildren-1);
-		}
-		
-		public function hideDesBox(e:Event):void
-		{
-			this.parent.removeChild(descriptionBox);
-			this.parent.removeChild(exitBtn);
-		}
 		
 	}
 
