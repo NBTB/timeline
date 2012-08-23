@@ -26,13 +26,24 @@
 		public var month:int;
 		public var day:int;
 		
+		public var title:String;
 		public var shortDes:String;
 		public var fullDes:String;
 		
+		//artist name
+		public var artist:String;
+		//image filename (.png)
+		public var imageLoc:String;
+		
+		//Battle Stuff
 		public var importance:int;
+		public var uStrength:String;
+		public var cStrength:String;
+		public var uCasualties:String;
+		public var cCasualties:String;
 		
 		public var backgroundCircle:Shape;
-		public var bitImage:Bitmap;
+		//public var bitImage:Bitmap;
 		
 		public var hoverBoxContainer:Sprite;
 		
@@ -46,9 +57,8 @@
 			backgroundCircle = new Shape();
 			backgroundCircle.graphics.lineStyle(2, 0x777777, 1);
 			
-			trace(importance);
-			
-			trace(importance);
+			//the transparancy of the circles 0-1
+			var visiblity = 0.7;
 			
 			if(type == "Battle")
 			{
@@ -56,94 +66,68 @@
 				
 				if(victor == "Union")
 				{
-					backgroundCircle.graphics.beginFill(0x002772,0.5);
-					bitImage = new Bitmap((iconArray[1]).bitmapData.clone());
+					backgroundCircle.graphics.beginFill(0x002772,visiblity);
+					//bitImage = new Bitmap((iconArray[1]).bitmapData.clone());
 				}
 				else if(victor == "Confederate")
 				{
-					backgroundCircle.graphics.beginFill(0x777777,0.5);
-					bitImage = new Bitmap((iconArray[2]).bitmapData.clone());
+					backgroundCircle.graphics.beginFill(0x777777,visiblity);
+					//bitImage = new Bitmap((iconArray[2]).bitmapData.clone());
 				}
 				else
 				{
-					backgroundCircle.graphics.beginFill(0x722700,0.5);
-					bitImage = new Bitmap((iconArray[3]).bitmapData.clone());
+					backgroundCircle.graphics.beginFill(0x722700,visiblity);
+					//bitImage = new Bitmap((iconArray[3]).bitmapData.clone());
 				}
 				
-				//if(xPos - lastBattle < safeZone)
-				//{
-				//	if(byPos == by1) byPos = by2;
-				//	else if(byPos == by2) byPos = by3;
-				//	else byPos = by1;
-				//}
-				//else
-				//{
-				//	byPos = by1;
-				//}
-				
-				//backgroundCircle.x = xPos;
-				//backgroundCircle.y = byPos;
 				backgroundCircle.graphics.drawCircle(0,0,magnitude);
-				//lastBattle = xPos;
-				
+				/*
 				bitImage.scaleX = 1;
 				bitImage.scaleY = 1;
 				bitImage.x = -bitImage.width / 2;
 				bitImage.y = -bitImage.height / 2;
+				*/
 			}
-			else if (type == "Artist")
+			else if (type == "Political")
 			{
-				//trace("artist");
-				backgroundCircle.graphics.beginFill(0x55FF22,0.5);
-				
-				//if(xPos - lastArtist < safeZone)
-				//{
-				//	if(ayPos == ay1) ayPos = ay2;
-				//	else ayPos = ay1;
-				//}
-				//else
-				//{
-				//	ayPos = ay1;
-				//}
-				//backgroundCircle.x = xPos;
-				//backgroundCircle.y = ayPos;
+				backgroundCircle.graphics.beginFill(0xFFCC11,visiblity);				
 				backgroundCircle.graphics.drawCircle(0,0,20);
-				//lastArtist = xPos;
-				
-				bitImage = new Bitmap((iconArray[4]).bitmapData.clone());
-				bitImage.scaleX = 1;
-				bitImage.scaleY = 1;
-				bitImage.x = -bitImage.width / 2;
-				bitImage.y = -bitImage.height / 2;
-			}
-			else
-			{
-				backgroundCircle.graphics.beginFill(0xFFCC11,0.5);
-				
-				//if(xPos - lastPolitical < safeZone)
-				//{
-				//	if(pyPos == py1) pyPos = py2;
-				//	else if(pyPos == py2) pyPos = py3;
-				//	else pyPos = py1;
-				//}
-				//else
-				//{
-				//	pyPos = py1;
-				//}
-				//backgroundCircle.x = xPos;
-				//backgroundCircle.y = pyPos;
-				backgroundCircle.graphics.drawCircle(0,0,20);
-				//lastPolitical = xPos;
-				
+				/*
 				bitImage = new Bitmap((iconArray[0]).bitmapData.clone());
 				bitImage.scaleX = 1;
 				bitImage.scaleY = 1;
 				bitImage.x = -bitImage.width / 3;
 				bitImage.y = -bitImage.height / 3 * 2;
+				*/
+			}
+			else if (type == "Artist")
+			{
+				backgroundCircle.graphics.beginFill(0x55FF22,visiblity);
+				backgroundCircle.graphics.drawCircle(0,0,20);
+				/*
+				bitImage = new Bitmap((iconArray[4]).bitmapData.clone());
+				bitImage.scaleX = 1;
+				bitImage.scaleY = 1;
+				bitImage.x = -bitImage.width / 2;
+				bitImage.y = -bitImage.height / 2;
+				*/
+			}
+			else //Painting
+			{
+				backgroundCircle.graphics.beginFill(0x5522FF,visiblity);
+				backgroundCircle.graphics.drawCircle(0,0,20);
+				
+				/*
+				bitImage = new Bitmap((iconArray[4]).bitmapData.clone());
+				bitImage.scaleX = 1;
+				bitImage.scaleY = 1;
+				bitImage.x = -bitImage.width / 2;
+				bitImage.y = -bitImage.height / 2;
+				*/
 			}
 			backgroundCircle.graphics.endFill();
 			addChild(backgroundCircle);
-			addChild(bitImage);
+			//addChild(bitImage);
 			
 			hoverBoxContainer = new Sprite();
 			
@@ -155,7 +139,7 @@
 			hoverBoxContainer.addChild(hoverBox);
 			
 			var hoverText:TextField = new TextField();
-			hoverText.text = month.toString() + "/" + day.toString() + "/" + year.toString() + "\n" + shortDes;
+			hoverText.text = month.toString() + "/" + day.toString() + "/" + year.toString() + "\n" + title + "\n" + shortDes;
 			hoverText.x = -50;
 			hoverText.y = 20;
 			hoverText.width = 100;

@@ -25,7 +25,7 @@ package
 		//{ region Constants
 		
 		// Constant that defines the URL of the XML database.
-		public static const XMLDATA:String = "data/database.xml";
+		public static const XMLDATA:String = "data/database2.xml";
 		
 		// Constants for icon assets. 
 		// NOTE: in order for the icon to be loaded, you must also add the constant to the IMAGES array below.
@@ -40,11 +40,12 @@ package
 		public static const BATTLES:String = "data/Battles.png";
 		public static const LIFEOFBEARD:String = "data/LifeOfBeard.png";
 		public static const CIVILWARART:String = "data/CivilWarArt.png";
+		public static const BACKGROUND:String = "data/Background.png";
 		
 		// Constant that defines an array of images to load in sequence.
 		public static const IMAGES:Array = [POLITICAL_ICON, UNION_ICON, CONFEDERATE_ICON, 
 											BATTLE_ICON, ART_ICON, TITLE, ARROWS,
-											POLITICALFRONT, BATTLES, LIFEOFBEARD, CIVILWARART];
+											POLITICALFRONT, BATTLES, LIFEOFBEARD, CIVILWARART, BACKGROUND];
 		
 		//} endregion
 		
@@ -59,6 +60,7 @@ package
 		private var loadingThingy:DisplayObject;
 		
 		private var title:MovieClip;
+		private var background:MovieClip;
 		private var political:FilterButton;
 		private var battles:FilterButton;
 		private var artist:FilterButton;
@@ -157,18 +159,32 @@ package
 					var tEvent:TimelineItem = new TimelineItem();
 					
 					tEvent.year = xml.ss::Worksheet..ss::Table.children()[i].children()[0].children()[0];
-					tEvent.month = xml.ss::Worksheet..ss::Table.children()[i].children()[1].children()[0];
-					tEvent.day = xml.ss::Worksheet..ss::Table.children()[i].children()[2].children()[0];
-					tEvent.type = xml.ss::Worksheet..ss::Table.children()[i].children()[3].children()[0];
-					tEvent.shortDes = xml.ss::Worksheet..ss::Table.children()[i].children()[4].children()[0];
-					tEvent.fullDes = xml.ss::Worksheet..ss::Table.children()[i].children()[5].children()[0];
-					if(tEvent.type == "Battle")
+					if (tEvent.year != 0)
 					{
-						tEvent.victor = xml.ss::Worksheet..ss::Table.children()[i].children()[6].children()[0];	
-						tEvent.importance = xml.ss::Worksheet..ss::Table.children()[i].children()[7].children()[0];						
+						tEvent.month = xml.ss::Worksheet..ss::Table.children()[i].children()[1].children()[0];
+						tEvent.day = xml.ss::Worksheet..ss::Table.children()[i].children()[2].children()[0];
+						tEvent.type = xml.ss::Worksheet..ss::Table.children()[i].children()[3].children()[0];
+						tEvent.title = xml.ss::Worksheet..ss::Table.children()[i].children()[4].children()[0];
+						tEvent.shortDes = xml.ss::Worksheet..ss::Table.children()[i].children()[5].children()[0];
+						tEvent.fullDes = xml.ss::Worksheet..ss::Table.children()[i].children()[6].children()[0];
+						
+						if (tEvent.type == "Battle")
+						{
+							tEvent.victor = xml.ss::Worksheet..ss::Table.children()[i].children()[7].children()[0];	
+							tEvent.importance = xml.ss::Worksheet..ss::Table.children()[i].children()[8].children()[0];	
+							tEvent.uStrength = xml.ss::Worksheet..ss::Table.children()[i].children()[9].children()[0];	
+							tEvent.cStrength = xml.ss::Worksheet..ss::Table.children()[i].children()[10].children()[0];	
+							tEvent.uCasualties = xml.ss::Worksheet..ss::Table.children()[i].children()[11].children()[0];	
+							tEvent.cCasualties = xml.ss::Worksheet..ss::Table.children()[i].children()[12].children()[0];	
+						}
+						else if (tEvent.type == "Art")
+						{
+							tEvent.artist = xml.ss::Worksheet..ss::Table.children()[i].children()[7].children()[0];
+							tEvent.imageLoc = xml.ss::Worksheet..ss::Table.children()[i].children()[8].children()[0];						
+						}
+						
+						timelineItemList.push(tEvent);
 					}
-					
-					timelineItemList.push(tEvent);					
 				}
 			}
 			
@@ -215,6 +231,15 @@ package
 			title.x = 200;
 			title.y = 15;
 			this.addChild(title);
+			
+			background = new MovieClip();
+			background.addChild(new Bitmap((iconArray[11]).bitmapData.clone()));
+			background.x = 0;
+			background.y = 0;
+			background.width = 750;
+			background.height = 600;
+			this.addChild(background);
+			this.setChildIndex(background, 0);
 			/*
 			arrows = new MovieClip();
 			arrows.addChild(new Bitmap((iconArray[6]).bitmapData.clone()));

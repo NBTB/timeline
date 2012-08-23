@@ -16,16 +16,16 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'8/21/2012'</value>
+      <value>'8/23/2012'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Users\Rob\Desktop\masterTimeline\FlashDev\src</path-element>
-      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>C:\Users\Tim\Desktop\UnfuddleTimeline\FlashDev\src</path-element>
+      <path-element>I:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\Rob\Desktop\masterTimeline\FlashDev\src\Main.as</path-element>
+    <path-element>C:\Users\Tim\Desktop\UnfuddleTimeline\FlashDev\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>60</default-frame-rate>

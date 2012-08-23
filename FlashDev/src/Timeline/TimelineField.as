@@ -78,7 +78,7 @@ package Timeline
 			//set up ticks
 			for (var i:int = 0; i <= 100; i++)
 			{
-				var tick:TimelineTick = new Timeline.TimelineTick(viewHeight, (i + 1800).toString());
+				var tick:TimelineTick = new Timeline.TimelineTick(viewHeight, (i + 1800).toString(), 20);
 				tick.y = viewHeight;
 				tick.x = totalwidth / 100 * i;// 
 				ticks.push(tick);
@@ -188,6 +188,9 @@ package Timeline
 				else if(items[j].type == "Artist") {
 					items[j].y = 260 +(j % 5) * 13;
 				}
+				else if(items[j].type == "Art") {
+					items[j].y = 360 +(j % 5) * 13;
+				}
 				items[j].doubleClickEnabled = true;
 				addChild(items[j]);
 				this.items.push(items[j]);
@@ -225,7 +228,6 @@ package Timeline
 		
 		private function mouseClick(e:Event):void
 		{
-			trace("clicky");
 			e.currentTarget.hoverBoxContainer.visible = false;
 			Timeline.Timeline(this.parent).showDesBox(Timeline.TimelineItem(e.currentTarget));
 		}

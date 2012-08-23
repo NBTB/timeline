@@ -11,7 +11,7 @@ package Timeline
 	public class TimelineTick extends Sprite 
 	{
 		
-		public function TimelineTick(height:int, date:String) 
+		public function TimelineTick(height:int, date:String, dateHeight:int = 30) 
 		{
 			//solid lines on datebar/timeline
 			var dLine:Shape = new Shape();
@@ -24,7 +24,7 @@ package Timeline
 			var dLineText:TextField = new TextField();
 			dLineText.text = date;
 			dLineText.x =  - 15;
-			dLineText.y = 30;
+			dLineText.y = dateHeight;
 			this.addChild(dLineText);
 			
 			//faint lines
