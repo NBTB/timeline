@@ -175,44 +175,16 @@ package
 			trace("xml done reading");
 			populateUI();
 		}
-		
-		public function changeZoomLevel(beginDateZoom:int, endDateZoom:int):void
-		{			
-			var newBegin:int = beginDate + beginDateZoom;
-			var newEnd:int = endDate + endDateZoom;
-			
-			if(newBegin < MINDATE)
-			{
-				newBegin = MINDATE;
-			}
-			else if(newEnd > MAXDATE)
-			{
-				newEnd = MAXDATE;
-			}
-						
-			if(newBegin > newEnd)
-			{
-				trace("Date Error in timeline.changeZoomLevel");
-			}
-			else
-			{
-				beginDate = newBegin;
-				endDate = newEnd;
-				emptyTimeline();
-				populateUI();
-			}
-		}
-		
 		private function populateUI():void
 		{		
-			timeline = new Timeline(100, 50, 550, 455, timelineItemList, iconArray);
+			timeline = new Timeline(100, 50, 1065, 455, timelineItemList, iconArray);
 			addChild(timeline);
 			
 			trace("populateUI");
 			
 			title = new MovieClip();
 			title.addChild(new Bitmap((iconArray[5]).bitmapData.clone()));
-			title.x = 200;
+			title.x = 447;
 			title.y = 15;
 			this.addChild(title);
 			/*
@@ -248,26 +220,21 @@ package
 			
 			zoomInbox = new TextField();
 			zoomInbox.text ="zoomIn";
-			zoomInbox.x = lineEnd + 10;
-			zoomInbox.y = lineHeight + 50;
+			zoomInbox.x = 950;
+			zoomInbox.y = 20;
+			zoomInbox.height = 20;
 			zoomInbox.addEventListener(MouseEvent.CLICK, timeline.zoomIn);
 			this.addChild(zoomInbox);
 			
 			zoomOutbox = new TextField();
 			zoomOutbox.text ="zoomOut";
-			zoomOutbox.x = lineEnd + 10;
-			zoomOutbox.y = lineHeight + 70;
+			zoomOutbox.x = 1050;
+			zoomOutbox.y = 20;
+			zoomOutbox.height = 20;
 			zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);
 			this.addChild(zoomOutbox);
 			
 			setFilter();
-		}
-		
-		private function emptyTimeline():void
-		{
-			trace("emtpyTimeline");
-			//clear current events and objects on screen
-			while (numChildren > 0) { removeChildAt(0); }
 		}
 		
 		private function setFilter(e:Event = null):void {
@@ -278,6 +245,7 @@ package
 			if (art.Selected) tags.push(art.Tag);
 			
 			timeline.Field.filter(tags);
+			timeline.Field.stagger();
 		}
 	}
 	

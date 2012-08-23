@@ -6,7 +6,7 @@
     <movie input="" />
     <movie path="bin\Timeline.swf" />
     <movie fps="60" />
-    <movie width="750" />
+    <movie width="1265" />
     <movie height="600" />
     <movie version="10" />
     <movie minorVersion="1" />
