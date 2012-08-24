@@ -31,9 +31,7 @@ package Timeline
 		public static const DECADE_TICK_THRESHOLD:Number = 150;      //The threshold at which the decade tick marks begin to fade in years-of-view-width.
 		public static const DECADE_TICK_FADE_RATE:Number = .01;      //The rate at which decade ticks fade out, in alpha-per-year-of-view-width.
 		
-		public static const ITEM_THRESHOLD_RATE:Number = 10;          //The rate at which the threshold for items disappearing increases (linearly with importance).
-		public static const ITEM_FADE_RATE:Number = 1;               //The rate at which items fade out, in alpha-per-year-of-view-width-per-importance.
-		
+		public static const ITEM_THRESHOLD_RATE:Number = 5;          //The rate at which the threshold for items disappearing increases (linearly with importance).
 		//} endregion
 		
 		private var viewWidth:int;
@@ -61,10 +59,10 @@ package Timeline
 			totalwidth = viewWidth * (end-start) / zoom;
 			
 			
-			fill = new Shape();
-			fill.graphics.beginFill(0xDCDCDC, 1);
-			fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
-			addChild(fill);
+			//fill = new Shape();
+			//fill.graphics.beginFill(0xDCDCDC, 1);
+			//fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
+			//addChild(fill);
 			
 			line = new Shape();
 			line.graphics.lineStyle(1, 0x000000,1);
@@ -178,7 +176,6 @@ package Timeline
 			
 			for ( var j:int = 0; j < items.length; j++)
 			{
-				items[j].setUp(icons);
 				items[j].x = totalwidth - (end - items[j].year) * totalwidth / years - (12 - items[j].month) * totalwidth / (12 * years)- (30 - items[j].day) * totalwidth / (years * 12 * 30);
 				if(items[j].type == "Political") {
 					items[j].y = 60+ (j % 5) * 13;
@@ -199,8 +196,6 @@ package Timeline
 				items[j].addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
 				items[j].addEventListener(MouseEvent.CLICK, showPopup);
 			}
-			
-			items.sort(Timeline.TimelineItem.sortItems);
 			
 			update(center, zoom, start, end, zoom);
 		}
@@ -246,11 +241,6 @@ package Timeline
 			line.graphics.beginFill(0x002772,0.5);
 			line.graphics.drawRect(0, viewHeight - 4, totalwidth, 8);
 			line.graphics.endFill();
-			
-			fill.graphics.clear();
-			fill.graphics.beginFill(0xDCDCDC, 1);
-			fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
-			fill.graphics.endFill();
 			
 			var monthA:Number = 1 - MONTH_TICK_FADE_RATE * (zoom - MONTH_TICK_THRESHOLD);
 			monthA = monthA > 1 ? 1 : monthA;
@@ -331,22 +321,23 @@ package Timeline
 			for ( var j:int = 0; j < items.length; j++)
 			{
 				//Item fading by importance
-				//TODO re-enable fading-by-importance when importance is given more meaning.
-				//*
 				var itemA:Number = 1 - (targetzoom - ITEM_THRESHOLD_RATE * (items[j].importance+1));
-				//itemA = itemA > 1 ? 1 : itemA;
+				items[j].isVanished = itemA < 1;
 				
-					items[j].isVanished = itemA < .98;
-				//*/
-				items[j].x = totalwidth - (end - items[j].year) * totalwidth / (end-start) - (12 - items[j].month) * totalwidth / (12*(end-start)) - (30 - items[j].day) * totalwidth / ((12*(end-start)) * 30);
-				//items[j].y = 400;
-				
+				items[j].x = totalwidth - (end - items[j].year) * totalwidth / (end - start)
+							- (12 - items[j].month) * totalwidth / (12 * (end - start)) 
+							- (30 - items[j].day) * totalwidth / (12 * (end - start) * 30);
 			}
 			
 			this.x = - totalwidth * (center - start) / (end - start) + viewWidth / 2;
-			stagger();
+			
+			stagger(start, end, targetzoom);
 		}
 		
+		/**
+		 * A function that filters timeline items by matching to the given array.
+		 * @param	types An array containing the String tags to match. If an item matches one of these tags, it is "turned on", otherwise it becomes invisible.
+		 */
 		public function filter(types:Array):void {
 			for (var i:int = 0 ; i < items.length; i++ ) {
 				items[i].isFiltered = true;
@@ -358,33 +349,39 @@ package Timeline
 			}
 		}
 		
-		public function stagger():void {
+		/**
+		 * A helper function that moves items around on the screen to stagger them and reduce collisions.
+		 * It's not perfect, but more often than not, it's good enough.
+		 */
+		public function stagger(start:Number, end:Number, targetZoom:Number):void {
 			for (var j:int = 0; j < items.length; j++) {
-				items[j].DesiredHeight = 200;
-				if (items[j].type == "Political") items[j].DesiredHeight = 100;
-				if (items[j].type == "Artist") items[j].DesiredHeight = 300;
-				if (items[j].type == "Art") items[j].DesiredHeight = 400;
-				//if(items[j].ShouldBeVisible) {
-					for (var b:int = 0; b < j; b++) {
-						if(!items[b].isFiltered && !items[b].isVanished) {
-							var dx:Number = items[j].x - items[b].x;
-							var dy:Number = items[j].DesiredHeight - items[b].DesiredHeight;
-							var d2:Number = (items[j].radius + items[b].radius) * (items[j].radius + items[b].radius);
-							if (dx * dx + dy * dy < d2) {
-								
-								if (j == 36) {
-									trace("troublemaker");
-								}
-								if(j%2 == 0){
-									items[j].DesiredHeight = Math.min(items[b].DesiredHeight - Math.sqrt(d2 - dx * dx), items[j].DesiredHeight);
-								}
-								else {
-									items[j].DesiredHeight = Math.max(items[b].DesiredHeight + Math.sqrt(d2 - dx * dx), items[j].DesiredHeight);
-								}
+				var targwidth:Number = viewWidth * (end - start) / targetZoom;
+				var jx:Number = targwidth - (end - items[j].year) * targwidth / (end - start)
+							- (12 - items[j].month) * targwidth / (12 * (end - start)) 
+							- (30 - items[j].day) * targwidth / (12 * (end - start) * 30);
+				items[j].desiredHeight = 200;
+				if (items[j].type == "Political") items[j].desiredHeight = 100;
+				if (items[j].type == "Artist") items[j].desiredHeight = 300;
+				if (items[j].type == "Art") items[j].desiredHeight = 400;
+				
+				for (var b:int = 0; b < j; b++) {
+					if(!items[b].isFiltered && !items[b].isVanished) {
+						var bx:Number = targwidth - (end - items[b].year) * targwidth / (end - start)
+									- (12 - items[b].month) * targwidth / (12 * (end - start)) 
+									- (30 - items[b].day) * targwidth / (12 * (end - start) * 30);
+						var dx:Number = jx - bx;
+						var dy:Number = items[j].desiredHeight - items[b].desiredHeight;
+						var dSqr:Number = (items[j].radius + items[b].radius) * (items[j].radius + items[b].radius);
+						if (dx * dx + dy * dy < dSqr) {
+							if(j%2 == 0){
+								items[j].desiredHeight = Math.min(items[b].desiredHeight - Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
+							}
+							else {
+								items[j].desiredHeight = Math.max(items[b].desiredHeight + Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
 							}
 						}
 					}
-				//}
+				}
 			}
 		}
 	}

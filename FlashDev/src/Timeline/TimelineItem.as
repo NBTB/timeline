@@ -23,11 +23,7 @@
 		public var isFiltered:Boolean = false;
 		public var isVanished:Boolean = false;
 		
-		private var desiredHeight:Number = 200;
-		public function set DesiredHeight(value:Number):void {
-			desiredHeight = value;
-		}
-		public function get DesiredHeight():Number { return desiredHeight; }
+		public var desiredHeight:Number = 200;
 		
 		//date values
 		public var year:int;
@@ -173,12 +169,8 @@
 		private function onFrame(e:Event):void {
 			//Fading
 			if (!isFiltered && !isVanished) {
-				//if (desiredAlpha > 0) {
-					visible = true;
-					alpha = Math.min(1, alpha * ALPHA_STEP);
-				//}
-				//else {
-				//}
+				visible = true;
+				alpha = Math.min(1, alpha * ALPHA_STEP);
 			}
 			else
 			{

@@ -188,6 +188,11 @@ package
 				}
 			}
 			
+			for (var j:int = 0; j < timelineItemList.length; j++) {
+				timelineItemList[j].setUp(iconArray);
+			}
+			timelineItemList.sort(TimelineItem.sortItems);
+			
 			trace("xml done reading");
 			populateUI();
 		}
@@ -260,6 +265,8 @@ package
 			this.addChild(zoomOutbox);
 			
 			setFilter();
+			
+			removeChild(loadingThingy);
 		}
 		
 		private function setFilter(e:Event = null):void {
@@ -270,7 +277,7 @@ package
 			if (art.Selected) tags.push(art.Tag);
 			
 			timeline.Field.filter(tags);
-			timeline.Field.stagger();
+			timeline.Field.stagger(timeline.StartDate, timeline.EndDate, timeline.TargetZoom);
 		}
 	}
 	
