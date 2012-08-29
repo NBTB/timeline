@@ -25,7 +25,7 @@ package
 		//{ region Constants
 		
 		// Constant that defines the URL of the XML database.
-		public static const XMLDATA:String = "data/database2.xml";
+		public static const XMLDATA:String = "data/database.xml";
 		
 		// Constants for icon assets. 
 		// NOTE: in order for the icon to be loaded, you must also add the constant to the IMAGES array below.
