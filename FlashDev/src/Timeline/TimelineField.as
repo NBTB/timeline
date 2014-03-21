@@ -31,7 +31,7 @@ package Timeline
 		public static const DECADE_TICK_THRESHOLD:Number = 150;      //The threshold at which the decade tick marks begin to fade in years-of-view-width.
 		public static const DECADE_TICK_FADE_RATE:Number = .01;      //The rate at which decade ticks fade out, in alpha-per-year-of-view-width.
 		
-		public static const ITEM_THRESHOLD_RATE:Number = 5;          //The rate at which the threshold for items disappearing increases (linearly with importance).
+		public static const ITEM_THRESHOLD_RATE:Number = 10;          //The rate at which the threshold for items disappearing increases (linearly with importance).
 		//} endregion
 		
 		private var viewWidth:int;
@@ -39,7 +39,7 @@ package Timeline
 		
 		private var ticks:Array;
 		private var monthlyTicks:Array;
-		private var items:Array;
+		public var items:Array;
 		private var line:Shape;
 		private var fill:Shape;
 		private var totalwidth:Number;
@@ -227,9 +227,9 @@ package Timeline
 		private function showPopup(e:Event):void {
 			e.currentTarget.hoverBoxContainer.visible = false;
 			var popup:Timeline.PopupBox = e.currentTarget.popup;
-			popup.x = 100;
-			popup.y = 20;
-			parent.addChild(popup);
+			popup.x = 300;
+			popup.y = 65;
+			parent.parent.addChild(popup);
 		}
 		
 		public function update(center:Number, zoom:Number, start:Number, end:Number, targetzoom:Number):void {
@@ -359,10 +359,10 @@ package Timeline
 				var jx:Number = targwidth - (end - items[j].year) * targwidth / (end - start)
 							- (12 - items[j].month) * targwidth / (12 * (end - start)) 
 							- (30 - items[j].day) * targwidth / (12 * (end - start) * 30);
-				items[j].desiredHeight = 200;
-				if (items[j].type == "Political") items[j].desiredHeight = 100;
-				if (items[j].type == "Artist") items[j].desiredHeight = 300;
-				if (items[j].type == "Art") items[j].desiredHeight = 400;
+				items[j].desiredHeight = 125;
+				//if (items[j].type == "Political") items[j].desiredHeight = 50;
+				//if (items[j].type == "Artist") items[j].desiredHeight = 300;
+				//if (items[j].type == "Art") items[j].desiredHeight = 400;
 				
 				for (var b:int = 0; b < j; b++) {
 					if(!items[b].isFiltered && !items[b].isVanished) {

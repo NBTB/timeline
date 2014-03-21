@@ -155,16 +155,15 @@ package Timeline
 			this.x = x;
 			this.y = y;
 			
-			targetCenter = 1862.5;
-			center = 1862.5;
-			targetZoom = 10;
-			zoom = 10;
+			targetCenter = 1863;
+			center = 1863;
+			targetZoom = 7;
+			zoom = 20;
 			startDate = 1800;
 			endDate = 1900;
 			
 			field = new TimelineField(width, height, items, icons, center, zoom, startDate, endDate);
 			addChild(field);
-			
 			fieldView = new Sprite();
 			fieldView.graphics.beginFill(0);
 			fieldView.graphics.drawRect(0, 0, width, height + 50);

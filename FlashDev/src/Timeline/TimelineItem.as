@@ -41,7 +41,7 @@
 		
 		//Battle Stuff
 		public var importance:int;
-		public var radius:int = 20;
+		public var radius:int = 15;
 		public var uStrength:String;
 		public var cStrength:String;
 		public var uCasualties:String;
@@ -68,7 +68,7 @@
 			var visiblity = 0.7;
 			if(type == "Battle")
 			{
-				var magnitude:int = importance * 5 + 7;
+				var magnitude:int = importance * 5;
 				radius = magnitude;
 				
 				if(victor == "Union")
@@ -163,7 +163,7 @@
 			
 			addEventListener(Event.ENTER_FRAME, onFrame);
 			
-			popup = new Timeline.PopupBox(207, 50, 850, 500, this);
+			popup = new Timeline.PopupBox(0, 0, 850, 450, this);
 		}
 	
 		private function onFrame(e:Event):void {

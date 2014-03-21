@@ -13,8 +13,10 @@ package
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	import Timeline.Timeline;
 	import Timeline.TimelineItem;
+	import Timeline.Slider;
 	
 	/**
 	 * ...
@@ -70,7 +72,7 @@ package
 		private var zoomInbox:TextField;
 		private var zoomOutbox:TextField;
 		
-		private var timeline:Timeline;
+		public var timeline:Timeline;
 		
 		//} endregion
 		
@@ -198,14 +200,14 @@ package
 		}
 		private function populateUI():void
 		{		
-			timeline = new Timeline(100, 50, 1065, 455, timelineItemList, iconArray);
+			timeline = new Timeline(20, 525, 1225, 250, timelineItemList, iconArray);
 			addChild(timeline);
 			
 			trace("populateUI");
 			
 			title = new MovieClip();
 			title.addChild(new Bitmap((iconArray[5]).bitmapData.clone()));
-			title.x = 447;
+			title.x = 15;
 			title.y = 15;
 			this.addChild(title);
 			
@@ -248,27 +250,45 @@ package
 			art.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(art);
 			
+			var tempFormat = new TextFormat();
+			tempFormat.color = 0xF5F5F5;
+			tempFormat.size = 48;
+			
+			var zoomSlider:Slider = new Slider(7);
+			zoomSlider.x = 200;
+			zoomSlider.y = 500;
+			//Flip the Slider because in Timeline.as, a higher targetZoom means we're zooming out
+			//Great job, whoever coded it like that. Sound logic.
+			zoomSlider.rotation = 180;
+			addChild(zoomSlider);
+			addEventListener(MouseEvent.MOUSE_UP, zoomSlider.SliderUp);
+			
 			zoomInbox = new TextField();
-			zoomInbox.text ="zoomIn";
-			zoomInbox.x = 950;
-			zoomInbox.y = 20;
-			zoomInbox.height = 20;
-			zoomInbox.addEventListener(MouseEvent.CLICK, timeline.zoomIn);
-			this.addChild(zoomInbox);
+			zoomInbox.text ="+";
+			zoomInbox.x = 205;
+			zoomInbox.y = zoomSlider.y - (zoomSlider.height / 2);
+			zoomInbox.height = 75;
+			//zoomInbox.addEventListener(MouseEvent.CLICK, timeline.zoomIn);
+			zoomInbox.setTextFormat(tempFormat);
+			zoomInbox.selectable = false;
+			addChild(zoomInbox);
 			
 			zoomOutbox = new TextField();
-			zoomOutbox.text ="zoomOut";
-			zoomOutbox.x = 1050;
-			zoomOutbox.y = 20;
-			zoomOutbox.height = 20;
-			zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);
-			this.addChild(zoomOutbox);
+			zoomOutbox.text ="-";
+			zoomOutbox.x = 15;
+			zoomOutbox.y = zoomSlider.y - (zoomSlider.height / 2);
+			zoomOutbox.height = 75;
+			//zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);
+			zoomOutbox.setTextFormat(tempFormat);
+			zoomOutbox.selectable = false;
+			addChild(zoomOutbox);
 			
 			setFilter();
-			
+			//Show info box for the first timeline item when the program starts
+			timeline.Field.items[0].dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false));
 			removeChild(loadingThingy);
 		}
-		
+				
 		private function setFilter(e:Event = null):void {
 			var tags:Array = new Array();
 			if (political.Selected) tags.push(political.Tag);

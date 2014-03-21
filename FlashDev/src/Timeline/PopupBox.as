@@ -21,7 +21,7 @@ package Timeline
 			var desShape:Shape = new Shape();
 			desShape.graphics.lineStyle(1, 0x000000,1);
 			desShape.graphics.beginFill(0xFFFFFF,1);
-			desShape.graphics.drawRoundRect(0, 0, width, height, 50);
+			desShape.graphics.drawRect(0, 0, width, height);
 			desShape.graphics.endFill();
 			
 			var format1:TextFormat = new TextFormat();
