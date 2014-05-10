@@ -262,12 +262,12 @@ package
 			zoomSlider.rotation = 180;
 			addChild(zoomSlider);
 			addEventListener(MouseEvent.MOUSE_UP, zoomSlider.SliderUp);
-			
 			zoomInbox = new TextField();
 			zoomInbox.text ="+";
 			zoomInbox.x = 205;
 			zoomInbox.y = zoomSlider.y - (zoomSlider.height / 2);
 			zoomInbox.height = 75;
+			zoomInbox.width = 40;
 			//zoomInbox.addEventListener(MouseEvent.CLICK, timeline.zoomIn);
 			zoomInbox.setTextFormat(tempFormat);
 			zoomInbox.selectable = false;
@@ -278,6 +278,7 @@ package
 			zoomOutbox.x = 15;
 			zoomOutbox.y = zoomSlider.y - (zoomSlider.height / 2);
 			zoomOutbox.height = 75;
+			zoomOutbox.width = 20;
 			//zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);
 			zoomOutbox.setTextFormat(tempFormat);
 			zoomOutbox.selectable = false;

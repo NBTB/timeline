@@ -27,6 +27,8 @@ package Timeline {
 			sliderTrack.graphics.beginFill(0xFFFFFF,1);
 			sliderTrack.graphics.drawRect(0, 0, 150, 20);
 			sliderTrack.graphics.endFill();
+			sliderTrack.mouseChildren = false;
+			sliderTrack.mouseEnabled = false;
 
 			sliderDragger.x = (sliderTrack.width - 15) * (sliderValue / 10);
 			sliderDragger.y = 0;
@@ -37,8 +39,6 @@ package Timeline {
 			sliderDragger.buttonMode = true;
 			addChild(sliderTrack);
 			addChild(sliderDragger);
-
-			bounds = new Rectangle(sliderTrack.x,sliderTrack.y,sliderTrack.width - sliderDragger.width,0);
 			sliderDragger.addEventListener(MouseEvent.MOUSE_DOWN, SliderDown);
 			sliderDragger.addEventListener(MouseEvent.MOUSE_UP, SliderUp);
 			
@@ -50,7 +50,7 @@ package Timeline {
 		}
 
 		protected function SliderDown(e:MouseEvent):void {
-			sliderDragger.startDrag(false, bounds);
+			sliderDragger.startDrag(false, new Rectangle(sliderTrack.x,sliderTrack.y,sliderTrack.width - sliderDragger.width,0));
 			sliderDragger.addEventListener(Event.ENTER_FRAME, Dragger);
 		}
 

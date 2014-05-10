@@ -40,6 +40,7 @@ package Timeline
 		private var ticks:Array;
 		private var monthlyTicks:Array;
 		public var items:Array;
+		public var visiblePopups:Array;
 		private var line:Shape;
 		private var fill:Shape;
 		private var totalwidth:Number;
@@ -52,6 +53,7 @@ package Timeline
 			ticks = new Array();
 			monthlyTicks = new Array();
 			this.items = new Array();
+			visiblePopups = new Array();
 			
 			//TODO fix this hardcoding (mostly overall length of timeline)
 			//hardcoded stuff follows
@@ -225,11 +227,18 @@ package Timeline
 		}
 		
 		private function showPopup(e:Event):void {
+			if (visiblePopups.length > 0) {
+				for each (var item in visiblePopups) {
+					item.hide(e);
+					visiblePopups.pop();
+				}			
+			}
 			e.currentTarget.hoverBoxContainer.visible = false;
 			var popup:Timeline.PopupBox = e.currentTarget.popup;
 			popup.x = 300;
 			popup.y = 65;
 			parent.parent.addChild(popup);
+			visiblePopups.push(popup);
 		}
 		
 		public function update(center:Number, zoom:Number, start:Number, end:Number, targetzoom:Number):void {
