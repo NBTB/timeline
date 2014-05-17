@@ -14,6 +14,7 @@ package
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
+	import flash.text.Font;
 	import Timeline.Timeline;
 	import Timeline.TimelineItem;
 	import Timeline.Slider;
@@ -48,7 +49,13 @@ package
 		public static const IMAGES:Array = [POLITICAL_ICON, UNION_ICON, CONFEDERATE_ICON, 
 											BATTLE_ICON, ART_ICON, TITLE, ARROWS,
 											POLITICALFRONT, BATTLES, LIFEOFBEARD, CIVILWARART, BACKGROUND];
-		
+
+		//Embedded font linkage and definitions
+		[Embed(source = "../bin/data/Lora-Regular.ttf", fontWeight = "Regular", fontName = "Lora", mimeType = "application/x-font", embedAsCFF = "false", unicodeRange = "U+0020-U+002F,U+0030-U+0039,U+003A-U+0040,U+0041-U+005A,U+005B-U+0060,U+0061-U+007A,U+007B-U+007E,U+00A1-U+00A1,U+00A3-U+00A3,U+00A9-U+00A9,U+00AE-U+00AE,U+00B0-U+00B0,U+00BC-U+00BE,U+00BF-U+00BF,U+00C0-U+00FF,U+2013-U+2014,U+2018-U+2019,U+201C-U+201D,U+2022-U+2023,U+2120-U+2120,U+2122-U+2122")]
+		private static const serifFont:Class;
+		Font.registerFont(serifFont);
+        public static var serif_tf:TextFormat = new TextFormat( "Lora", 30,0x777777 );
+		public static var timeline_date_tf:TextFormat = new TextFormat( "Lora", 12,0x444444 );
 		//} endregion
 		
 		public var timelineItemList:Vector.<TimelineItem>;		//stores all the events from our database in sorted order
@@ -200,7 +207,7 @@ package
 		}
 		private function populateUI():void
 		{		
-			timeline = new Timeline(20, 525, 1225, 250, timelineItemList, iconArray);
+			timeline = new Timeline(20, 470, 1240, 275, timelineItemList, iconArray);
 			addChild(timeline);
 			
 			trace("populateUI");
@@ -210,7 +217,7 @@ package
 			title.x = 15;
 			title.y = 15;
 			this.addChild(title);
-			
+			/*
 			background = new MovieClip();
 			background.addChild(new Bitmap((iconArray[11]).bitmapData.clone()));
 			background.x = 0;
@@ -219,6 +226,8 @@ package
 			background.height = 900;
 			this.addChild(background);
 			this.setChildIndex(background, 0);
+			*/
+			
 			/*
 			arrows = new MovieClip();
 			arrows.addChild(new Bitmap((iconArray[6]).bitmapData.clone()));
@@ -228,35 +237,35 @@ package
 			*/
 			political = new FilterButton("Political",new Bitmap((iconArray[7]).bitmapData.clone()));
 			political.x = 15;
-			political.y = ((lineHeight - 100) / 4) * 1;
+			political.y = 50;
 			political.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(political);
 			
 			battles = new FilterButton("Battle", new Bitmap((iconArray[8]).bitmapData.clone()));
 			battles.x = 15;
-			battles.y = ((lineHeight - 100) / 4) * 2;
+			battles.y = 75
 			battles.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(battles);
 			
 			artist = new FilterButton("Artist", new Bitmap((iconArray[9]).bitmapData.clone()));
 			artist.x = 15;
-			artist.y = ((lineHeight - 100) / 4) * 3;
+			artist.y = 100;
 			artist.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(artist);
 			
 			art = new FilterButton("Art", new Bitmap((iconArray[10]).bitmapData.clone()));
 			art.x = 15;
-			art.y = ((lineHeight - 100) / 4) * 4;
+			art.y = 125;
 			art.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(art);
 			
 			var tempFormat = new TextFormat();
-			tempFormat.color = 0xF5F5F5;
-			tempFormat.size = 48;
+			tempFormat.color = 0x444444;
+			tempFormat.size = 32;
 			
 			var zoomSlider:Slider = new Slider(7);
-			zoomSlider.x = 200;
-			zoomSlider.y = 500;
+			zoomSlider.x = (stage.stageWidth / 2) + (zoomSlider.width / 2);
+			zoomSlider.y = 450;
 			//Flip the Slider because in Timeline.as, a higher targetZoom means we're zooming out
 			//Great job, whoever coded it like that. Sound logic.
 			zoomSlider.rotation = 180;
@@ -264,7 +273,7 @@ package
 			addEventListener(MouseEvent.MOUSE_UP, zoomSlider.SliderUp);
 			zoomInbox = new TextField();
 			zoomInbox.text ="+";
-			zoomInbox.x = 205;
+			zoomInbox.x = zoomSlider.x + 5;
 			zoomInbox.y = zoomSlider.y - (zoomSlider.height / 2);
 			zoomInbox.height = 75;
 			zoomInbox.width = 40;
@@ -275,8 +284,8 @@ package
 			
 			zoomOutbox = new TextField();
 			zoomOutbox.text ="-";
-			zoomOutbox.x = 15;
-			zoomOutbox.y = zoomSlider.y - (zoomSlider.height / 2);
+			zoomOutbox.x = zoomSlider.x - zoomSlider.width - 25;
+			zoomOutbox.y = zoomInbox.y;
 			zoomOutbox.height = 75;
 			zoomOutbox.width = 20;
 			//zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);

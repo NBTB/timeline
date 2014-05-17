@@ -185,7 +185,7 @@ package Timeline
 			field.hitArea = fieldHitArea;
 			
 			leftArrow = new Sprite();
-			leftArrow.graphics.beginFill(0);
+			leftArrow.graphics.beginFill(0x444444, 1);
 			leftArrow.graphics.drawTriangles(Vector.<Number>([-20, 0, 0, -10, 0, 10]));
 			leftArrow.graphics.endFill();
 			leftArrow.x = 0;
@@ -194,7 +194,7 @@ package Timeline
 			addChild(leftArrow);
 			
 			rightArrow = new Sprite();
-			rightArrow.graphics.beginFill(0);
+			rightArrow.graphics.beginFill(0x444444, 1);
 			rightArrow.graphics.drawTriangles(Vector.<Number>([0, -10, 20, 0, 0, 10]));
 			rightArrow.graphics.endFill();
 			rightArrow.x = width;
@@ -224,6 +224,7 @@ package Timeline
 		 * @param	e The ENTER_FRAME event.
 		 */
 		private function onFrame(e:Event):void {
+			
 			//Zooming -- basically, this code takes the ratio of desired to current zoom and moves it towards 1, or equal.
 			var ratio:Number = 1 - zoom / targetZoom;
 			if (Math.abs(ratio) < ZOOM_TOLERANCE) {

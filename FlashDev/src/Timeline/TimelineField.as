@@ -3,6 +3,7 @@ package Timeline
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
@@ -44,6 +45,7 @@ package Timeline
 		private var line:Shape;
 		private var fill:Shape;
 		private var totalwidth:Number;
+		private var currentAlpha:Number;
 		public function get TotalWidth():Number { return totalwidth; }
 			
 		public function TimelineField(width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>, center:Number, zoom:Number, start:Number, end:Number) 
@@ -54,21 +56,16 @@ package Timeline
 			monthlyTicks = new Array();
 			this.items = new Array();
 			visiblePopups = new Array();
+			currentAlpha = 1;
 			
 			//TODO fix this hardcoding (mostly overall length of timeline)
 			//hardcoded stuff follows
 			
 			totalwidth = viewWidth * (end-start) / zoom;
 			
-			
-			//fill = new Shape();
-			//fill.graphics.beginFill(0xDCDCDC, 1);
-			//fill.graphics.drawRect(0, 0, totalwidth, viewHeight);
-			//addChild(fill);
-			
 			line = new Shape();
-			line.graphics.lineStyle(1, 0x000000,1);
-			line.graphics.beginFill(0x002772,0.5);
+			//line.graphics.lineStyle(1, 0x000000,1);
+			line.graphics.beginFill(0x444444,1);
 			line.graphics.drawRect(0, viewHeight - 4, totalwidth, 8);
 			line.graphics.endFill();
 			addChild(line);
@@ -79,7 +76,7 @@ package Timeline
 			var years:Number = end - start;
 			for (var i:int = 0; i <= years; i++)
 			{
-				var tick:TimelineTick = new Timeline.TimelineTick(viewHeight, (i + 1800).toString(), 20);
+				var tick:TimelineTick = new Timeline.TimelineTick(viewHeight, (i + 1801).toString(), 20);
 				tick.y = viewHeight;
 				tick.x = totalwidth / years * i;// 
 				ticks.push(tick);
@@ -205,38 +202,46 @@ package Timeline
 		private function mouseOver(e:Event):void
 		{
 			//trace("mouseover: " + e.currentTarget.type);
-			e.currentTarget.backgroundCircle.scaleX = 1.2;
-			e.currentTarget.backgroundCircle.scaleY = 1.2;
-			Shape(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 00, 180, 180);
+			//e.currentTarget.backgroundCircle.scaleX = 1.2;
+			//e.currentTarget.backgroundCircle.scaleY = 1.2;
+			currentAlpha = e.currentTarget.backgroundCircle.alpha;
+			this.setChildIndex(Sprite(e.currentTarget), (this.numChildren-1))
+			Sprite(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 15, 15, 15);
 			
 			//hover Description
-			e.currentTarget.parent.setChildIndex(e.currentTarget, e.currentTarget.parent.numChildren-1);
-			e.currentTarget.hoverBoxContainer.visible = true;
+			trace(items.indexOf(e.currentTarget));
 			
 		}
 		
 		private function mouseOut(e:Event):void
 		{
-			//trace("mouseout");
 			e.currentTarget.backgroundCircle.scaleX = 1;
 			e.currentTarget.backgroundCircle.scaleY = 1;
-			Shape(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1)
-			
-			//hide HoverDescription
-			e.currentTarget.hoverBoxContainer.visible = false;
+			Sprite(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
 		}
 		
 		private function showPopup(e:Event):void {
+			currentAlpha = e.currentTarget.backgroundCircle.alpha;
+
 			if (visiblePopups.length > 0) {
 				for each (var item in visiblePopups) {
 					item.hide(e);
 					visiblePopups.pop();
 				}			
+
 			}
-			e.currentTarget.hoverBoxContainer.visible = false;
+			for each (var item in items) {
+				if (item === e.currentTarget) {
+					Sprite(item.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 30, 30, 30)
+				}
+				else {
+					Sprite(item.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
+				}
+			}
+
 			var popup:Timeline.PopupBox = e.currentTarget.popup;
-			popup.x = 300;
-			popup.y = 65;
+			popup.x = 400;
+			popup.y = 20;
 			parent.parent.addChild(popup);
 			visiblePopups.push(popup);
 		}
@@ -246,9 +251,9 @@ package Timeline
 			totalwidth = viewWidth * (end - start) / zoom;
 			
 			line.graphics.clear();
-			line.graphics.lineStyle(1, 0x000000,1);
-			line.graphics.beginFill(0x002772,0.5);
-			line.graphics.drawRect(0, viewHeight - 4, totalwidth, 8);
+			//line.graphics.lineStyle(1, 0x000000,1);
+			line.graphics.beginFill(0x8c8c8c,1);
+			line.graphics.drawRect(0, viewHeight - 7, totalwidth, 14);
 			line.graphics.endFill();
 			
 			var monthA:Number = 1 - MONTH_TICK_FADE_RATE * (zoom - MONTH_TICK_THRESHOLD);
@@ -366,32 +371,39 @@ package Timeline
 			for (var j:int = 0; j < items.length; j++) {
 				var targwidth:Number = viewWidth * (end - start) / targetZoom;
 				var jx:Number = targwidth - (end - items[j].year) * targwidth / (end - start)
-							- (12 - items[j].month) * targwidth / (12 * (end - start)) 
-							- (30 - items[j].day) * targwidth / (12 * (end - start) * 30);
+							- (10 - items[j].month) * targwidth / (10 * (end - start)) 
+							- (30 - items[j].day) * targwidth / (10 * (end - start) * 30);
 				items[j].desiredHeight = 125;
-				//if (items[j].type == "Political") items[j].desiredHeight = 50;
-				//if (items[j].type == "Artist") items[j].desiredHeight = 300;
-				//if (items[j].type == "Art") items[j].desiredHeight = 400;
+				if (items[j].type == "Political") items[j].desiredHeight = 25;
+				if (items[j].type == "Artist") items[j].desiredHeight = 175;
+				if (items[j].type == "Art") items[j].desiredHeight = 250;
 				
 				for (var b:int = 0; b < j; b++) {
-					if(!items[b].isFiltered && !items[b].isVanished) {
+					if (!items[b].isFiltered && !items[b].isVanished) {
 						var bx:Number = targwidth - (end - items[b].year) * targwidth / (end - start)
-									- (12 - items[b].month) * targwidth / (12 * (end - start)) 
-									- (30 - items[b].day) * targwidth / (12 * (end - start) * 30);
+									- (10 - items[b].month) * targwidth / (10 * (end - start)) 
+									- (30 - items[b].day) * targwidth / (10 * (end - start) * 30);
 						var dx:Number = jx - bx;
 						var dy:Number = items[j].desiredHeight - items[b].desiredHeight;
-						var dSqr:Number = (items[j].radius + items[b].radius) * (items[j].radius + items[b].radius);
+						var dSqr:Number = (items[j].height + items[b].height) * (items[j].height + items[b].height);
 						if (dx * dx + dy * dy < dSqr) {
-							if(j%2 == 0){
-								items[j].desiredHeight = Math.min(items[b].desiredHeight - Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
+							if(b%2 == 0){
+								//items[b].desiredHeight = Math.min(items[b].desiredHeight - Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
+								items[b].desiredHeight -= 25;
 							}
 							else {
-								items[j].desiredHeight = Math.max(items[b].desiredHeight + Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
+								//items[b].desiredHeight = Math.max(items[b].desiredHeight + Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
+								items[b].desiredHeight += 25;
 							}
 						}
+						items[b].desiredHeight = clamp(items[b].desiredHeight, 25, 210);
 					}
 				}
 			}
+		}
+		
+		function clamp(val:Number, min:Number, max:Number){
+			return Math.max(min, Math.min(max, val))
 		}
 	}
 

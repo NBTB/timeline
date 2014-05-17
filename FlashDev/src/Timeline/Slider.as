@@ -20,21 +20,18 @@ package Timeline {
 		public function Slider(initialValue:Number) {
 			
 			sliderValue = initialValue;
-			
 			sliderTrack.x = 0;
 			sliderTrack.y = 0;
-			sliderTrack.graphics.lineStyle(1, 0x000000,1);
-			sliderTrack.graphics.beginFill(0xFFFFFF,1);
-			sliderTrack.graphics.drawRect(0, 0, 150, 20);
+			sliderTrack.graphics.beginFill(0x8c8c8c,1);
+			sliderTrack.graphics.drawRect(0, 0, 150, 15);
 			sliderTrack.graphics.endFill();
 			sliderTrack.mouseChildren = false;
 			sliderTrack.mouseEnabled = false;
 
 			sliderDragger.x = (sliderTrack.width - 15) * (sliderValue / 10);
 			sliderDragger.y = 0;
-			sliderDragger.graphics.lineStyle(1, 0x000000,1);
-			sliderDragger.graphics.beginFill(0xFFFFFF,1);
-			sliderDragger.graphics.drawRect(0, -15, 15, 50);
+			sliderDragger.graphics.beginFill(0x444444,1);
+			sliderDragger.graphics.drawRect(0, -12.5, 15, 40);
 			sliderDragger.graphics.endFill();
 			sliderDragger.buttonMode = true;
 			addChild(sliderTrack);
@@ -47,6 +44,7 @@ package Timeline {
 		public function SliderUp(e:MouseEvent):void {
 			sliderDragger.stopDrag();
 			sliderDragger.removeEventListener(Event.ENTER_FRAME, Dragger);
+			trace(sliderTrack.width);
 		}
 
 		protected function SliderDown(e:MouseEvent):void {

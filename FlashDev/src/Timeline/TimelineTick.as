@@ -16,13 +16,15 @@ package Timeline
 			//solid lines on datebar/timeline
 			var dLine:Shape = new Shape();
 			dLine.graphics.moveTo(0, -15);
-			dLine.graphics.lineStyle(2, 0x000000,1);
+			dLine.graphics.lineStyle(2, 0x444444,1);
 			dLine.graphics.lineTo(0, 15);
 			this.addChild(dLine);
 			
 			//dates
 			var dLineText:TextField = new TextField();
+			var dLinkTextFormat = Main.timeline_date_tf;
 			dLineText.text = date;
+			dLineText.setTextFormat(dLinkTextFormat);
 			dLineText.x =  - 15;
 			dLineText.y = dateHeight;
 			this.addChild(dLineText);

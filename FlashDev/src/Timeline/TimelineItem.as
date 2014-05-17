@@ -23,7 +23,7 @@
 		public var isFiltered:Boolean = false;
 		public var isVanished:Boolean = false;
 		
-		public var desiredHeight:Number = 200;
+		public var desiredHeight:Number = 150;
 		
 		//date values
 		public var year:int;
@@ -46,14 +46,8 @@
 		public var cStrength:String;
 		public var uCasualties:String;
 		public var cCasualties:String;
-		
-		public var backgroundCircle:Shape;
-		//public var bitImage:Bitmap;
-		
-		public var hoverBoxContainer:Sprite;
-		
+		public var backgroundCircle:Sprite;
 		public var popup:PopupBox;
-		
 		public function TimelineItem() {
 			
 		}
@@ -61,16 +55,16 @@
 		public function setUp(iconArray:Vector.<Bitmap>):void {
 			while (numChildren > 0) { removeChildAt(0); }
 			
-			backgroundCircle = new Shape();
-			backgroundCircle.graphics.lineStyle(2, 0x777777, 1);
+			backgroundCircle = new Sprite();
+			backgroundCircle.graphics.lineStyle(1, 0x555555, 1);
 			
 			//the transparancy of the circles 0-1
-			var visiblity = 0.7;
+			var visiblity = 1;
 			if(type == "Battle")
 			{
 				var magnitude:int = importance * 5;
-				radius = magnitude;
-				
+				//radius = magnitude;
+				/*
 				if(victor == "Union")
 				{
 					backgroundCircle.graphics.beginFill(0x002772,visiblity);
@@ -86,8 +80,9 @@
 					backgroundCircle.graphics.beginFill(0x722700,visiblity);
 					//bitImage = new Bitmap((iconArray[3]).bitmapData.clone());
 				}
-				
-				backgroundCircle.graphics.drawCircle(0,0,magnitude);
+				*/
+				backgroundCircle.graphics.beginFill(0xa66249,visiblity);
+				backgroundCircle.graphics.drawRect( 0, 0, 185, 30);
 				/*
 				bitImage.scaleX = 1;
 				bitImage.scaleY = 1;
@@ -97,8 +92,8 @@
 			}
 			else if (type == "Political")
 			{
-				backgroundCircle.graphics.beginFill(0xFFCC11,visiblity);				
-				backgroundCircle.graphics.drawCircle(0,0,20);
+				backgroundCircle.graphics.beginFill(0x4971a6,visiblity);				
+				backgroundCircle.graphics.drawRect( 0, 0, 185, 30);
 				/*
 				bitImage = new Bitmap((iconArray[0]).bitmapData.clone());
 				bitImage.scaleX = 1;
@@ -109,9 +104,9 @@
 			}
 			else if (type == "Artist")
 			{
-				backgroundCircle.graphics.beginFill(0x55FF22,visiblity);
+				backgroundCircle.graphics.beginFill(0x8e8b32,visiblity);
 				importance = 5;
-				backgroundCircle.graphics.drawCircle(0,0,radius);
+				backgroundCircle.graphics.drawRect(0, 0, 185, 30);
 				/*
 				bitImage = new Bitmap((iconArray[4]).bitmapData.clone());
 				bitImage.scaleX = 1;
@@ -122,8 +117,8 @@
 			}
 			else //Painting
 			{
-				backgroundCircle.graphics.beginFill(0x5522FF,visiblity);
-				backgroundCircle.graphics.drawCircle(0,0,radius);
+				backgroundCircle.graphics.beginFill(0x5f7936,visiblity);
+				backgroundCircle.graphics.drawRect(0,0, 185, 30);
 				
 				/*
 				bitImage = new Bitmap((iconArray[4]).bitmapData.clone());
@@ -134,36 +129,26 @@
 				*/
 			}
 			backgroundCircle.graphics.endFill();
+			backgroundCircle.buttonMode = true;
+			backgroundCircle.mouseEnabled = true;
+			backgroundCircle.useHandCursor = true;
 			addChild(backgroundCircle);
-			//addChild(bitImage);
-			
-			hoverBoxContainer = new Sprite();
-			
-			var hoverBox:Shape = new Shape();
-			hoverBox.graphics.lineStyle(2, 0x777777, 1);
-			hoverBox.graphics.beginFill(0xFFFFFF, 0.7);
-			hoverBox.graphics.drawRect( -50, 20, 100, 100);
-			hoverBox.visible = false;
-			hoverBoxContainer.addChild(hoverBox);
-			
+
 			var hoverText:TextField = new TextField();
-			hoverText.text = month.toString() + "/" + day.toString() + "/" + year.toString() + "\n" + title + "\n" + shortDes;
-			hoverText.x = -50;
-			hoverText.y = 20;
-			hoverText.width = 100;
-			hoverText.multiline = true;
-			hoverText.autoSize = "left";
-			hoverText.wordWrap = true;
-			hoverText.border = true;
-			hoverText.background = true;
-			
-			hoverBoxContainer.addChild(hoverText);
-			hoverBoxContainer.visible = false;
-			addChild(hoverBoxContainer);
-			
+			var itemTextFormat = Main.serif_tf;
+			hoverText.text = title.length > 25 ? title.substring(0, 25) + "..." : title;
+			itemTextFormat.size = 12;
+			itemTextFormat.color = 0xbbbbbb;
+			hoverText.setTextFormat(itemTextFormat);
+			hoverText.x = 10;
+			hoverText.y = 3;
+			hoverText.width = 200;
+			hoverText.height = 25;
+			hoverText.mouseEnabled = false;
+			backgroundCircle.addChild(hoverText);
 			addEventListener(Event.ENTER_FRAME, onFrame);
 			
-			popup = new Timeline.PopupBox(0, 0, 850, 450, this);
+			popup = new Timeline.PopupBox(0, 0, 850, 380, this);
 		}
 	
 		private function onFrame(e:Event):void {
