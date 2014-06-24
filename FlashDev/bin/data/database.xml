@@ -473,21 +473,14 @@
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
    </Row>
-   <Row ss:Height="14.25">
+   <Row>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1860</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">20</Data></Cell>
     <Cell ss:StyleID="s71"><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Southern States Secede</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
-    <Cell ss:StyleID="s67"><ss:Data ss:Type="String"
-      xmlns="http://www.w3.org/TR/REC-html40">From December 20<Sup>th</Sup><Font> to February 1</Font><Sup>st</Sup><Font> South Carolina, Mississippi, Florida, Alabama, Georgia, Louisiana, and Texas Secede</Font></ss:Data></Cell>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">First Southern States Secede</Data></Cell>
+    <Cell><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">From December 20 to February 1, South Carolina, Mississippi, Florida, Alabama, Georgia, Louisiana, and Texas Secede.</Data></Cell>
    </Row>
    <Row>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1861</Data></Cell>
@@ -498,21 +491,14 @@
     <Cell><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Lincoln takes office of the President of the United States of America and delivers his inaugural address.</Data></Cell>
    </Row>
-   <Row ss:Height="14.25">
+   <Row>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1861</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">4</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">17</Data></Cell>
     <Cell ss:StyleID="s71"><Data ss:Type="String">Political</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Southern States Secede</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
-    <Cell ss:StyleID="s67"><ss:Data ss:Type="String"
-      xmlns="http://www.w3.org/TR/REC-html40">From April 17<Sup>th</Sup><Font> to May 20</Font><Sup>th</Sup><Font> Virginia, Arkansas, Tennessee and North Carolina Secede.</Font></ss:Data></Cell>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">More Southern States Secede</Data></Cell>
+    <Cell><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">From April 17 to May 20, Virginia, Arkansas, Tennessee and North Carolina Secede.</Data></Cell>
    </Row>
    <Row>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1861</Data></Cell>

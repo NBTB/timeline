@@ -4,6 +4,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	/**
 	 * FilterButton is a toggleable button used for the filtering buttons that turn on/off categories of items.
 	 * @author Robert Cigna
@@ -22,15 +24,48 @@ package
 			selected = value;
 		}
 		
-		public function FilterButton(tag:String, image:Bitmap, selected:Boolean = true) 
+		public function FilterButton(tag:String, text:String, color:Number, selected:Boolean = true) 
 		{
 			this.tag = tag;
-			
-			addChild(image);
 			
 			Selected = selected;
 			
 			addEventListener(MouseEvent.CLICK, toggle);
+			
+			var labelTextFormat = Main.serif_tf;
+			
+			var square = new Sprite();
+			square.graphics.lineStyle(1, 0x555555, 1);
+			square.graphics.beginFill(color,1);
+			square.graphics.drawRect(0, 0, 40, 40);
+			square.graphics.endFill();
+			square.buttonMode = true;
+			square.mouseEnabled = true;
+			square.useHandCursor = true;
+			addChild(square);
+			
+			var label:TextField = new TextField();
+			label.text = text;
+			label.width = 400;
+			label.x = square.width + 15;
+			label.multiline = true;
+			label.autoSize = "left";
+			label.wordWrap = true;
+			labelTextFormat.size = 18;
+			labelTextFormat.color = 0x777777;
+			label.setTextFormat(labelTextFormat);
+			label.selectable = false;
+			label.mouseEnabled = false;
+			
+			var btn = new Sprite();
+			btn.graphics.beginFill(0x000000, 0);
+			btn.graphics.drawRect(0 - 20, 0, label.width, label.height);
+			btn.graphics.endFill();
+			btn.buttonMode = true;
+			btn.useHandCursor = true;
+			
+			addChild(label);
+			addChild(btn);
 		}
 		
 		public function toggle(e:Event = null):void {

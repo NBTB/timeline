@@ -4,21 +4,21 @@ package Timeline {
 
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 
 	public class Slider extends Sprite {
-		
+
 		private var SliderTrack:Class;
 		private var SliderDragger:Class;
 		public var sliderValue:Number = 0; // Default sliderValue
 		private var sliderTrack:Sprite = new Sprite();
 		private var sliderDragger:Sprite = new Sprite();
 		private var bounds:Rectangle = new Rectangle();
-		
+
 		public function Slider(initialValue:Number) {
-			
 			sliderValue = initialValue;
 			sliderTrack.x = 0;
 			sliderTrack.y = 0;
@@ -37,14 +37,14 @@ package Timeline {
 			addChild(sliderTrack);
 			addChild(sliderDragger);
 			sliderDragger.addEventListener(MouseEvent.MOUSE_DOWN, SliderDown);
-			sliderDragger.addEventListener(MouseEvent.MOUSE_UP, SliderUp);
-			
+			this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event) {
+				stage.addEventListener(MouseEvent.MOUSE_UP, SliderUp);
+			});
 		}
 
 		public function SliderUp(e:MouseEvent):void {
 			sliderDragger.stopDrag();
 			sliderDragger.removeEventListener(Event.ENTER_FRAME, Dragger);
-			trace(sliderTrack.width);
 		}
 
 		protected function SliderDown(e:MouseEvent):void {

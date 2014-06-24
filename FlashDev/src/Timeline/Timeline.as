@@ -150,8 +150,8 @@ package Timeline
 		 * @param	items A Vector of TimelineItems, sorted by date.
 		 * @param	icons A Vector of Bitmaps containing the icons the TimelineItems will use.
 		 */
-		public function Timeline(x:int, y:int, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) 
-		{
+		public function Timeline(x:int, y:int, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) {
+			
 			this.x = x;
 			this.y = y;
 			

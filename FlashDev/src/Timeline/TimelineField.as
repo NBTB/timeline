@@ -199,29 +199,23 @@ package Timeline
 			update(center, zoom, start, end, zoom);
 		}
 		
-		private function mouseOver(e:Event):void
-		{
-			//trace("mouseover: " + e.currentTarget.type);
-			//e.currentTarget.backgroundCircle.scaleX = 1.2;
-			//e.currentTarget.backgroundCircle.scaleY = 1.2;
-			currentAlpha = e.currentTarget.backgroundCircle.alpha;
+		private function mouseOver(e:Event):void {
+			currentAlpha = e.currentTarget.labelBackground.alpha;
 			this.setChildIndex(Sprite(e.currentTarget), (this.numChildren-1))
-			Sprite(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 15, 15, 15);
-			
-			//hover Description
-			trace(items.indexOf(e.currentTarget));
-			
+			Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 15, 15, 15);
+			//show index in array
+			//trace("Index: " + items.indexOf(e.currentTarget) + " desiredHeight: " + e.currentTarget.desiredHeight);
 		}
 		
 		private function mouseOut(e:Event):void
 		{
-			e.currentTarget.backgroundCircle.scaleX = 1;
-			e.currentTarget.backgroundCircle.scaleY = 1;
-			Sprite(e.currentTarget.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
+			e.currentTarget.labelBackground.scaleX = 1;
+			e.currentTarget.labelBackground.scaleY = 1;
+			Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
 		}
 		
 		private function showPopup(e:Event):void {
-			currentAlpha = e.currentTarget.backgroundCircle.alpha;
+			currentAlpha = e.currentTarget.labelBackground.alpha;
 
 			if (visiblePopups.length > 0) {
 				for each (var item in visiblePopups) {
@@ -232,15 +226,15 @@ package Timeline
 			}
 			for each (var item in items) {
 				if (item === e.currentTarget) {
-					Sprite(item.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 30, 30, 30)
+					Sprite(item.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 30, 30, 30)
 				}
 				else {
-					Sprite(item.backgroundCircle).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
+					Sprite(item.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
 				}
 			}
 
 			var popup:Timeline.PopupBox = e.currentTarget.popup;
-			popup.x = 400;
+			popup.x = 450;
 			popup.y = 20;
 			parent.parent.addChild(popup);
 			visiblePopups.push(popup);
@@ -368,37 +362,24 @@ package Timeline
 		 * It's not perfect, but more often than not, it's good enough.
 		 */
 		public function stagger(start:Number, end:Number, targetZoom:Number):void {
+			var factor = 0;
 			for (var j:int = 0; j < items.length; j++) {
-				var targwidth:Number = viewWidth * (end - start) / targetZoom;
-				var jx:Number = targwidth - (end - items[j].year) * targwidth / (end - start)
-							- (10 - items[j].month) * targwidth / (10 * (end - start)) 
-							- (30 - items[j].day) * targwidth / (10 * (end - start) * 30);
-				items[j].desiredHeight = 125;
-				if (items[j].type == "Political") items[j].desiredHeight = 25;
-				if (items[j].type == "Artist") items[j].desiredHeight = 175;
-				if (items[j].type == "Art") items[j].desiredHeight = 250;
-				
-				for (var b:int = 0; b < j; b++) {
-					if (!items[b].isFiltered && !items[b].isVanished) {
-						var bx:Number = targwidth - (end - items[b].year) * targwidth / (end - start)
-									- (10 - items[b].month) * targwidth / (10 * (end - start)) 
-									- (30 - items[b].day) * targwidth / (10 * (end - start) * 30);
-						var dx:Number = jx - bx;
-						var dy:Number = items[j].desiredHeight - items[b].desiredHeight;
-						var dSqr:Number = (items[j].height + items[b].height) * (items[j].height + items[b].height);
-						if (dx * dx + dy * dy < dSqr) {
-							if(b%2 == 0){
-								//items[b].desiredHeight = Math.min(items[b].desiredHeight - Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
-								items[b].desiredHeight -= 25;
-							}
-							else {
-								//items[b].desiredHeight = Math.max(items[b].desiredHeight + Math.sqrt(dSqr - dx * dx), items[j].desiredHeight);
-								items[b].desiredHeight += 25;
-							}
-						}
-						items[b].desiredHeight = clamp(items[b].desiredHeight, 25, 210);
-					}
+				items[j].desiredHeight = 0;
+				if (items[j].type == "Political") items[j].desiredHeight = 100;
+				if (items[j].type == "Art") items[j].desiredHeight = 225;
+				items[j].desiredHeight += (factor * 25);
+				//The following spreads the items out when zoomed in
+				//But it doesn't work well enough and significantly degrades performance
+				/*
+				if (targetZoom < 2) {
+					items[j].desiredHeight *= (1 / targetZoom * 0.8);
 				}
+				*/
+				factor++;
+				if (factor > 3) {
+					factor = 0;
+				}
+				if (items[j].type == "Artist") items[j].desiredHeight = 200; //Always put these at the same height
 			}
 		}
 		

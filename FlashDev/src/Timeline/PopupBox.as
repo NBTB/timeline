@@ -1,5 +1,7 @@
 package Timeline 
 {
+	import flash.display.Graphics;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.Shape;
 	import flash.text.TextField;
@@ -7,6 +9,8 @@ package Timeline
 	import flash.text.TextFormat;
 	import flash.events.Event;
 	import flash.geom.ColorTransform;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	
 	/**
 	 * ...
@@ -19,6 +23,11 @@ package Timeline
 		{
 			this.x = x;
 			this.y = y;
+			var isArt:Boolean = false;
+			
+			if (item.type === "Art") {
+				isArt = true;
+			}
 			
 			var desShape:Shape = new Shape();
 			//desShape.graphics.lineStyle(1, 0x000000,1);
@@ -36,7 +45,7 @@ package Timeline
 			titleText.multiline = true;
 			titleText.autoSize = "left";
 			titleText.wordWrap = true;
-			if (titleText.text.length > 40) {
+			if (titleText.text.length >= 35) {
 				popupTextFormat.size = 30;
 			}
 			else {
@@ -72,6 +81,73 @@ package Timeline
 			addChild(dateText);
 			addChild(bodyText);
 			
+			if (isArt) {
+				var thumbSize = 325;
+				var loader:Loader = new Loader();
+				var location = "data/pictures/" + item.imageLoc + ".png";
+				var picContainer:Sprite = new Sprite();
+				var linkText:TextField = new TextField();
+				
+				bodyText.x = 450;
+				
+				picContainer.x = 50;
+				picContainer.y = dateText.y + dateText.height + 15;
+				picContainer.buttonMode = true;
+				picContainer.useHandCursor = true;
+				addChild(picContainer);
+				
+				linkText.text = "Click here to view in a new window";
+				linkText.x = bodyText.x;
+				linkText.y = bodyText.y + bodyText.height + 15;
+				linkText.width = 400;
+				linkText.multiline = true;
+				linkText.autoSize = "left";
+				linkText.wordWrap = true;
+				popupTextFormat.size = 18;
+				popupTextFormat.color = 0x5f8aa9;
+				linkText.setTextFormat(popupTextFormat);
+				linkText.selectable = false;
+				linkText.mouseEnabled = false;
+				
+				//AS3 doesn't support using the hand cursor on a textfield...brilliant
+				//We overlay an invisible sprite on top of the textfield to get around this
+				var linkBtn = new Sprite();
+				linkBtn.x = linkText.x;
+				linkBtn.y = linkText.y;
+				linkBtn.graphics.beginFill(0x000000, 0);
+				linkBtn.graphics.drawRect(0 - 20, 0, linkText.width, linkText.height);
+				linkBtn.graphics.endFill();
+				linkBtn.buttonMode = true;
+				linkBtn.useHandCursor = true;
+				
+				addChild(linkBtn);
+				addChild(linkText);
+				
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event) {
+					var shape:Shape = new Shape();
+					var g:Graphics = shape.graphics;
+					var scaleWidth:Number = thumbSize / loader.width;
+					var scaleHeight:Number = thumbSize / loader.height;
+					if (scaleWidth > scaleHeight) {
+						loader.scaleX = loader.scaleY = scaleWidth;
+					}
+					else {
+						loader.scaleX = loader.scaleY = scaleHeight;
+					}
+					g.beginFill(0x00FF00);
+					g.drawRect(0, 0, thumbSize, thumbSize);
+					g.endFill();
+					loader.mask = shape;
+					picContainer.addChild(loader);
+					picContainer.addChild(shape);
+				});
+				
+				loader.load(new URLRequest(location));
+				
+				linkBtn.addEventListener(MouseEvent.CLICK, openLink(location));
+				picContainer.addEventListener(MouseEvent.CLICK, openLink(location));
+			}
+			
 			//Use the letter X in a textfield as a button to close the popup
 			var closeBtnText:TextField = new TextField();
 			closeBtnText.text = "X";
@@ -83,8 +159,7 @@ package Timeline
 			popupTextFormat.color = 0xbbbbbb;
 			closeBtnText.setTextFormat(popupTextFormat);
 			
-			//AS3 doesn't support using the hand cursor on a textfield...brilliant
-			//We overlay an invisible sprite on top of the textfield to get around this
+			//Same overlay hack as above
 			var closeBtn = new Sprite();
 			closeBtn.x = closeBtnText.x;
 			closeBtn.y = closeBtnText.y;
@@ -94,10 +169,12 @@ package Timeline
 			closeBtn.buttonMode = true;
 			closeBtn.useHandCursor = true;
 			closeBtn.addEventListener(MouseEvent.MOUSE_OVER, function() {
+				popupTextFormat.size = 40;
 				popupTextFormat.color = 0xc15c5c;
 				closeBtnText.setTextFormat(popupTextFormat);
 			});
 			closeBtn.addEventListener(MouseEvent.MOUSE_OUT, function() {
+				popupTextFormat.size = 40;
 				popupTextFormat.color = 0xbbbbbb;
 				closeBtnText.setTextFormat(popupTextFormat);
 			});
@@ -105,6 +182,14 @@ package Timeline
 			
 			addChild(closeBtn);
 			addChild(closeBtnText);
+		}
+		
+		//Uber-sweet generator pattern lets us pass variables to event handlers
+		public function openLink(location:String):Function {
+			return function(e:Event):void { 
+				var request = new URLRequest(location);
+				navigateToURL(request, "_blank");
+			}
 		}
 		
 		public function hide(e:Event):void {

@@ -8,6 +8,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.ProgressEvent;
 	import flash.events.TextEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -18,6 +19,7 @@ package
 	import Timeline.Timeline;
 	import Timeline.TimelineItem;
 	import Timeline.Slider;
+	import Timeline.ProgressBar;
 	
 	/**
 	 * ...
@@ -32,23 +34,10 @@ package
 		
 		// Constants for icon assets. 
 		// NOTE: in order for the icon to be loaded, you must also add the constant to the IMAGES array below.
-		public static const POLITICAL_ICON:String = "data/political.png";
-		public static const UNION_ICON:String = "data/union.png";
-		public static const CONFEDERATE_ICON:String = "data/confederate.png";
-		public static const BATTLE_ICON:String = "data/battle.png";
-		public static const ART_ICON:String = "data/art.png";
 		public static const TITLE:String = "data/title.png";
-		public static const ARROWS:String = "data/arrows.png";
-		public static const POLITICALFRONT:String = "data/PoliticalFront.png";	
-		public static const BATTLES:String = "data/Battles.png";
-		public static const LIFEOFBEARD:String = "data/LifeOfBeard.png";
-		public static const CIVILWARART:String = "data/CivilWarArt.png";
-		public static const BACKGROUND:String = "data/Background.png";
 		
 		// Constant that defines an array of images to load in sequence.
-		public static const IMAGES:Array = [POLITICAL_ICON, UNION_ICON, CONFEDERATE_ICON, 
-											BATTLE_ICON, ART_ICON, TITLE, ARROWS,
-											POLITICALFRONT, BATTLES, LIFEOFBEARD, CIVILWARART, BACKGROUND];
+		public static const IMAGES:Array = [TITLE];
 
 		//Embedded font linkage and definitions
 		[Embed(source = "../bin/data/Lora-Regular.ttf", fontWeight = "Regular", fontName = "Lora", mimeType = "application/x-font", embedAsCFF = "false", unicodeRange = "U+0020-U+002F,U+0030-U+0039,U+003A-U+0040,U+0041-U+005A,U+005B-U+0060,U+0061-U+007A,U+007B-U+007E,U+00A1-U+00A1,U+00A3-U+00A3,U+00A9-U+00A9,U+00AE-U+00AE,U+00B0-U+00B0,U+00BC-U+00BE,U+00BF-U+00BF,U+00C0-U+00FF,U+2013-U+2014,U+2018-U+2019,U+201C-U+201D,U+2022-U+2023,U+2120-U+2120,U+2122-U+2122")]
@@ -66,15 +55,14 @@ package
 		
 		//{ region UI Elements
 		
-		private var loadingThingy:DisplayObject;
-		
 		private var title:MovieClip;
 		private var background:MovieClip;
 		private var political:FilterButton;
 		private var battles:FilterButton;
 		private var artist:FilterButton;
 		private var art:FilterButton;
-		private var arrows:MovieClip;
+		private var loady:ProgressBar;
+		public var loader:Loader;
 		
 		private var zoomInbox:TextField;
 		private var zoomOutbox:TextField;
@@ -103,17 +91,18 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
-			//TODO a better loading graphic
-			loadingThingy = new TextField();
-			TextField(loadingThingy).text = "Loading... 0/" + (IMAGES.length + 1);
-			loadingThingy.x = 250;
-			loadingThingy.y = 250;
-			addChild(loadingThingy);
+			
+			loady = new ProgressBar(100,30);
+			loady.x = (stage.stageWidth / 2) - (loady.width / 2);
+			loady.y = (stage.stageHeight / 2) - (loady.height / 2);
+			loady.draw(0);
+			addChild(loady);
 			
 			iconArray = new Vector.<Bitmap>();
 			beginDate = 1860;
 			endDate = 1866;
 			
+			loader = new Loader();
 			loadNext();
 		}
 		
@@ -126,13 +115,11 @@ package
 			if (loaded < IMAGES.length)
 			{
 				trace("loading image #" + loaded + " now...");
-				var loader:Loader = new Loader();
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadNext);
 				loader.load(new URLRequest(IMAGES[loaded]));
 				loaded++;
-				
+				loady.draw(loaded / IMAGES.length);
 				//TODO update loading graphic
-				TextField(loadingThingy).text = "Loading... " + loaded + "/" + (IMAGES.length + 1);
 			}
 			//otherwise, load the xml file.
 			else
@@ -144,7 +131,6 @@ package
 				loaded++;
 				
 				//TODO update loading graphic
-				TextField(loadingThingy).text = "Loading data... " + loaded + "/" + (IMAGES.length + 1);
 			}
 			
 		}
@@ -200,62 +186,56 @@ package
 			for (var j:int = 0; j < timelineItemList.length; j++) {
 				timelineItemList[j].setUp(iconArray);
 			}
-			timelineItemList.sort(TimelineItem.sortItems);
+			//timelineItemList.sort(TimelineItem.sortItems);
 			
 			trace("xml done reading");
 			populateUI();
 		}
 		private function populateUI():void
 		{		
-			timeline = new Timeline(20, 470, 1240, 275, timelineItemList, iconArray);
+			timeline = new Timeline(20, 600, 1240, 350, timelineItemList, iconArray);
 			addChild(timeline);
 			
 			trace("populateUI");
 			
 			title = new MovieClip();
-			title.addChild(new Bitmap((iconArray[5]).bitmapData.clone()));
+			title.addChild(new Bitmap((iconArray[0]).bitmapData.clone()));
 			title.x = 15;
 			title.y = 15;
 			this.addChild(title);
-			/*
-			background = new MovieClip();
-			background.addChild(new Bitmap((iconArray[11]).bitmapData.clone()));
-			background.x = 0;
-			background.y = 0;
-			background.width = 1270;
-			background.height = 900;
-			this.addChild(background);
-			this.setChildIndex(background, 0);
-			*/
 			
-			/*
-			arrows = new MovieClip();
-			arrows.addChild(new Bitmap((iconArray[6]).bitmapData.clone()));
-			arrows.x = lineStart;
-			arrows.y = lineHeight;
-			this.addChild(arrows);
-			*/
-			political = new FilterButton("Political",new Bitmap((iconArray[7]).bitmapData.clone()));
-			political.x = 15;
-			political.y = 50;
+			var keyTitle:TextField = new TextField();
+			keyTitle.x = 15;
+			keyTitle.y = 50;
+			keyTitle.text = "Key";
+			keyTitle.multiline = true;
+			keyTitle.autoSize = "left";
+			keyTitle.wordWrap = true;
+			serif_tf.color = 0x777777;
+			keyTitle.setTextFormat(serif_tf);
+			addChild(keyTitle);
+			
+			political = new FilterButton("Political", "Political Front", 0x4971a6);
+			political.x = 45;
+			political.y = 125;
 			political.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(political);
 			
-			battles = new FilterButton("Battle", new Bitmap((iconArray[8]).bitmapData.clone()));
-			battles.x = 15;
-			battles.y = 75
+			battles = new FilterButton("Battle", "Battles of the Civil War", 0xa66249);
+			battles.x = political.x;
+			battles.y = political.y + 55;
 			battles.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(battles);
 			
-			artist = new FilterButton("Artist", new Bitmap((iconArray[9]).bitmapData.clone()));
-			artist.x = 15;
-			artist.y = 100;
+			artist = new FilterButton("Artist", "Life of James Henry Beard", 0x8e8b32);
+			artist.x = political.x;
+			artist.y = battles.y + 55;
 			artist.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(artist);
 			
-			art = new FilterButton("Art", new Bitmap((iconArray[10]).bitmapData.clone()));
-			art.x = 15;
-			art.y = 125;
+			art = new FilterButton("Art", "Art of the Civil War Era", 0x5f7936);
+			art.x = political.x;
+			art.y = artist.y + 55;
 			art.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(art);
 			
@@ -264,13 +244,12 @@ package
 			tempFormat.size = 32;
 			
 			var zoomSlider:Slider = new Slider(7);
-			zoomSlider.x = (stage.stageWidth / 2) + (zoomSlider.width / 2);
-			zoomSlider.y = 450;
+			zoomSlider.x = 200;
+			zoomSlider.y = 500;
 			//Flip the Slider because in Timeline.as, a higher targetZoom means we're zooming out
 			//Great job, whoever coded it like that. Sound logic.
 			zoomSlider.rotation = 180;
 			addChild(zoomSlider);
-			addEventListener(MouseEvent.MOUSE_UP, zoomSlider.SliderUp);
 			zoomInbox = new TextField();
 			zoomInbox.text ="+";
 			zoomInbox.x = zoomSlider.x + 5;
@@ -296,7 +275,7 @@ package
 			setFilter();
 			//Show info box for the first timeline item when the program starts
 			timeline.Field.items[0].dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false));
-			removeChild(loadingThingy);
+			removeChild(loady);
 		}
 				
 		private function setFilter(e:Event = null):void {
