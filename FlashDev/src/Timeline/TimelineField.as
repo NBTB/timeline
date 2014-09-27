@@ -80,7 +80,7 @@ package Timeline
 				tick.y = viewHeight;
 				tick.x = totalwidth / years * i;// 
 				ticks.push(tick);
-				tick.doubleClickEnabled = true;
+				tick.mouseEnabled = false;
 				addChild(tick);
 				
 				//TODO ticks for individual months in a year
@@ -88,90 +88,88 @@ package Timeline
 				jan.y = viewHeight;
 				jan.x = totalwidth / years * (i + 0 / 12);
 				monthlyTicks.push(jan);
-				jan.doubleClickEnabled = true;
+				jan.mouseEnabled = false;
 				addChild(jan);
 				
 				var feb:TimelineTick = new Timeline.TimelineTick(viewHeight, "February");
 				feb.y = viewHeight;
 				feb.x = totalwidth / years * (i + 1 / 12);
 				monthlyTicks.push(feb);
-				feb.doubleClickEnabled = true;
+				feb.mouseEnabled = false;
 				addChild(feb);
 				
 				var mar:TimelineTick = new Timeline.TimelineTick(viewHeight, "March");
 				mar.y = viewHeight;
 				mar.x = totalwidth / years * (i + 2 / 12);
 				monthlyTicks.push(mar);
-				mar.doubleClickEnabled = true;
+				mar.mouseEnabled = false;
 				addChild(mar);
 				
 				var apr:TimelineTick = new Timeline.TimelineTick(viewHeight, "April");
 				apr.y = viewHeight;
 				apr.x = totalwidth / years * (i + 3 / 12);
 				monthlyTicks.push(apr);
-				apr.doubleClickEnabled = true;
+				apr.mouseEnabled = false;
 				addChild(apr);
 				
 				var may:TimelineTick = new Timeline.TimelineTick(viewHeight, "May");
 				may.y = viewHeight;
 				may.x = totalwidth / years * (i + 4 / 12);
 				monthlyTicks.push(may);
-				may.doubleClickEnabled = true;
+				may.mouseEnabled = false;
 				addChild(may);
 				
 				var jun:TimelineTick = new Timeline.TimelineTick(viewHeight, "June");
 				jun.y = viewHeight;
 				jun.x = totalwidth / years * (i + 5 / 12);
 				monthlyTicks.push(jun);
-				jun.doubleClickEnabled = true;
+				jun.mouseEnabled = false;
 				addChild(jun);
 				
 				var jul:TimelineTick = new Timeline.TimelineTick(viewHeight, "July");
 				jul.y = viewHeight;
 				jul.x = totalwidth / years * (i + 6 / 12);
 				monthlyTicks.push(jul);
-				jul.doubleClickEnabled = true;
+				jul.mouseEnabled = false;
 				addChild(jul);
 				
 				var aug:TimelineTick = new Timeline.TimelineTick(viewHeight, "August");
 				aug.y = viewHeight;
 				aug.x = totalwidth / years * (i + 7 / 12);
 				monthlyTicks.push(aug);
-				aug.doubleClickEnabled = true;
+				aug.mouseEnabled = false;
 				addChild(aug);
 				
 				var sep:TimelineTick = new Timeline.TimelineTick(viewHeight, "September");
 				sep.y = viewHeight;
 				sep.x = totalwidth / years * (i + 8 / 12);
 				monthlyTicks.push(sep);
-				sep.doubleClickEnabled = true;
+				sep.mouseEnabled = false;
 				addChild(sep);
 				
 				var oct:TimelineTick = new Timeline.TimelineTick(viewHeight, "October");
 				oct.y = viewHeight;
 				oct.x = totalwidth / years * (i + 9 / 12);
 				monthlyTicks.push(oct);
-				oct.doubleClickEnabled = true;
+				oct.mouseEnabled = false;
 				addChild(oct);
 				
 				var nov:TimelineTick = new Timeline.TimelineTick(viewHeight, "November");
 				nov.y = viewHeight;
 				nov.x = totalwidth / years * (i + 10 / 12);
 				monthlyTicks.push(nov);
-				nov.doubleClickEnabled = true;
+				nov.mouseEnabled = false;
 				addChild(nov);
 				
 				var dec:TimelineTick = new Timeline.TimelineTick(viewHeight, "December");
 				dec.y = viewHeight;
 				dec.x = totalwidth / years * (i + 11 / 12);
 				monthlyTicks.push(dec);
-				dec.doubleClickEnabled = true;
+				dec.mouseEnabled = false;
 				addChild(dec);
 			}
 			
-			
 			this.x = - totalwidth * center + viewWidth / 2;
-			//this.cacheAsBitmap = true;
 			
 			for ( var j:int = 0; j < items.length; j++)
 			{
@@ -189,6 +187,7 @@ package Timeline
 					items[j].y = 360 +(j % 5) * 13;
 				}
 				items[j].doubleClickEnabled = true;
+				items[j].cacheAsBitmap = true;
 				addChild(items[j]);
 				this.items.push(items[j]);
 				items[j].addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
@@ -200,6 +199,7 @@ package Timeline
 		}
 		
 		private function mouseOver(e:Event):void {
+			e.stopPropagation();
 			currentAlpha = e.currentTarget.labelBackground.alpha;
 			this.setChildIndex(Sprite(e.currentTarget), (this.numChildren-1))
 			Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 15, 15, 15);
@@ -209,6 +209,7 @@ package Timeline
 		
 		private function mouseOut(e:Event):void
 		{
+			e.stopPropagation();
 			e.currentTarget.labelBackground.scaleX = 1;
 			e.currentTarget.labelBackground.scaleY = 1;
 			Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)

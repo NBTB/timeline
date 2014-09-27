@@ -54,6 +54,7 @@ package Timeline
 		
 		private var center:Number;   //The current center of focus, in absolute years.
 		private var zoom:Number;     //The current zoom, in years.
+		private var fieldWidth:Number; //Cache the width of the field object
 		
 		public var descriptionBox:MovieClip;
 		public var exitBtn:MovieClip;
@@ -73,7 +74,7 @@ package Timeline
 		public function set Center(value:Number):void {
 			value = Math.max(Math.min(endDate - zoom / 2, value), startDate + zoom / 2);
 			center = value;
-			field.x = - (center - startDate) * field.TotalWidth / (endDate - startDate) + fieldView.width/2;
+			field.x = - (center - startDate) * field.TotalWidth / (endDate - startDate) + fieldWidth/2;
 		}
 		/**
 		 * Sets the current level of zoom. Automatically triggers a redraw of the onscreen elements to reflect the new zoom.
@@ -214,7 +215,7 @@ package Timeline
 			
 			stage.addEventListener(MouseEvent.MOUSE_UP, endDrag);
 			field.addEventListener(MouseEvent.MOUSE_DOWN, beginDrag);
-			field.addEventListener(Event.ENTER_FRAME, onFrame);
+			stage.addEventListener(Event.ENTER_FRAME, onFrame);
 			field.doubleClickEnabled = true;
 			field.addEventListener(MouseEvent.DOUBLE_CLICK, quickZoom);
 		}
@@ -224,30 +225,36 @@ package Timeline
 		 * @param	e The ENTER_FRAME event.
 		 */
 		private function onFrame(e:Event):void {
-			
+			e.stopPropagation();
 			//Zooming -- basically, this code takes the ratio of desired to current zoom and moves it towards 1, or equal.
-			var ratio:Number = 1 - zoom / targetZoom;
-			if (Math.abs(ratio) < ZOOM_TOLERANCE) {
-				zoom = targetZoom;
+			var curMouseX = mouseX;
+			if(Zoom != targetZoom) {
+				var ratio:Number = 1 - zoom / targetZoom;
+				if (Math.abs(ratio) < ZOOM_TOLERANCE) {
+					zoom = targetZoom;
+				}
+				else {
+					Zoom = (1 - ratio * ZOOM_RATE) * targetZoom;
+				}		
 			}
-			else {
-				Zoom = (1 - ratio * ZOOM_RATE) * targetZoom;
-			}
-			
+			fieldWidth = fieldView.width;
 			//Scrolling -- basically, this code takes the difference of desired and current center and moves it toward 0, or equal.
+
 			if (isDragging) {
-				jumpCenter(center - (mouseX - lastmouseX) * zoom / fieldView.width);
+				if(lastmouseX != curMouseX) {
+					jumpCenter(center - (curMouseX - lastmouseX) * zoom / fieldWidth);
+				}
 			}
 			else {
 				var difference:Number = targetCenter - center;
-				if (Math.abs(difference * fieldView.width / zoom) < SCROLL_TOLERANCE) {
+				if (Math.abs(difference * fieldWidth / zoom) < SCROLL_TOLERANCE) {
 					center = targetCenter;
 				}
 				else {
 					Center = targetCenter - difference * SCROLL_RATE;
 				}
 			}
-			lastmouseX = mouseX;
+			lastmouseX = curMouseX;
 		}
 		
 		/**
@@ -255,7 +262,16 @@ package Timeline
 		 * @param	e The MOUSE_DOWN event.
 		 */
 		private function beginDrag(e:MouseEvent):void {
+			e.stopPropagation();
 			isDragging = true;
+			stage.addEventListener(MouseEvent.MOUSE_OVER,suppressBubbling,true,9999,true);
+			stage.addEventListener(MouseEvent.MOUSE_OUT,suppressBubbling,true,9999,true);
+		}
+
+		//Prevent events from bubbling while dragging
+		//Improves performance, especially when dragging rapidly
+		function suppressBubbling(e:MouseEvent):void {
+			e.stopPropagation();
 		}
 		
 		/**
@@ -263,6 +279,8 @@ package Timeline
 		 * @param	e The MOUSE_UP event.
 		 */
 		private function endDrag(e:MouseEvent):void {
+			stage.removeEventListener(MouseEvent.MOUSE_OVER,suppressBubbling,true);
+			stage.removeEventListener(MouseEvent.MOUSE_OUT,suppressBubbling,true);
 			if(isDragging) {
 				isDragging = false;
 				TargetCenter = Center - (mouseX - lastmouseX) / (1 - SCROLL_RATE) * zoom / fieldView.width;
@@ -290,7 +308,7 @@ package Timeline
 		 */
 		public function quickZoom(e:MouseEvent):void {
 			TargetZoom = TargetZoom / ZOOM_STEP / ZOOM_STEP;
-			TargetCenter = center + (e.stageX - x - fieldView.width / 2) / fieldView.width * zoom;
+			TargetCenter = center + (e.stageX - x - fieldWidth / 2) / fieldWidth * zoom;
 		}
 		
 		/**

@@ -47,6 +47,7 @@
 		public var uCasualties:String;
 		public var cCasualties:String;
 		public var labelBackground:Sprite;
+		public var dot:Sprite;
 		public var popup:PopupBox;
 		public function TimelineItem() {
 
@@ -56,6 +57,8 @@
 			while (numChildren > 0) { removeChildAt(0); }
 
 			labelBackground = new Sprite();
+			dot = new Sprite();
+			dot.graphics.lineStyle(1, 0x555555, 1);
 			labelBackground.graphics.lineStyle(1, 0x555555, 1);
 
 			//the transparancy of the circles 0-1
@@ -81,9 +84,14 @@
 
 			labelBackground.graphics.endFill();
 			labelBackground.buttonMode = true;
-			labelBackground.mouseEnabled = true;
+			labelBackground.mouseEnabled = false;
 			labelBackground.useHandCursor = true;
+			dot.graphics.beginFill(0x555555, 1);
+			dot.graphics.drawCircle(0,labelBackground.height,5);
+			dot.graphics.endFill();
 			addChild(labelBackground);
+			addChild(dot);
+
 
 			var hoverText:TextField = new TextField();
 			var itemTextFormat = Main.serif_tf;
