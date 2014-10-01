@@ -3,6 +3,7 @@
 	import flash.display.*;
 	import flash.events.*;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 
 	/**
 	 * A TimelineItem is an interactive icon that appears on the timeline.
@@ -22,6 +23,7 @@
 
 		public var isFiltered:Boolean = false;
 		public var isVanished:Boolean = false;
+		public var isSelected:Boolean = false;
 
 		public var desiredHeight:Number = 150;
 
@@ -53,16 +55,16 @@
 
 		}
 
-		public function setUp(iconArray:Vector.<Bitmap>):void {
+		public function setUp():void {
 			while (numChildren > 0) { removeChildAt(0); }
 
 			labelBackground = new Sprite();
 			dot = new Sprite();
-			dot.graphics.lineStyle(1, 0x555555, 1);
-			labelBackground.graphics.lineStyle(1, 0x555555, 1);
+			dot.graphics.lineStyle(1, 0x1a1b1f, 1);
+			labelBackground.graphics.lineStyle(1, 0x1a1b1f, 1);
 
 			//the transparancy of the circles 0-1
-			var visiblity = 1;
+			var visiblity:Number = 1;
 			if(type == "Battle") {
 				var magnitude:int = importance * 5;
 				labelBackground.graphics.beginFill(0xa66249,visiblity);
@@ -84,9 +86,9 @@
 
 			labelBackground.graphics.endFill();
 			labelBackground.buttonMode = true;
-			labelBackground.mouseEnabled = false;
+			labelBackground.mouseEnabled = true;
 			labelBackground.useHandCursor = true;
-			dot.graphics.beginFill(0x555555, 1);
+			dot.graphics.beginFill(0x1a1b1f, 1);
 			dot.graphics.drawCircle(0,labelBackground.height,5);
 			dot.graphics.endFill();
 			addChild(labelBackground);
@@ -94,10 +96,10 @@
 
 
 			var hoverText:TextField = new TextField();
-			var itemTextFormat = Main.serif_tf;
+			var itemTextFormat:TextFormat = Main.serif_tf;
 			hoverText.text = title.length > 25 ? title.substring(0, 25) + "..." : title;
 			itemTextFormat.size = 12;
-			itemTextFormat.color = 0xbbbbbb;
+			itemTextFormat.color = 0xe5e5e5;
 			hoverText.setTextFormat(itemTextFormat);
 			hoverText.x = 10;
 			hoverText.y = 3;

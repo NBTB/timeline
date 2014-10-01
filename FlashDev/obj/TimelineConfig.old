@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'9/27/2014'</value>
+      <value>'9/30/2014'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -39,10 +39,10 @@
   <file-specs>
     <path-element>F:\Dropbox\dev\MAG\ritgig_nbtbtimeline\FlashDev\src\Main.as</path-element>
   </file-specs>
-  <default-background-color>#C9CED3</default-background-color>
+  <default-background-color>#CCB899</default-background-color>
   <default-frame-rate>60</default-frame-rate>
   <default-size>
     <width>1280</width>
-    <height>1000</height>
+    <height>720</height>
   </default-size>
 </flex-config>

@@ -40,6 +40,7 @@ package Timeline
 		
 		private var ticks:Array;
 		private var monthlyTicks:Array;
+		private var yearAssuranceTicks:Array;
 		public var items:Array;
 		public var visiblePopups:Array;
 		private var line:Shape;
@@ -48,12 +49,13 @@ package Timeline
 		private var currentAlpha:Number;
 		public function get TotalWidth():Number { return totalwidth; }
 			
-		public function TimelineField(width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>, center:Number, zoom:Number, start:Number, end:Number) 
+		public function TimelineField(width:int, height:int, items:Vector.<Timeline.TimelineItem>, center:Number, zoom:Number, start:Number, end:Number) 
 		{
 			viewWidth = width;
 			viewHeight = height;
 			ticks = new Array();
 			monthlyTicks = new Array();
+			yearAssuranceTicks = new Array();
 			this.items = new Array();
 			visiblePopups = new Array();
 			currentAlpha = 1;
@@ -65,7 +67,7 @@ package Timeline
 			
 			line = new Shape();
 			//line.graphics.lineStyle(1, 0x000000,1);
-			line.graphics.beginFill(0x444444,1);
+			line.graphics.beginFill(0xa9997f,1);
 			line.graphics.drawRect(0, viewHeight - 4, totalwidth, 8);
 			line.graphics.endFill();
 			addChild(line);
@@ -74,9 +76,11 @@ package Timeline
 			
 			//set up ticks
 			var years:Number = end - start;
+			var yearRepeat:TimelineTick;
 			for (var i:int = 0; i <= years; i++)
 			{
-				var tick:TimelineTick = new Timeline.TimelineTick(viewHeight, (i + 1801).toString(), 20);
+				var curYear:String = (i + 1801).toString();
+				var tick:TimelineTick = new Timeline.TimelineTick(viewHeight, curYear, 20);
 				tick.y = viewHeight;
 				tick.x = totalwidth / years * i;// 
 				ticks.push(tick);
@@ -87,85 +91,145 @@ package Timeline
 				var jan:TimelineTick = new Timeline.TimelineTick(viewHeight, "January");
 				jan.y = viewHeight;
 				jan.x = totalwidth / years * (i + 0 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(jan);
 				jan.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(jan);
 				
 				var feb:TimelineTick = new Timeline.TimelineTick(viewHeight, "February");
 				feb.y = viewHeight;
 				feb.x = totalwidth / years * (i + 1 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(feb);
 				feb.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(feb);
 				
 				var mar:TimelineTick = new Timeline.TimelineTick(viewHeight, "March");
 				mar.y = viewHeight;
 				mar.x = totalwidth / years * (i + 2 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(mar);
 				mar.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(mar);
 				
 				var apr:TimelineTick = new Timeline.TimelineTick(viewHeight, "April");
 				apr.y = viewHeight;
 				apr.x = totalwidth / years * (i + 3 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(apr);
 				apr.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(apr);
 				
 				var may:TimelineTick = new Timeline.TimelineTick(viewHeight, "May");
 				may.y = viewHeight;
 				may.x = totalwidth / years * (i + 4 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(may);
 				may.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(may);
 				
 				var jun:TimelineTick = new Timeline.TimelineTick(viewHeight, "June");
 				jun.y = viewHeight;
 				jun.x = totalwidth / years * (i + 5 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(jun);
 				jun.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(jun);
 				
 				var jul:TimelineTick = new Timeline.TimelineTick(viewHeight, "July");
 				jul.y = viewHeight;
 				jul.x = totalwidth / years * (i + 6 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(jul);
 				jul.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(jul);
 				
 				var aug:TimelineTick = new Timeline.TimelineTick(viewHeight, "August");
 				aug.y = viewHeight;
 				aug.x = totalwidth / years * (i + 7 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(aug);
 				aug.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(aug);
 				
 				var sep:TimelineTick = new Timeline.TimelineTick(viewHeight, "September");
 				sep.y = viewHeight;
 				sep.x = totalwidth / years * (i + 8 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(sep);
 				sep.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(sep);
 				
 				var oct:TimelineTick = new Timeline.TimelineTick(viewHeight, "October");
 				oct.y = viewHeight;
 				oct.x = totalwidth / years * (i + 9 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(oct);
 				oct.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(oct);
 				
 				var nov:TimelineTick = new Timeline.TimelineTick(viewHeight, "November");
 				nov.y = viewHeight;
 				nov.x = totalwidth / years * (i + 10 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(nov);
 				nov.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(nov);
 				
 				var dec:TimelineTick = new Timeline.TimelineTick(viewHeight, "December");
 				dec.y = viewHeight;
 				dec.x = totalwidth / years * (i + 11 / 12);
+				yearRepeat = new Timeline.TimelineTick(viewHeight, curYear, 295, false, true);
+				yearAssuranceTicks.push(yearRepeat);
 				monthlyTicks.push(dec);
 				dec.mouseEnabled = false;
+				yearRepeat.mouseEnabled = false;
+				yearRepeat.cacheAsBitmap = true;
+				addChild(yearRepeat);
 				addChild(dec);
 			}
 			
@@ -201,36 +265,39 @@ package Timeline
 		private function mouseOver(e:Event):void {
 			e.stopPropagation();
 			currentAlpha = e.currentTarget.labelBackground.alpha;
-			this.setChildIndex(Sprite(e.currentTarget), (this.numChildren-1))
-			Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 15, 15, 15);
+			this.setChildIndex(Sprite(e.currentTarget), (this.numChildren-1));
+			if(!e.currentTarget.isSelected) {
+				Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 15, 15, 15);
+			}
 			//show index in array
 			//trace("Index: " + items.indexOf(e.currentTarget) + " desiredHeight: " + e.currentTarget.desiredHeight);
 		}
 		
-		private function mouseOut(e:Event):void
-		{
+		private function mouseOut(e:Event):void {
 			e.stopPropagation();
-			e.currentTarget.labelBackground.scaleX = 1;
-			e.currentTarget.labelBackground.scaleY = 1;
-			Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
+			if(!e.currentTarget.isSelected) {
+				Sprite(e.currentTarget.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0);
+			}
 		}
 		
 		private function showPopup(e:Event):void {
 			currentAlpha = e.currentTarget.labelBackground.alpha;
 
 			if (visiblePopups.length > 0) {
-				for each (var item in visiblePopups) {
-					item.hide(e);
+				for each (var p:Timeline.PopupBox in visiblePopups) {
+					p.hide(e);
 					visiblePopups.pop();
 				}			
 
 			}
-			for each (var item in items) {
+			for each (var item:Timeline.TimelineItem in items) {
 				if (item === e.currentTarget) {
-					Sprite(item.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 30, 30, 30)
+					item.isSelected = true;
+					Sprite(item.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, -45, -45, -45);
 				}
 				else {
-					Sprite(item.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0)
+					item.isSelected = false;
+					Sprite(item.labelBackground).transform.colorTransform = new ColorTransform(1, 1, 1, 1, 0, 0, 0);
 				}
 			}
 
@@ -247,7 +314,7 @@ package Timeline
 			
 			line.graphics.clear();
 			//line.graphics.lineStyle(1, 0x000000,1);
-			line.graphics.beginFill(0x8c8c8c,1);
+			line.graphics.beginFill(0xa9997f,1);
 			line.graphics.drawRect(0, viewHeight - 7, totalwidth, 14);
 			line.graphics.endFill();
 			
@@ -323,6 +390,14 @@ package Timeline
 						monthlyTicks[k].visible = true;
 					}
 				}
+				yearAssuranceTicks[k].x = 1 == targetzoom ? monthlyTicks[k].x + 35 : monthlyTicks[k].x + 95;
+				yearAssuranceTicks[k].alpha = monthA;
+				if (monthA < 0) {
+					yearAssuranceTicks[k].visible = false;
+				}
+				else {
+					yearAssuranceTicks[k].visible = true;
+				}
 			}
 			
 			
@@ -363,16 +438,16 @@ package Timeline
 		 * It's not perfect, but more often than not, it's good enough.
 		 */
 		public function stagger(start:Number, end:Number, targetZoom:Number):void {
-			var factor = 0;
+			var factor:Number = 0;
 			for (var j:int = 0; j < items.length; j++) {
 				items[j].desiredHeight = 0;
 				if (items[j].type == "Political") items[j].desiredHeight = 100;
 				if (items[j].type == "Art") items[j].desiredHeight = 225;
 				items[j].desiredHeight += (factor * 25);
 				//The following spreads the items out when zoomed in
-				//But it doesn't work well enough and significantly degrades performance
+				//But it doesn't work well enough
 				/*
-				if (targetZoom < 2) {
+				if (targetZoom < 1) {
 					items[j].desiredHeight *= (1 / targetZoom * 0.8);
 				}
 				*/
@@ -384,7 +459,7 @@ package Timeline
 			}
 		}
 		
-		function clamp(val:Number, min:Number, max:Number){
+		public function clamp(val:Number, min:Number, max:Number):Number {
 			return Math.max(min, Math.min(max, val))
 		}
 	}

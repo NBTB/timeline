@@ -22,7 +22,7 @@ package Timeline {
 			sliderValue = initialValue;
 			sliderTrack.x = 0;
 			sliderTrack.y = 0;
-			sliderTrack.graphics.beginFill(0x8c8c8c,1);
+			sliderTrack.graphics.beginFill(0xa9997f,1);
 			sliderTrack.graphics.drawRect(0, 0, 150, 15);
 			sliderTrack.graphics.endFill();
 			sliderTrack.mouseChildren = false;
@@ -30,14 +30,14 @@ package Timeline {
 
 			sliderDragger.x = (sliderTrack.width - 15) * (sliderValue / 10);
 			sliderDragger.y = 0;
-			sliderDragger.graphics.beginFill(0x444444,1);
+			sliderDragger.graphics.beginFill(0x786f60,1);
 			sliderDragger.graphics.drawRect(0, -12.5, 15, 40);
 			sliderDragger.graphics.endFill();
 			sliderDragger.buttonMode = true;
 			addChild(sliderTrack);
 			addChild(sliderDragger);
 			sliderDragger.addEventListener(MouseEvent.MOUSE_DOWN, SliderDown);
-			this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event) {
+			this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event):void {
 				stage.addEventListener(MouseEvent.MOUSE_UP, SliderUp);
 			});
 		}
@@ -55,6 +55,11 @@ package Timeline {
 		protected function Dragger(e:Event):void {
 			sliderValue = int(sliderDragger.x * 10 / (sliderTrack.width - sliderDragger.width)); // Normalized to range 0-10
 			Main(root).timeline.TargetZoom = sliderValue;
+		}
+
+		public function setStep(val:Number):void {
+			sliderValue = int(val);
+			sliderDragger.x = (sliderValue * (sliderTrack.width - sliderDragger.width)) / 10;
 		}
 	}
 }

@@ -31,27 +31,28 @@ package
 		
 		// Constant that defines the URL of the XML database.
 		public static const XMLDATA:String = "data/database.xml";
-		
-		// Constants for icon assets. 
-		// NOTE: in order for the icon to be loaded, you must also add the constant to the IMAGES array below.
-		public static const TITLE:String = "data/title.png";
-		
-		// Constant that defines an array of images to load in sequence.
-		public static const IMAGES:Array = [TITLE];
 
 		//Embedded font linkage and definitions
-		[Embed(source = "../bin/data/Lora-Regular.ttf", fontWeight = "Regular", fontName = "Lora", mimeType = "application/x-font", embedAsCFF = "false", unicodeRange = "U+0020-U+002F,U+0030-U+0039,U+003A-U+0040,U+0041-U+005A,U+005B-U+0060,U+0061-U+007A,U+007B-U+007E,U+00A1-U+00A1,U+00A3-U+00A3,U+00A9-U+00A9,U+00AE-U+00AE,U+00B0-U+00B0,U+00BC-U+00BE,U+00BF-U+00BF,U+00C0-U+00FF,U+2013-U+2014,U+2018-U+2019,U+201C-U+201D,U+2022-U+2023,U+2120-U+2120,U+2122-U+2122")]
+		[Embed(source = "../bin/data/Lora-Regular.ttf", fontWeight = "Regular", fontFamily = "Lora", fontName = "Lora", mimeType = "application/x-font", embedAsCFF = "false", unicodeRange = "U+0020-U+002F,U+0030-U+0039,U+003A-U+0040,U+0041-U+005A,U+005B-U+0060,U+0061-U+007A,U+007B-U+007E,U+00A1-U+00A1,U+00A3-U+00A3,U+00A9-U+00A9,U+00AE-U+00AE,U+00B0-U+00B0,U+00BC-U+00BE,U+00BF-U+00BF,U+00C0-U+00FF,U+2013-U+2014,U+2018-U+2019,U+201C-U+201D,U+2022-U+2023,U+2120-U+2120,U+2122-U+2122")]
 		private static const serifFont:Class;
+		
+		[Embed(source = "../bin/data/Carnevalee.ttf", fontWeight = "Regular", fontFamily = "Carn", fontName = "Carn", mimeType = "application/x-font", embedAsCFF = "false", unicodeRange = "U+0020-U+002F,U+0030-U+0039,U+003A-U+0040,U+0041-U+005A,U+005B-U+0060,U+0061-U+007A,U+007B-U+007E,U+00A1-U+00A1,U+00A3-U+00A3,U+00A9-U+00A9,U+00AE-U+00AE,U+00B0-U+00B0,U+00BC-U+00BE,U+00BF-U+00BF,U+00C0-U+00FF,U+2013-U+2014,U+2018-U+2019,U+201C-U+201D,U+2022-U+2023,U+2120-U+2120,U+2122-U+2122")]
+		private static const civilWarFont:Class;
+
 		Font.registerFont(serifFont);
-        public static var serif_tf:TextFormat = new TextFormat( "Lora", 30,0x777777 );
-		public static var timeline_date_tf:TextFormat = new TextFormat( "Lora", 12,0x444444 );
+		Font.registerFont(civilWarFont);
+
+        public static var serif_tf:TextFormat = new TextFormat("Lora", 30,0x1a1b1f);
+		public static var timeline_date_tf:TextFormat = new TextFormat("Lora", 12,0x444444);
+		public static var title_tf:TextFormat = new TextFormat("Carn",36,0x1a1b1f);
+		public static var subtle_tf:TextFormat = new TextFormat("Lora",25,0x786649);
+		public static var subtler_tf:TextFormat = new TextFormat("Lora",25,0xa9997f);
 		//} endregion
 		
-		public var timelineItemList:Vector.<TimelineItem>;		//stores all the events from our database in sorted order
-		public var currentItemList:Vector.<TimelineItem>;		//stores the currently shown events
+		public var timelineItemList:Vector.<TimelineItem>; //stores all the events from our database in sorted order
+		public var currentItemList:Vector.<TimelineItem>; //stores the currently shown events
 		private var currentItems:MovieClip;
-		public var iconArray:Vector.<Bitmap>;						//stores all the icons
-		private var loaded:int = 0;           //keeps track of which images needs to be loaded next.
+		private var loaded:int = 0; //Fake loading progress since we don't use images anymore, but we still need time for AS3 to process everything
 		
 		//{ region UI Elements
 		
@@ -63,7 +64,8 @@ package
 		private var art:FilterButton;
 		private var loady:ProgressBar;
 		public var loader:Loader;
-		
+
+		public static var zoomSlider:Slider;
 		private var zoomInbox:TextField;
 		private var zoomOutbox:TextField;
 		
@@ -80,64 +82,48 @@ package
 		private var lineEnd:int = 650;
 		private var lineHeight:int = 500;
 	
-		public function Main():void 
-		{
+		public function Main():void {
 			if (stage) init();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
-		private function init(e:Event = null):void 
-		{
+		private function init(e:Event = null):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			// entry point
-			
-			
 			loady = new ProgressBar(100,30);
 			loady.x = (stage.stageWidth / 2) - (loady.width / 2);
 			loady.y = (stage.stageHeight / 2) - (loady.height / 2);
 			loady.draw(0);
 			addChild(loady);
-			
-			iconArray = new Vector.<Bitmap>();
+
 			beginDate = 1860;
 			endDate = 1866;
-			
+
+			addEventListener(Event.ENTER_FRAME, loadProgress);
 			loader = new Loader();
-			loadNext();
+
+		}
+
+		public function loadProgress(e:Event = null):void {
+			if(loaded < 100) {
+				loaded++;
+				loady.draw(loaded / 100);
+			}
+			else {
+				removeEventListener(Event.ENTER_FRAME, loadProgress);
+				loadNext();
+			}
+			
 		}
 		
 		public function loadNext(e:Event = null):void {
-			//The first time this is called, e is null, every other time, e.target is a Loader that just finished.
-			if(e != null) { iconArray.push(e.target.loader.content); }
-			
-			
-			//if there are still images to load, load the next one.
-			if (loaded < IMAGES.length)
-			{
-				trace("loading image #" + loaded + " now...");
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadNext);
-				loader.load(new URLRequest(IMAGES[loaded]));
-				loaded++;
-				loady.draw(loaded / IMAGES.length);
-				//TODO update loading graphic
-			}
-			//otherwise, load the xml file.
-			else
-			{
-				trace("loading XML now...");
-				var xmlloader:URLLoader = new URLLoader();
-				xmlloader.addEventListener(Event.COMPLETE, parseXML);
-				xmlloader.load(new URLRequest(XMLDATA));
-				loaded++;
-				
-				//TODO update loading graphic
-			}
-			
+			trace("loading XML now...");
+			var xmlloader:URLLoader = new URLLoader();
+			xmlloader.addEventListener(Event.COMPLETE, parseXML);
+			xmlloader.load(new URLRequest(XMLDATA));
 		}
 		
 		//pretty much copied verbatim -- those namespaces are just too messy to deal with (ditto for the xml file itself)
-		public function parseXML(e:Event):void
-		{
+		public function parseXML(e:Event):void {
 			var xml:XML = new XML(e.target.data);
 			xml.ignoreWhitespace=true;
 			var ss:Namespace = new Namespace("urn:schemas-microsoft-com:office:spreadsheet");
@@ -184,77 +170,93 @@ package
 			}
 			
 			for (var j:int = 0; j < timelineItemList.length; j++) {
-				timelineItemList[j].setUp(iconArray);
+				timelineItemList[j].setUp();
 			}
 			//timelineItemList.sort(TimelineItem.sortItems);
 			
 			trace("xml done reading");
 			populateUI();
 		}
-		private function populateUI():void
-		{		
-			timeline = new Timeline(20, 600, 1240, 350, timelineItemList, iconArray);
+		private function populateUI():void {		
+			timeline = new Timeline(0, 320, stage.stageWidth, 350, timelineItemList);
 			addChild(timeline);
-			
+
 			trace("populateUI");
-			
-			title = new MovieClip();
-			title.addChild(new Bitmap((iconArray[0]).bitmapData.clone()));
-			title.x = 15;
-			title.y = 15;
-			this.addChild(title);
-			
+
+			var mainTitle:TextField = new TextField();
+			mainTitle.embedFonts = true;
+			mainTitle.defaultTextFormat = title_tf;
+			mainTitle.x = 15;
+			mainTitle.y = 15;
+			mainTitle.width = 400;
+			mainTitle.text = "The Night Before The Battle";
+			addChild(mainTitle);
+
+			var secondaryTitle:TextField = new TextField();
+			secondaryTitle.embedFonts = true;
+			title_tf.size = 30;
+			secondaryTitle.defaultTextFormat = title_tf;
+			secondaryTitle.x = 100;
+			secondaryTitle.y = 60;
+			secondaryTitle.width = 400;
+			secondaryTitle.text = "Civil War Timeline";
+			addChild(secondaryTitle);
+
+			var tempFormat:TextFormat = new TextFormat();
+			tempFormat.color = 0x1a1b1f;
+			tempFormat.size = 20;
+
 			var keyTitle:TextField = new TextField();
-			keyTitle.x = 15;
-			keyTitle.y = 50;
+			keyTitle.embedFonts = true;
+			keyTitle.selectable = false;
+			timeline_date_tf.size = 25;
+			timeline_date_tf.color = 0x786649;
+			keyTitle.defaultTextFormat = timeline_date_tf;
+			keyTitle.x = 30;
+			keyTitle.y = 230;
+			keyTitle.rotation = -90;
 			keyTitle.text = "Key";
 			keyTitle.multiline = true;
 			keyTitle.autoSize = "left";
 			keyTitle.wordWrap = true;
-			serif_tf.color = 0x777777;
-			keyTitle.setTextFormat(serif_tf);
 			addChild(keyTitle);
-			
-			political = new FilterButton("Political", "Political Front", 0x4971a6);
-			political.x = 45;
-			political.y = 125;
-			political.addEventListener(MouseEvent.CLICK, setFilter);
-			this.addChild(political);
-			
+
 			battles = new FilterButton("Battle", "Battles of the Civil War", 0xa66249);
-			battles.x = political.x;
-			battles.y = political.y + 55;
+			battles.x = 85;
+			battles.y = 130;
 			battles.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(battles);
-			
+
+			political = new FilterButton("Political", "Political Front", 0x4971a6);
+			political.x = battles.x;
+			political.y = battles.y + 45;
+			political.addEventListener(MouseEvent.CLICK, setFilter);
+			this.addChild(political);
+
 			artist = new FilterButton("Artist", "Life of James Henry Beard", 0x8e8b32);
-			artist.x = political.x;
-			artist.y = battles.y + 55;
+			artist.x = battles.x;
+			artist.y = political.y + 45;
 			artist.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(artist);
-			
+
 			art = new FilterButton("Art", "Art of the Civil War Era", 0x5f7936);
-			art.x = political.x;
-			art.y = artist.y + 55;
+			art.x = battles.x;
+			art.y = artist.y + 45;
 			art.addEventListener(MouseEvent.CLICK, setFilter);
 			this.addChild(art);
-			
-			var tempFormat = new TextFormat();
-			tempFormat.color = 0x444444;
-			tempFormat.size = 32;
-			
-			var zoomSlider:Slider = new Slider(7);
-			zoomSlider.x = 200;
-			zoomSlider.y = 500;
+
+			zoomSlider = new Slider(5);
+			zoomSlider.x = 365;
+			zoomSlider.y = 133;
 			//Flip the Slider because in Timeline.as, a higher targetZoom means we're zooming out
 			//Great job, whoever coded it like that. Sound logic.
-			zoomSlider.rotation = 180;
+			zoomSlider.rotation = 90;
 			addChild(zoomSlider);
 			zoomInbox = new TextField();
 			zoomInbox.text ="+";
-			zoomInbox.x = zoomSlider.x + 5;
-			zoomInbox.y = zoomSlider.y - (zoomSlider.height / 2);
-			zoomInbox.height = 75;
+			zoomInbox.x = zoomSlider.x - 16;
+			zoomInbox.y = zoomSlider.y - 25;
+			zoomInbox.height = 25;
 			zoomInbox.width = 40;
 			//zoomInbox.addEventListener(MouseEvent.CLICK, timeline.zoomIn);
 			zoomInbox.setTextFormat(tempFormat);
@@ -263,9 +265,9 @@ package
 			
 			zoomOutbox = new TextField();
 			zoomOutbox.text ="-";
-			zoomOutbox.x = zoomSlider.x - zoomSlider.width - 25;
-			zoomOutbox.y = zoomInbox.y;
-			zoomOutbox.height = 75;
+			zoomOutbox.x = zoomSlider.x - 13;
+			zoomOutbox.y = zoomSlider.y + zoomSlider.height - 5;
+			zoomOutbox.height = 25;
 			zoomOutbox.width = 20;
 			//zoomOutbox.addEventListener(MouseEvent.CLICK, timeline.zoomOut);
 			zoomOutbox.setTextFormat(tempFormat);

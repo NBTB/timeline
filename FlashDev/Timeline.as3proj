@@ -7,11 +7,11 @@
     <movie path="bin\Timeline.swf" />
     <movie fps="60" />
     <movie width="1280" />
-    <movie height="1000" />
+    <movie height="720" />
     <movie version="10" />
     <movie minorVersion="1" />
     <movie platform="Flash Player" />
-    <movie background="#C9CED3" />
+    <movie background="#CCB899" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>

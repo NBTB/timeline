@@ -149,9 +149,8 @@ package Timeline
 		 * @param	width The width of the viewable area of the Timeline.
 		 * @param	height The height of the viewable area of the Timeline.
 		 * @param	items A Vector of TimelineItems, sorted by date.
-		 * @param	icons A Vector of Bitmaps containing the icons the TimelineItems will use.
 		 */
-		public function Timeline(x:int, y:int, width:int, height:int, items:Vector.<Timeline.TimelineItem>, icons:Vector.<Bitmap>) {
+		public function Timeline(x:int, y:int, width:int, height:int, items:Vector.<Timeline.TimelineItem>) {
 			
 			this.x = x;
 			this.y = y;
@@ -163,7 +162,7 @@ package Timeline
 			startDate = 1800;
 			endDate = 1900;
 			
-			field = new TimelineField(width, height, items, icons, center, zoom, startDate, endDate);
+			field = new TimelineField(width, height, items, center, zoom, startDate, endDate);
 			addChild(field);
 			fieldView = new Sprite();
 			fieldView.graphics.beginFill(0);
@@ -189,8 +188,8 @@ package Timeline
 			leftArrow.graphics.beginFill(0x444444, 1);
 			leftArrow.graphics.drawTriangles(Vector.<Number>([-20, 0, 0, -10, 0, 10]));
 			leftArrow.graphics.endFill();
-			leftArrow.x = 0;
-			leftArrow.y = height;
+			leftArrow.x = 20;
+			leftArrow.y = height + 7;
 			leftArrow.addEventListener(MouseEvent.CLICK, flipLeft);
 			addChild(leftArrow);
 			
@@ -198,8 +197,8 @@ package Timeline
 			rightArrow.graphics.beginFill(0x444444, 1);
 			rightArrow.graphics.drawTriangles(Vector.<Number>([0, -10, 20, 0, 0, 10]));
 			rightArrow.graphics.endFill();
-			rightArrow.x = width;
-			rightArrow.y = height;
+			rightArrow.x = width - 20;
+			rightArrow.y = height + 7;
 			rightArrow.addEventListener(MouseEvent.CLICK, flipRight);
 			addChild(rightArrow);
 			
@@ -227,7 +226,7 @@ package Timeline
 		private function onFrame(e:Event):void {
 			e.stopPropagation();
 			//Zooming -- basically, this code takes the ratio of desired to current zoom and moves it towards 1, or equal.
-			var curMouseX = mouseX;
+			var curMouseX:Number = mouseX;
 			if(Zoom != targetZoom) {
 				var ratio:Number = 1 - zoom / targetZoom;
 				if (Math.abs(ratio) < ZOOM_TOLERANCE) {
@@ -270,7 +269,7 @@ package Timeline
 
 		//Prevent events from bubbling while dragging
 		//Improves performance, especially when dragging rapidly
-		function suppressBubbling(e:MouseEvent):void {
+		private function suppressBubbling(e:MouseEvent):void {
 			e.stopPropagation();
 		}
 		
@@ -307,8 +306,10 @@ package Timeline
 		 * @param	e
 		 */
 		public function quickZoom(e:MouseEvent):void {
-			TargetZoom = TargetZoom / ZOOM_STEP / ZOOM_STEP;
+			var tz:Number = TargetZoom / ZOOM_STEP;
+			TargetZoom = Math.round(tz / 0.5) * 0.5;
 			TargetCenter = center + (e.stageX - x - fieldWidth / 2) / fieldWidth * zoom;
+			Main.zoomSlider.setStep(TargetZoom);
 		}
 		
 		/**

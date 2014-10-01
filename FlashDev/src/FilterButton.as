@@ -32,12 +32,12 @@ package
 			
 			addEventListener(MouseEvent.CLICK, toggle);
 			
-			var labelTextFormat = Main.serif_tf;
+			var labelTextFormat:TextFormat = Main.serif_tf;
 			
-			var square = new Sprite();
-			square.graphics.lineStyle(1, 0x555555, 1);
+			var square:Sprite = new Sprite();
+			square.graphics.lineStyle(1, 0x1a1b1f, 1);
 			square.graphics.beginFill(color,1);
-			square.graphics.drawRect(0, 0, 40, 40);
+			square.graphics.drawRect(0, 0, 24, 24);
 			square.graphics.endFill();
 			square.buttonMode = true;
 			square.mouseEnabled = true;
@@ -46,18 +46,18 @@ package
 			
 			var label:TextField = new TextField();
 			label.text = text;
-			label.width = 400;
+			label.width = 245;
 			label.x = square.width + 15;
+			label.y = square.y - 3;
 			label.multiline = true;
 			label.autoSize = "left";
 			label.wordWrap = true;
-			labelTextFormat.size = 18;
-			labelTextFormat.color = 0x777777;
+			labelTextFormat.size = 16;
 			label.setTextFormat(labelTextFormat);
 			label.selectable = false;
 			label.mouseEnabled = false;
 			
-			var btn = new Sprite();
+			var btn:Sprite = new Sprite();
 			btn.graphics.beginFill(0x000000, 0);
 			btn.graphics.drawRect(0 - 20, 0, label.width, label.height);
 			btn.graphics.endFill();
