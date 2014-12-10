@@ -146,8 +146,8 @@ package
 						tEvent.day = xml.ss::Worksheet..ss::Table.children()[i].children()[2].children()[0];
 						tEvent.type = xml.ss::Worksheet..ss::Table.children()[i].children()[3].children()[0];
 						tEvent.title = xml.ss::Worksheet..ss::Table.children()[i].children()[4].children()[0];
-						tEvent.shortDes = xml.ss::Worksheet..ss::Table.children()[i].children()[5].children()[0];
-						tEvent.fullDes = xml.ss::Worksheet..ss::Table.children()[i].children()[6].children()[0];
+						tEvent.url = xml.ss::Worksheet..ss::Table.children()[i].children()[5].children()[0];
+						tEvent.description = xml.ss::Worksheet..ss::Table.children()[i].children()[6].children()[0];
 						
 						if (tEvent.type == "Battle")
 						{

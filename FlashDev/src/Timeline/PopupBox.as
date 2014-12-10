@@ -57,7 +57,7 @@ package Timeline
 			dateText.setTextFormat(Main.subtle_tf);
 			
 			var bodyText:TextField = new TextField();
-			bodyText.text = item.fullDes;
+			bodyText.text = item.description;
 			bodyText.x = 25;
 			bodyText.y = dateText.y + dateText.height + 15;
 			bodyText.width = width - 100;
@@ -74,37 +74,36 @@ package Timeline
 			
 			if (isArt) {
 				
-				var thumbSize:Number = 220;
+				var thumbSize:Number = 230; //Size of square to crop image to
 				var loader:Loader = new Loader();
-				var location:String = "data/pictures/" + item.imageLoc + ".png";
+				var picPath:String = "data/pictures/" + item.imageLoc + ".png";
 				var picContainer:Sprite = new Sprite();
 				var linkText:TextField = new TextField();
+				var isUrlValid:Boolean = /^https?:/.test(item.url); //Simple URL validator
 
 				bodyText.x = 450;
 
-				picContainer.x = 500;
-				picContainer.y = 30;
-				picContainer.buttonMode = true;
-				picContainer.useHandCursor = true;
+				picContainer.x = 550;
+				picContainer.y = 20;
 				addChild(picContainer);
 
-				titleText.width = 400;
+				titleText.width = 450;
 				dateText.y = titleText.y + titleText.height;
 				bodyText.visible = false;
 
-				linkText.text = "Enlarge in a new tab";
+				linkText.text = "View on Memorial Art Gallery website";
 				linkText.x = picContainer.x;
 				linkText.y = picContainer.y + thumbSize + 5;
 				linkText.width = 400;
 				linkText.multiline = true;
 				linkText.autoSize = "left";
 				linkText.wordWrap = true;
-				popupTextFormat.size = 16;
+				popupTextFormat.size = 13;
 				popupTextFormat.color = 0x5f8aa9;
 				linkText.setTextFormat(popupTextFormat);
 				linkText.selectable = false;
 				linkText.mouseEnabled = false;
-				
+
 				//AS3 doesn't support using the hand cursor on a textfield...brilliant
 				//We overlay an invisible sprite on top of the textfield to get around this
 				var linkBtn:Sprite = new Sprite();
@@ -113,12 +112,7 @@ package Timeline
 				linkBtn.graphics.beginFill(0x000000, 0);
 				linkBtn.graphics.drawRect(0 - 20, 0, linkText.width, linkText.height);
 				linkBtn.graphics.endFill();
-				linkBtn.buttonMode = true;
-				linkBtn.useHandCursor = true;
-				
-				addChild(linkBtn);
-				addChild(linkText);
-				
+
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event):void {
 					var shape:Shape = new Shape();
 					var g:Graphics = shape.graphics;
@@ -138,10 +132,17 @@ package Timeline
 					picContainer.addChild(shape);
 				});
 				
-				loader.load(new URLRequest(location));
-				
-				linkBtn.addEventListener(MouseEvent.CLICK, openLink(location));
-				picContainer.addEventListener(MouseEvent.CLICK, openLink(location));
+				loader.load(new URLRequest(picPath));
+				if (isUrlValid) {
+					linkBtn.buttonMode = true;
+					linkBtn.useHandCursor = true;
+					picContainer.buttonMode = true;
+					picContainer.useHandCursor = true;
+					addChild(linkBtn);
+					addChild(linkText);
+					linkBtn.addEventListener(MouseEvent.CLICK, openLink(item.url));
+					picContainer.addEventListener(MouseEvent.CLICK, openLink(item.url));
+				}
 			}
 
 		}

@@ -776,7 +776,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Life Mask and Hands of Abraham Lincoln</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ3894</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Leonard Wells Volk</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">LifeMask</Data></Cell>
@@ -791,7 +791,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">4</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Inauguration of Abraham Lincoln as President of the United States</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1811</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Inauguration</Data></Cell>
@@ -806,7 +806,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Georgia Delegation in Congress</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1815</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">GeorgiaDelegation</Data></Cell>
@@ -821,7 +821,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Seceding Mississippi Delegation in Congress</Data></Cell>
-    <Cell ss:StyleID="s73"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s73"><Data ss:Type="String">http://magart.rochester.edu/OBJ1814</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">MississippiDelegation</Data></Cell>
@@ -836,7 +836,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Advance Guard of the Grand Army of the United States Crossing the Long Bridge</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1822</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">LongBridge</Data></Cell>
@@ -851,7 +851,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filling Cartidges at the United States Arsenal at Watertown Massachusetts</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1821</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">FillingCartridges</Data></Cell>
@@ -866,7 +866,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Christmas Boxes in Camp-Christmas, 1861</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1820</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">CampChristmas</Data></Cell>
@@ -881,7 +881,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Army of the Potomac - A Sharp Shooter on Picket Duty</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1816</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">SharpShooter</Data></Cell>
@@ -896,7 +896,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Union Cavalry and Artillery Starting in Pursuit of the Rebels Up the Yorktown</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1818</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">YorktownPursuit</Data></Cell>
@@ -911,7 +911,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Rebels Outside Their Works at Yorktown Reconnoitring with Dark Lanterns</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1819</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">YorktownRebels</Data></Cell>
@@ -926,7 +926,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Surgeon at Work at the Rear During an Engagement</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ23646</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Surgeon</Data></Cell>
@@ -941,7 +941,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">A Shell in the Rebel Trenches</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1878</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">RebelTrenches</Data></Cell>
@@ -956,7 +956,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Home from the War</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1876</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">HomeFromWar</Data></Cell>
@@ -971,7 +971,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Pay-Day in the Army of the Potomac</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1877</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">PayDay</Data></Cell>
@@ -986,7 +986,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">The Russian Ball - In the Supper Room</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1875</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">RussianBall</Data></Cell>
@@ -1001,7 +1001,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Taking the Oath and Drawing Rations</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1047</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">John Rogers</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">TakingTheOath</Data></Cell>
@@ -1016,7 +1016,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Our Watering Places - The Empty Sleeve at Newport</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ13766</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">OurWateringPlaces</Data></Cell>
@@ -1031,7 +1031,7 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Our Next President</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ1867</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">Winslow Homer</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">OurNextPresident</Data></Cell>
@@ -1045,8 +1045,8 @@
     <Cell ss:StyleID="s67"><Data ss:Type="Number">5</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s74"><Data ss:Type="String">Art</Data></Cell>
-    <Cell ss:StyleID="s67"><Data ss:Type="String">Night Before the Battle</Data></Cell>
-    <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">The Night Before the Battle</Data></Cell>
+    <Cell ss:StyleID="s63"><Data ss:Type="String">http://magart.rochester.edu/OBJ202</Data></Cell>
     <Cell ss:StyleID="s63"><Data ss:Type="String">Filler</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">James Henry Beard</Data></Cell>
     <Cell ss:StyleID="s67"><Data ss:Type="String">NBTB</Data></Cell>

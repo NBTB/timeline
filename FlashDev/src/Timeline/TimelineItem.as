@@ -33,8 +33,8 @@
 		public var day:int;
 
 		public var title:String;
-		public var shortDes:String;
-		public var fullDes:String;
+		public var url:String; //"Art" objects contain a URL to corresponding webpage to open on the MAG site
+		public var description:String;
 
 		//artist name
 		public var artist:String;
